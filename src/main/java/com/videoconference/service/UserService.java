@@ -22,4 +22,6 @@ public interface UserService {
     VerificationToken getVerificationToken(String VerificationToken);
 
     User getUserByUsername(String username);
+
+    User getUserByEmail(String email);
 }

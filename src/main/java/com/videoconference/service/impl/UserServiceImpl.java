@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.videoconference.constant.SystemConstant.ROLE_USER;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private VerificationTokenRepository tokenRepository;
+
     public User createUser(CreateUserDTO createUserDTO) {
         //mapping to user
         User user = new User();
@@ -73,9 +75,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createVerificationToken(User user, String token) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        VerificationToken myToken = new VerificationToken(token, user);
-        myToken.setCreatedAt(Timestamp.valueOf(localDateTime));
-        myToken.setExpiryDate(Timestamp.valueOf(localDateTime.plusMinutes(VerificationToken.EXPIRATION)));
+        VerificationToken myToken;
+        Optional<VerificationToken> existedToken = tokenRepository.findFirstByUser_UserId(user.getUserId());
+
+        if(existedToken.isPresent()) {
+            myToken = existedToken.get();
+            myToken.setToken(token);
+        } else {
+            myToken = new VerificationToken(token, user);
+            myToken.setCreatedAt(Timestamp.valueOf(localDateTime));
+        }
+
+        myToken.setExpiryDate(calExpiredDate(localDateTime));
         tokenRepository.save(myToken);
     }
 
@@ -95,5 +106,16 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findFirstByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException());
         return user;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        User user = userRepository.findFirstByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException());
+        return user;
+    }
+
+    private Timestamp calExpiredDate(LocalDateTime localDateTime) {
+        return Timestamp.valueOf(localDateTime.plusMinutes(VerificationToken.EXPIRATION));
     }
 }
