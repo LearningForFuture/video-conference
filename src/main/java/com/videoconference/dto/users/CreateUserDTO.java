@@ -1,13 +1,8 @@
 package com.videoconference.dto.users;
 
-import com.videoconference.validator.ExistEmail;
-import com.videoconference.validator.ExistUsername;
-import com.videoconference.validator.PasswordMatches;
-import com.videoconference.validator.ValidEmail;
+import com.videoconference.validator.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Value;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
