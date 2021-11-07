@@ -9,13 +9,27 @@ import { faFacebook, faTwitter, faGoogle, faTelegram} from '@fortawesome/free-br
 config.autoAddCss = false
 library.add(fas, faFacebook, faTwitter, faGoogle, faTelegram)
 
+import VueLogger from 'vuejs-logger';
+const isProduction = process.env.NODE_ENV === 'production';
+
+const options = {
+    isEnabled: true,
+    logLevel : isProduction ? 'error' : 'debug',
+    stringifyArguments : false,
+    showLogLevel : true,
+    showMethodName : true,
+    separator: '|',
+    showConsoleColors: true
+};
+
+Vue.use(VueLogger, options);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
 new Vue({
-  store,
-  router,
-  render: h => h(App),
+    store,
+    router,
+    render: h => h(App),
 }).$mount('#app')

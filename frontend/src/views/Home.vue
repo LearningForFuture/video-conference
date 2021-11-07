@@ -1,34 +1,34 @@
 <template lang="">
-    <div class="page-wrapper">
-        <Navigation/>
-        <BannerHome/>
-        <TextAnimationHome/>
-        <BodyHome/>
-        <MemberHome/>
-        <FooterHome/>
-    </div>
+  <!-- <div class="page-wrapper"> -->
+  <!-- <Navigation/> -->
+  <div>
+    <HomeBanner />
+    <HomeTextAnimation />
+    <HomeBody />
+    <HomeMember />
+  </div>
+  <!-- <FooterHome/> -->
+  <!-- </div> -->
 </template>
 
 <script>
 
-import Navigation from '../components/Navigation.vue'
-import BannerHome from '../components/BannerHome.vue'
-import TextAnimationHome from '../components/TextAnimationHome.vue'
-import BodyHome from '../components/BodyHome.vue'
-import MemberHome from '../components/MemberHome.vue'
-import FooterHome from '../components/FooterHome.vue'
+import HomeBanner from '../components/layout/home/HomeBanner.vue'
+import HomeTextAnimation from '../components/layout/home/HomeTextAnimation.vue'
+import HomeBody from '../components/layout/home/HomeBody.vue'
+import HomeMember from '../components/layout/home/HomeMember.vue'
 import '../assets/css/style.css'
 import '../assets/css/home.css'
 
 export default{
     name: 'HomePage',
     components: {
-        Navigation,
-        BannerHome,
-        TextAnimationHome,
-        BodyHome,
-        MemberHome,
-        FooterHome,
+        // Navigation,
+        HomeBanner,
+        HomeTextAnimation,
+        HomeBody,
+        HomeMember,
+        // FooterHome,
     },
     mounted() {
         document.body.classList.add('croll')

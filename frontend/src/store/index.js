@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import groups from './modules/groups';
+import rooms from './modules/rooms';
+import meeting from './modules/meeting';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  modules: {
-    groups
-  }
+    modules: {
+        rooms,
+        meeting,
+    }
 });
 
 // store.subscribeAction(function callback(action, state) {

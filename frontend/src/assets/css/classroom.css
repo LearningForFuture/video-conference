@@ -20868,10 +20868,9 @@ input.file-upload {
 
 .wrapper-teams .container-teams .row-team {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     justify-self: center;
     justify-content:center;
-    height: 100vh;
 }
 
 .wrapper-teams .team-grid {

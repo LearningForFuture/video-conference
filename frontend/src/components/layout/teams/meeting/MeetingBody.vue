@@ -1,16 +1,16 @@
 <template>
-    <section>
-        <VideoArea/>
-    </section>
+  <section>
+    <MeetingVideoArea />
+  </section>
 </template>
 
 <script>
-import VideoArea from './VideoArea.vue';
+import MeetingVideoArea from './MeetingVideoArea.vue';
 export default {
-    name: 'Bodyvideocall',
+    name: 'MeetingBody',
 
     components: {
-        VideoArea,
+        MeetingVideoArea,
     },
 
     data() {

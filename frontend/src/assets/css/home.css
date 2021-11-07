@@ -644,6 +644,7 @@ a {
 }
 
 .show-modal {
+    display: block;
     opacity: 1;
     visibility: visible;
     transform: scale(1.0);

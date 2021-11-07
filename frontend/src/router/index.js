@@ -1,39 +1,40 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import ClassRoom from '../views/ClassRoom.vue';
-import CallVideo from '../views/CallVideo.vue';
+import Teams from '../views/Teams.vue';
+import Meeting from '../views/Meeting.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/classroom',
-    name: 'ClassRoom',
-    component: ClassRoom,
+    {
+        path: '/',
+        name: 'Home',
+        component: Home,
+    },
+    {
+        path: '/teams',
+        name: 'Teams',
+        component: Teams,
     // children: [
     //   {
-    //     path: 'groups/:id',
-    //     component: CallVideo,
+    //     path: 'meeting/:id',
+    //     name: 'Meeting',
+    //     component: Meeting,
     //   }
     // ]
-  },
-  {
-    path: '/groups/:id',
-    name: 'groups',
-    component: CallVideo,
-  }
+    },
+    {
+        path: '/teams/meeting/:id',
+        name: 'Meeting',
+        component: Meeting,
+    }
 ];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes,
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes,
 });
 
 export default router;

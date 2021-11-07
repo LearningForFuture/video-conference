@@ -1,21 +1,29 @@
 <template>
-<nav class="navigation">
+  <nav class="navigation">
     <div class="nav-group">
-        <ul>
-            <li v-for="(item, index) in navItems" :key="index" @click=" currentActive = index">
-                <router-link tag="a" :to="{path:item.to}" :class="[{ notifiy_badge : item.isNotify}, {active: index === currentActive}]">
-                    <i :class=item.icon ></i>
-                    <span>{{ item.text }}</span>
-                </router-link>
-            </li>
-        </ul>
+      <ul>
+        <li
+          v-for="(item, index) in navItems"
+          :key="index"
+          @click=" currentActive = index"
+        >
+          <router-link
+            tag="a"
+            :to="{path:item.to}"
+            :class="[{ notifiy_badge : item.isNotify}, {active: index === currentActive}]"
+          >
+            <i :class="item.icon" />
+            <span>{{ item.text }}</span>
+          </router-link>
+        </li>
+      </ul>
     </div>
-</nav>
+  </nav>
 </template>
 
 <script>
 export default {
-    name: 'SideBarLayout',
+    name: 'TeamsSideBar',
     data() {
         return {
             currentActive: 1,

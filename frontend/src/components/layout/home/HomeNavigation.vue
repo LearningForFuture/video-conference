@@ -1,29 +1,47 @@
 <template lang="">
-<div class="nav-wrapper">
-    <div class="grad-bar"></div>
+  <div class="nav-wrapper">
+    <div class="grad-bar" />
     <nav class="navbar">
-        <div class="logo">
-            <img src="../assets/images/Video-Conferencing-App-Logo.png" alt="Company Logo" loading="lazy">
-            <div class="wrapper">
-                <div class="bg"> Video Call </div>
-                <div class="fg"> Video Call </div>
-            </div>
+      <div class="logo">
+        <img
+          src="@/assets/images/Video-Conferencing-App-Logo.png"
+          alt="Company Logo"
+          loading="lazy"
+        >
+        <div class="wrapper">
+          <div class="bg">
+            Video Call
+          </div>
+          <div class="fg">
+            Video Call
+          </div>
         </div>
-        <div :class="'menu-toggle ' + (isactive ? 'is-active': '')" id="mobile-menu" @click="ismobile =! ismobile; isactive =! isactive">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <ul :class="'nav ' + (ismobile ? 'mobile-nav' : '')">
-            <li class="nav-item" v-for="(item, index) in dataNav" :key="index"><a href="#"><span>{{ item }}</span></a></li>
-        </ul>
+      </div>
+      <div
+        id="mobile-menu"
+        :class="'menu-toggle ' + (isactive ? 'is-active': '')"
+        @click="ismobile =! ismobile; isactive =! isactive"
+      >
+        <span class="bar" />
+        <span class="bar" />
+        <span class="bar" />
+      </div>
+      <ul :class="'nav ' + (ismobile ? 'mobile-nav' : '')">
+        <li
+          v-for="(item, index) in dataNav"
+          :key="index"
+          class="nav-item"
+        >
+          <a href="#"><span>{{ item }}</span></a>
+        </li>
+      </ul>
     </nav>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Navigation',
+    name: 'HomeNavigation',
     data() {
         return {
             dataNav: [
