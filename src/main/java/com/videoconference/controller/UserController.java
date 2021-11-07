@@ -1,25 +1,23 @@
 package com.videoconference.controller;
 
-import com.videoconference.dto.users.CreateUserDTO;
+import com.videoconference.entity.User;
 import com.videoconference.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.validation.Valid;
 
 @Controller
 public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/register")
+    @GetMapping("/user/{username}")
     @ResponseBody
-    public ResponseEntity<?> register(@Valid @RequestBody CreateUserDTO createUserDTO) {
-        userService.createUser(createUserDTO);
-        return ResponseEntity.ok("OK");
+    public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
+        return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 }

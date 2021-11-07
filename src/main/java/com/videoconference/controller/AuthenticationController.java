@@ -1,11 +1,16 @@
 package com.videoconference.controller;
 
+import com.videoconference.dto.users.CreateUserDTO;
+import com.videoconference.dto.users.OnRegistrationCompleteEvent;
+import com.videoconference.entity.User;
 import com.videoconference.security.JwtRequest;
 import com.videoconference.security.JwtResponse;
 import com.videoconference.security.JwtTokenUtil;
+import com.videoconference.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,14 +21,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 
 @RestController
 @CrossOrigin
 public class AuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(ControllerAdvisor.class);
     @Autowired
+    UserService userService;
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
+    @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
@@ -38,6 +49,24 @@ public class AuthenticationController {
 
         logger.info(userDetails.getUsername() + " login success");
         return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @PostMapping("/register")
+    @ResponseBody
+    public ResponseEntity<?> register(@Valid @RequestBody CreateUserDTO createUserDTO,
+                                      HttpServletRequest request) {
+        User registered = userService.createUser(createUserDTO);
+
+        String appUrl = request.getContextPath();
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, appUrl));
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/registrationConfirm/{token}")
+    @ResponseBody
+    public ResponseEntity<?> confirmRegistration(@PathVariable("token") String token) {
+        userService.confirmRegistration(token);
+        return ResponseEntity.ok("OK");
     }
 
     private Authentication authenticate(String username, String password) throws Exception {
