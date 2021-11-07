@@ -36,6 +36,7 @@ public class AuthenticationController {
     ApplicationEventPublisher eventPublisher;
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
