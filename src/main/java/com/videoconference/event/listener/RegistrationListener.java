@@ -1,11 +1,11 @@
-package com.videoconference.dto.users;
+package com.videoconference.event.listener;
 
 import com.videoconference.entity.User;
+import com.videoconference.event.OnRegistrationCompleteEvent;
+import com.videoconference.service.EmailService;
 import com.videoconference.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -13,12 +13,10 @@ import java.util.UUID;
 @Component
 public class RegistrationListener implements
         ApplicationListener<OnRegistrationCompleteEvent> {
-
     @Autowired
     private UserService service;
-
     @Autowired
-    private JavaMailSender mailSender;
+    private EmailService emailService;
 
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
@@ -34,11 +32,8 @@ public class RegistrationListener implements
         String subject = "Registration Confirmation";
         String confirmationUrl
                 = event.getAppUrl() + "/register/registration-confirm/" + token;
+        String body = "\r\n" + "http://localhost:8080" + confirmationUrl;
 
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(recipientAddress);
-        email.setSubject(subject);
-        email.setText("\r\n" + "http://localhost:8080" + confirmationUrl);
-        mailSender.send(email);
+        emailService.send(subject, body, recipientAddress);
     }
 }

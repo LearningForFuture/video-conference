@@ -1,7 +1,7 @@
 package com.videoconference.controller;
 
 import com.videoconference.dto.users.CreateUserDTO;
-import com.videoconference.dto.users.OnRegistrationCompleteEvent;
+import com.videoconference.event.OnRegistrationCompleteEvent;
 import com.videoconference.dto.users.ResendRegistration;
 import com.videoconference.entity.User;
 import com.videoconference.security.JwtRequest;
@@ -31,12 +31,11 @@ import javax.validation.Valid;
 public class AuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(ControllerAdvisor.class);
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    ApplicationEventPublisher eventPublisher;
+    private ApplicationEventPublisher eventPublisher;
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 

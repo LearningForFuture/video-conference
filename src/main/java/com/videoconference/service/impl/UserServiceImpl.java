@@ -1,6 +1,7 @@
 package com.videoconference.service.impl;
 
 import com.videoconference.dto.users.CreateUserDTO;
+import com.videoconference.dto.users.PasswordResetDTO;
 import com.videoconference.entity.Role;
 import com.videoconference.entity.User;
 import com.videoconference.entity.VerificationToken;
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService {
         VerificationToken myToken;
         Optional<VerificationToken> existedToken = tokenRepository.findFirstByUser_UserId(user.getUserId());
 
-        if(existedToken.isPresent()) {
+        if (existedToken.isPresent()) {
             myToken = existedToken.get();
             myToken.setToken(token);
         } else {
@@ -88,6 +89,16 @@ public class UserServiceImpl implements UserService {
 
         myToken.setExpiryDate(calExpiredDate(localDateTime));
         tokenRepository.save(myToken);
+    }
+
+    @Override
+    public void resetPassword(PasswordResetDTO passwordResetDTO, String token) {
+        VerificationToken verificationToken = getVerificationToken(token);
+        User user = userRepository.findFirstByUserId(verificationToken.getUser().getUserId())
+                .orElseThrow(() -> new UserNotFoundException());
+
+        user.setPassword(passwordEncoder.encode(passwordResetDTO.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
@@ -104,7 +115,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUsername(String username) {
         User user = userRepository.findFirstByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(()  -> new UserNotFoundException());
         return user;
     }
 

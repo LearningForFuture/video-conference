@@ -1,4 +1,4 @@
-package com.videoconference.dto.users;
+package com.videoconference.event;
 
 import com.videoconference.entity.User;
 import lombok.Getter;
@@ -7,11 +7,11 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 @Setter
-public class OnRegistrationCompleteEvent extends ApplicationEvent {
+public class OnPasswordForgotEvent extends ApplicationEvent {
     private String appUrl;
     private User user;
 
-    public OnRegistrationCompleteEvent(
+    public OnPasswordForgotEvent(
             User user, String appUrl) {
         super(user);
 
