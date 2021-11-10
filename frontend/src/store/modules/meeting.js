@@ -24,9 +24,59 @@ const state = {
     connected: false,
     localMediaStream: null,
     isLeave: true,
+    peers: {},
+    dataChannels: {},
 }
 
 const mutations = {
+
+    SEND_MSG_CHANNELS(state, mesages) {
+        Object.keys(state.dataChannels[state.meeting_id]).map((peer_id) => {
+            if (state.dataChannels[state.meeting_id][peer_id].readyState === 'open') {
+                state.dataChannels[state.meeting_id][peer_id].send(JSON.stringify(mesages))
+            }
+        });
+    },
+
+    ADD_CHANNELS(state, channel) {
+        if (!state.dataChannels[state.meeting_id]) state.dataChannels[state.meeting_id] = {};
+        state.dataChannels[state.meeting_id][channel.peer_id] = channel.peerConnection;
+    },
+
+    REMOVE_CHANNELS(state, peer_id) {
+        if (state.dataChannels[state.meeting_id][peer_id]) {
+            delete state.dataChannels[state.meeting_id][peer_id];
+        }
+    },
+
+    SET_PEERS(state, peers) {
+        state.peers = peers;
+    },
+
+    ADD_PEERS(state, peer) {
+        state.peers[peer.peer_id] = peer.value;
+    },
+
+    REMOVE_PEERS(state, peer_id) {
+        delete state.peers[peer_id];
+    },
+
+    SET_REMOTE_DESCRIPTIONS(state, peer) {
+        state.peers[peer.peer_id].setRemoteDescription(peer.description);
+    },
+
+    SET_LOCAL_DESCRIPTIONS(state, peer) {
+        state.peers[peer.peer_id].setLocalDescription(peer.description);
+    },
+
+    ADD_ICE_CANDIDATE(state, config) {
+        state.peers[config.peerId].addIceCandidate(new RTCIceCandidate(config.iceCandidate))
+            .catch((err) => {
+                // this.$log.debug('[Error] addIceCandidate', err);
+                console.log(err);
+            });
+    },
+
     SET_IS_LEAVE(state, payload) {
         state.isLeave = payload;
     },
@@ -113,11 +163,55 @@ const mutations = {
 
     SET_CONNECTED(state, payload) {
         state.connected = payload;
-    }
+    },
+
+    CLOSE_PEERS(state, peer_id) {
+        state.peers[peer_id].close();
+    },
 
 }
 
 const actions = {
+    sendMsgChannels({ commit }, message) {
+        commit('SEND_MSG_CHANNELS', message);
+    },
+
+    addChannels({ commit }, channel) {
+        commit('ADD_CHANNELS', channel);
+    },
+
+    removeChannels({ commit }, peer_id) {
+        commit('REMOVE_CHANNELS', peer_id);
+    },
+
+    closePeers({ commit }, peer_id) {
+        commit('CLOSE_PEERS', peer_id);    
+    },
+
+    setRemoteDescription({ commit }, peer) {
+        commit('SET_REMOTE_DESCRIPTIONS', peer);
+    },
+
+    setLocalDescription({ commit }, peer) {
+        commit('SET_LOCAL_DESCRIPTIONS', peer);
+    },
+
+    setPeers({ commit }, peers) {
+        commit('SET_PEERS', peers);
+    },
+
+    addPeers({ commit }, peer) {
+        commit('ADD_PEERS', peer);
+    },
+
+    removePeers({ commit }, peer_id) {
+        commit('REMOVE_PEERS', peer_id);
+    },
+
+    addIceCandidate({ commit }, config) {
+        commit('ADD_ICE_CANDIDATE', config);
+    },
+
     setIsLeave({ commit }, isleave) {
         commit("SET_IS_LEAVE", isleave);  
     },
@@ -134,9 +228,9 @@ const actions = {
         commit('SET_VIDEO_TOGGLE');
     },
 
-    setRoomLink ({ commit, state }, roomLink) {
+    setRoomLink ({ commit }, roomLink) {
         commit('SET_ROOM_LINK', roomLink);
-        console.log(state.roomLink);
+        // console.log(state.roomLink);
     },
 
     setCopyText: ({ commit }, copyText) => {

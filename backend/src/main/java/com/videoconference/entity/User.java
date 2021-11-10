@@ -21,6 +21,7 @@ public class User {
     private String fullName;
     private String email;
     private String username;
+    @Column(length = 255)
     private String password;
     private Timestamp createdAt;
     private Timestamp updatedAt;

@@ -120,6 +120,7 @@
 import {
     mapGetters,
     mapActions,
+    mapState
 } from 'vuex';
 
 export default {
@@ -130,6 +131,10 @@ export default {
     },
 
     computed: {
+        ...mapState('meeting', {
+            peers: (state) => state.peers
+        }),
+		
         ...mapGetters('meeting', ['getCopyText', 'getVideoDevices',
             'getAudioDevices', 'getAudioEnabled', 'getVideoEnabled',
             'getScreenshareEnabled', 'getShowIntro', 'getShowChat', 'getShowSettings',
@@ -145,7 +150,8 @@ export default {
             'setAudioDevices', 'setAudioEnabled', 'setVideoEnabled',
             'setScreenshareEnabled', 'setShowIntro', 'setShowChat', 'setShowSettings',
             'setSelectedAudioDeviceId', 'setSelectedVideoDeviceId', 'setUsername',
-            'setTyping', 'setShats', 'setAudioToggle', 'setVideoToggle', 'setIsLeave'
+            'setTyping', 'setShats', 'setAudioToggle', 'setVideoToggle', 'setIsLeave',
+            'sendMsgChannels'
         ]),
 
         videoToggle: function () {
@@ -153,6 +159,12 @@ export default {
             this.setVideoToggle();
             this.$log.debug(this.getVideoEnabled)
             this.setVideoEnabled(!this.getVideoEnabled);
+            const msgStatusVideo = {
+                type: "refreshStatusVideo",
+                peer_id: this.getSender,
+                videoEnabled: this.getVideoEnabled,
+            };
+            this.sendMsgChannels(msgStatusVideo);
         },
 
         audioToggle: function (e) {
@@ -160,9 +172,66 @@ export default {
             this.setAudioToggle();
             this.$log.debug(this.getAudioEnabled)
             this.setAudioEnabled(!this.getAudioEnabled);
+            const msgStatusAudio = {
+                type: "refreshStatusAudio",
+                peer_id: this.getSender,
+                audioEnabled: this.getAudioEnabled,
+            };
+            this.sendMsgChannels(msgStatusAudio);
         },
 
-        screenShareToggle: function () {},
+        screenShareToggle: function (e) {
+            e.stopPropagation();
+            let screenMediaPromise;
+            if (!this.getScreenshareEnabled) {
+                if (navigator.getDisplayMedia) {
+                    screenMediaPromise = navigator.getDisplayMedia({
+                        video: true
+                    });
+                } else if (navigator.mediaDevices.getDisplayMedia) {
+                    screenMediaPromise = navigator.mediaDevices.getDisplayMedia({
+                        video: true
+                    });
+                } else {
+                    screenMediaPromise = navigator.mediaDevices.getUserMedia({
+                        video: {
+                            mediaSource: "screen"
+                        },
+                    });
+                }
+            } else {
+                screenMediaPromise = navigator.mediaDevices.getUserMedia({
+                    video: true
+                });
+            }
+            screenMediaPromise
+                .then((screenStream) => {
+                    this.setScreenshareEnabled(!this.getScreenshareEnabled);
+
+                    for (let peer_id in this.peers) {
+                        const sender = this.peers[peer_id].getSenders().find((s) => (s.track ? s.track.kind === "video" : false));
+                        sender.replaceTrack(screenStream.getVideoTracks()[0]);
+                    }
+                    screenStream.getVideoTracks()[0].enabled = true;
+                    const newStream = new MediaStream([screenStream.getVideoTracks()[0], this.getLocalMediaStream.getAudioTracks()[0]]);
+                    // localMediaStream = newStream;
+                    this.setLocalMediaStream(newStream);
+                    this.attachMediaStream(document.getElementById("selfVideo"), newStream);
+                    this.toggleSelfVideoMirror();
+
+                    screenStream.getVideoTracks()[0].onended = function () {
+                        if (this.screenshareEnabled) this.screenShareToggle();
+                    };
+                })
+                .catch((e) => {
+                    console.log("Unable to share screen. Please use a supported browser.");
+                    this.$log.debug(e);
+                });
+        },
+
+        toggleSelfVideoMirror: function () {
+            document.querySelector("#videos .video #selfVideo").classList.toggle("mirror");
+        },
 
         showSettings() {},
 
@@ -186,7 +255,7 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-end;
     align-items: center;
-    padding: 10px 15px;
+    padding: 5px 15px;
 }
 
 .wrap-devices {
@@ -231,6 +300,14 @@ export default {
     justify-content: center;
     align-items: center;
 }
+ 
+.btn-camera:hover svg, i{
+	color: rgb(155, 21, 21)
+}
+
+.btn-microphone a:hover svg{ color: rgb(155, 21, 21) }
+
+.btn-share-screen a:hover i{ color: rgb(155, 21, 21) }
 
 .btn-share-screen,
 .btn-chat i,
@@ -273,6 +350,6 @@ export default {
 
 .btn-microphone svg,
 .btn-camera svg {
-    width: 1.5rem;
+    width: 1.2rem;
 }
 </style>

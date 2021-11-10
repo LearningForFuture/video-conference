@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtRequestFilter jwtRequestFilter;
 
     public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder(12).matches("khanhdpdx", "$2a$12$C4vwYfmIB20KNyqZZdzw0eqxPRrxBCSF9YehYkf2z5tHGgAk8gDBi"));
+        System.out.println(new BCryptPasswordEncoder(12).matches("vanket1512001", "$2a$12$B45bpu.TIAxQBMZXyTqdL.SwphZjF6Os/Oq5ac5nw33sKM5UJCuaW"));
     }
 
     @Override

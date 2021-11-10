@@ -42,4 +42,12 @@ export default {
     flex-direction: column;
     flex: 1;
 }
+
+@media screen and (max-width: 992px) {
+  .wrapper-video {
+    margin-top: 45px;
+    height: calc(100vh - 45px) - 60px; 
+    max-height: calc(100vh - 45px - 60px);
+  }
+}
 </style>
