@@ -38,8 +38,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<ParticipantMeeting> participantMeetings = new HashSet<>();
 
-    @OneToMany(mappedBy = "participant")
-    private Set<ParticipantRoom> participantRooms = new HashSet<>();
+//    @OneToMany(mappedBy = "participant")
+//    private Set<ParticipantRoom> participantRooms = new HashSet<>();
+
+    @OneToMany(mappedBy = "createdByUser")
+    private Set<Room> rooms = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "avatar_id")

@@ -40,7 +40,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         final String token = bearerHeader.split(" ")[1].trim();
 
         // Get user identity and set it on spring security context
-        UserDetails userDetails = this.userDetailsService.  loadUserByUsername(jwtTokenUtil.getUsernameFromToken(token));
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtTokenUtil.getUsernameFromToken(token));
         // get jwt token and validate
         if (!jwtTokenUtil.validateToken(token, userDetails)) {
             filterChain.doFilter(request, response);

@@ -1,5 +1,5 @@
 <template>
-  <div :class="'modal ' + (modal.isShowModal ? 'show-modal': '')">
+  <div :class="'modal ' + (modal.isShowModal ? 'show-modal' : '')">
     <div class="modal-content">
       <span
         class="close-button"
@@ -7,7 +7,7 @@
       >&times;</span>
       <div
         id="container"
-        :class="'container ' + (modal.isSignUp ? 'right-panel-active': '')"
+        :class="'container ' + (modal.isSignUp ? 'right-panel-active' : '')"
       >
         <div class="form-container sign-up-container">
           <form action="">
@@ -127,32 +127,30 @@
 
 <script>
 export default {
-    name: 'ModalSignIn',
+    name: "ModalSignIn",
     props: {
         modal: {
             type: Object,
             required: true,
-        }
+        },
     },
     data() {
-        return {
-            
-        }
+        return {};
     },
     methods: {
-        tabSignUp: function() {
-            this.$emit('changeIsSignUp', true)
+        tabSignUp: function () {
+            this.$emit("changeIsSignUp", true);
         },
 
-        tabSignIn: function() {
-            this.$emit('changeIsSignUp', false)
+        tabSignIn: function () {
+            this.$emit("changeIsSignUp", false);
         },
 
-        closeModal: function() {
-            this.$emit('closeModal')
-        }
-    }
-}
+        closeModal: function () {
+            this.$emit("closeModal");
+        },
+    },
+};
 </script>
 
 <style lang="css">

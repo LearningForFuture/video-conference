@@ -18,14 +18,15 @@ public class ParticipantRoom {
 
     private Timestamp joinedAt;
     private Timestamp leftAt;
+    private Boolean isAdmin;
 
-    @ManyToOne
-    @MapsId("roomId")
-    @JoinColumn(name = "room_id")
-    private Room room;
-
-    @ManyToOne
-    @MapsId("participantId")
-    @JoinColumn(name = "participant_id")
-    private User participant;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @MapsId("roomId")
+//    @JoinColumn(name = "room_id")
+//    private Room room;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @MapsId("participantId")
+//    @JoinColumn(name = "participant_id")
+//    private User participant;
 }

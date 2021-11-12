@@ -23,13 +23,16 @@ public class Room {
     private Boolean isPublic;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private Integer createdBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    private User createdByUser;
 
     @OneToMany(mappedBy = "room")
     private Set<Document> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "participant")
-    private Set<ParticipantRoom> participantRooms = new HashSet<>();
+//    @OneToMany(mappedBy = "room")
+//    private Set<ParticipantRoom> participantRooms = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "avatar_id")
