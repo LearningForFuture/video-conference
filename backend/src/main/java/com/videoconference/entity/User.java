@@ -44,7 +44,7 @@ public class User {
     @OneToMany(mappedBy = "createdByUser")
     private Set<Room> rooms = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id")
     private Image image;
 

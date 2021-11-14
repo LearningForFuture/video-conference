@@ -32,7 +32,7 @@ public class PasswordForgotListener implements
         String subject = "Reset password";
         String confirmationUrl
                 = event.getAppUrl() + "/reset-password/" + token;
-        String body = "\r\n" + "http://localhost:8080" + confirmationUrl;
+        String body = "\r\n" + "http://localhost:3000" + confirmationUrl;
 
         emailService.send(subject, body, recipientAddress);
     }

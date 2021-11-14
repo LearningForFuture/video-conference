@@ -1,18 +1,21 @@
 package com.videoconference.controller;
 
+import com.videoconference.dto.pagination.PaginationParams;
+import com.videoconference.dto.pagination.PaginationResponse;
 import com.videoconference.dto.room.JoinByRoomCodeDTO;
 import com.videoconference.dto.users.RoomDTO;
-import com.videoconference.entity.User;
 import com.videoconference.service.RoomService;
+import com.videoconference.util.PaginationAndSortUtil;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "bearerAuth")
@@ -21,10 +24,13 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping("/rooms")
-    public ResponseEntity<?> getRooms() {
-        //tra ve tat ca room
-        // co phan trang
-        return ResponseEntity.ok("OK");
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<?> getRooms(@Valid PaginationParams params) {
+        Page<RoomDTO> pageRoomDTO = roomService.getRooms(params.getPage(),
+                params.getSize(), params.getSort(), params.getKeyword());
+
+        PaginationResponse<RoomDTO> response = PaginationAndSortUtil.map(pageRoomDTO);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/rooms/{room-id}")
