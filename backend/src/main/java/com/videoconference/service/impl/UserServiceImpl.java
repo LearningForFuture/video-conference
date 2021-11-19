@@ -2,6 +2,7 @@ package com.videoconference.service.impl;
 
 import com.videoconference.dto.users.CreateUserDTO;
 import com.videoconference.dto.users.PasswordResetDTO;
+import com.videoconference.dto.users.UserDTO;
 import com.videoconference.entity.Role;
 import com.videoconference.entity.User;
 import com.videoconference.entity.VerificationToken;
@@ -11,16 +12,17 @@ import com.videoconference.exception.VerificationNotFoundException;
 import com.videoconference.repository.UserRepository;
 import com.videoconference.repository.VerificationTokenRepository;
 import com.videoconference.service.UserService;
+import com.videoconference.util.PaginationAndSortUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.videoconference.constant.SystemConstant.ROLE_USER;
 
@@ -115,7 +117,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUsername(String username) {
         User user = userRepository.findFirstByUsername(username)
-                .orElseThrow(()  -> new UserNotFoundException());
+                .orElseThrow(() -> new UserNotFoundException());
         return user;
     }
 
@@ -126,7 +128,44 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public Page<UserDTO> getUsers(int page, int size, String[] sort, String keyword) {
+        Pageable pageable = PaginationAndSortUtil.create(page, size, sort);
+
+        Page<User> pageRoom;
+
+        if (keyword == null || keyword.isBlank()) {
+            pageRoom = userRepository.findAll(pageable);
+        } else {
+            pageRoom = userRepository.search(keyword, pageable);
+        }
+
+        List<UserDTO> roomDTOs = mapList(pageRoom.getContent());
+
+        return new PageImpl<>(roomDTOs, pageable, pageRoom.getTotalElements());
+    }
+
     private Timestamp calExpiredDate(LocalDateTime localDateTime) {
         return Timestamp.valueOf(localDateTime.plusMinutes(VerificationToken.EXPIRATION));
+    }
+
+    private UserDTO map(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getUserId())
+                .setUsername(user.getUsername())
+                .setFullName(user.getFullName())
+                .setEmail(user.getEmail())
+                .setEnabled(user.isEnabled())
+                .setCreatedAt(user.getCreatedAt())
+                .setUpdatedAt(user.getUpdatedAt());
+        return userDTO;
+    }
+
+    private List<UserDTO> mapList(List<User> users) {
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for(User user : users) {
+            userDTOs.add(map(user));
+        }
+        return userDTOs;
     }
 }
