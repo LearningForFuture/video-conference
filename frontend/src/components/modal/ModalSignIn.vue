@@ -1,5 +1,5 @@
 <template>
-  <div :class="'modal ' + (modal.isShowModal ? 'show-modal': '')">
+  <div :class="'modal ' + (modal.isShowModal ? 'show-modal' : '')">
     <div class="modal-content">
       <span
         class="close-button"
@@ -7,7 +7,7 @@
       >&times;</span>
       <div
         id="container"
-        :class="'container ' + (modal.isSignUp ? 'right-panel-active': '')"
+        :class="'container ' + (modal.isSignUp ? 'right-panel-active' : '')"
       >
         <div class="form-container sign-up-container">
           <form

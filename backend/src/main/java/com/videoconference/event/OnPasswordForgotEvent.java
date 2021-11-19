@@ -2,6 +2,7 @@ package com.videoconference.event;
 
 import com.videoconference.entity.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 

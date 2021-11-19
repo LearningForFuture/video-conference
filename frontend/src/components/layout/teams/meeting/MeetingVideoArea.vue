@@ -678,7 +678,7 @@ export default {
 }
 
 .light {
-    color: #878787;
+  color: #878787;
 }
 
 .video {
@@ -694,29 +694,29 @@ export default {
 }
 
 #video .video.one {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 #video .video.two {
-    width: 50%;
-    max-width: 50%;
-    height: 50%;
+  width: 50%;
+  max-width: 50%;
+  height: 50%;
 }
 
 #video .video.three {
-    width: calc(100/3%);
-    height: calc(100/3%);
+  width: calc(100 / 3%);
+  height: calc(100 / 3%);
 }
 
 #video .video.four {
-    width: 25%;
-    height: 25%;
+  width: 25%;
+  height: 25%;
 }
 
 #video .video.especially {
-    width: 50%;
-    height: 100%;
+  width: 50%;
+  height: 100%;
 }
 
 .video video {
@@ -728,15 +728,15 @@ export default {
 }
 
 .video video.mirror {
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
 }
 
 .video:fullscreen video {
-    background: #acadd3;
-    object-fit: contain;
-    border: none;
+  background: #acadd3;
+  object-fit: contain;
+  border: none;
 }
 
 .video a {
@@ -798,241 +798,265 @@ export default {
 }
 
 .video:fullscreen button {
-    display: none;
+  display: none;
 }
 
 #app {
-    display: none;
+  display: none;
 }
 
 #intro {
-    background: #fff;
-    position: fixed;
-    bottom: 6rem;
-    left: 0px;
-    right: 0px;
-    z-index: 100;
-    width: 18rem;
-    margin: auto;
-    padding: 1rem;
-    box-sizing: border-box;
-    border-radius: 1rem;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.16), 0px 1px 4px rgba(0, 0, 0, 0.16);
+  background: #fff;
+  position: fixed;
+  bottom: 6rem;
+  left: 0px;
+  right: 0px;
+  z-index: 100;
+  width: 18rem;
+  margin: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.16), 0px 1px 4px rgba(0, 0, 0, 0.16);
 }
 
 #intro .roomLink {
-    text-decoration: underline;
-    text-decoration-style: dashed;
-    text-underline-offset: 0.2rem;
-    word-wrap: break-word;
-    word-break: break-word;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 0.2rem;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 #intro .copyURL {
-    color: inherit;
-    text-decoration: none;
-    font-weight: bold;
-    -webkit-user-select: none;
-    user-select: none;
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #intro .footer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 #intro .footer .terms {
-    position: relative;
-    top: -0.25rem;
+  position: relative;
+  top: -0.25rem;
 }
 
 #chatWrap {
-    background: #fff;
-    position: fixed;
-    bottom: 6rem;
-    left: 0px;
-    right: 0px;
-    z-index: 100;
-    width: 18rem;
-    margin: auto;
-    padding: 1rem;
-    box-sizing: border-box;
-    border-radius: 1rem;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.16), 0px 1px 4px rgba(0, 0, 0, 0.16);
+  background: #fff;
+  position: fixed;
+  bottom: 6rem;
+  left: 0px;
+  right: 0px;
+  z-index: 100;
+  width: 18rem;
+  margin: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.16), 0px 1px 4px rgba(0, 0, 0, 0.16);
 }
 
 #chatWrap #chats {
-    overflow-y: auto;
-    overflow: auto;
-    max-height: 240px;
-    margin: auto;
-    background:
-        /* Shadow covers */
-        linear-gradient(white 30%, rgba(255, 255, 255, 0)),
-        linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
-        /* Shadows */
-        radial-gradient(50% 0, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
-        radial-gradient(50% 100%, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
-    background:
-        /* Shadow covers */
-        linear-gradient(white 30%, rgba(255, 255, 255, 0)),
-        linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
-        /* Shadows */
-        radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
-        radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
-    background-repeat: no-repeat;
-    background-color: white;
-    background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+  overflow-y: auto;
+  overflow: auto;
+  max-height: 240px;
+  margin: auto;
+  background:
+        /* Shadow covers */ linear-gradient(
+      white 30%,
+      rgba(255, 255, 255, 0)
+    ),
+    linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
+    /* Shadows */
+      radial-gradient(
+        50% 0,
+        farthest-side,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      ),
+    radial-gradient(
+        50% 100%,
+        farthest-side,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
+  background:
+        /* Shadow covers */ linear-gradient(
+      white 30%,
+      rgba(255, 255, 255, 0)
+    ),
+    linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
+    /* Shadows */
+      radial-gradient(
+        farthest-side at 50% 0,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      ),
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
 
-    background-attachment: local, local, scroll, scroll;
+  background-attachment: local, local, scroll, scroll;
 }
 
 #chatWrap .chat {
-    margin: 0.5rem 0rem;
+  margin: 0.5rem 0rem;
 }
 
 #chatWrap .chat .name {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 #chatWrap .chat .date {
-    font-size: small;
+  font-size: small;
 }
 
 #chatWrap #composeBox {
-    position: relative;
-    background: #f6f6f6;
-    border-radius: 1rem;
-    padding: 0.7rem 1rem;
-    margin-top: 0.5rem;
-    max-height: 4.2rem;
-    overflow-y: auto;
+  position: relative;
+  background: #f6f6f6;
+  border-radius: 1rem;
+  padding: 0.7rem 1rem;
+  margin-top: 0.5rem;
+  max-height: 4.2rem;
+  overflow-y: auto;
 }
 
 #chatWrap #composeBox #placeholder {
-    position: absolute;
-    z-index: 5;
-    opacity: 0.5;
+  position: absolute;
+  z-index: 5;
+  opacity: 0.5;
 }
 
 #chatWrap #composeBox #compose {
-    position: relative;
-    z-index: 10;
+  position: relative;
+  z-index: 10;
 }
 
 #chatWrap #noChat {
-    padding: 1rem;
-    text-align: center;
+  padding: 1rem;
+  text-align: center;
 }
 
 #settings {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.16), 0px 1px 4px rgba(0, 0, 0, 0.16);
-    position: fixed;
-    bottom: 5rem;
-    left: 0px;
-    right: 0px;
-    z-index: 100;
-    width: 17rem;
-    margin: auto;
-    box-sizing: border-box;
-    border-radius: 1rem;
-    max-height: 26rem;
-    overflow-y: auto;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.16), 0px 1px 4px rgba(0, 0, 0, 0.16);
+  position: fixed;
+  bottom: 5rem;
+  left: 0px;
+  right: 0px;
+  z-index: 100;
+  width: 17rem;
+  margin: auto;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  max-height: 26rem;
+  overflow-y: auto;
 }
 
 #settings .label {
-    padding: 1rem 1rem 0.25rem;
-    font-weight: bold;
+  padding: 1rem 1rem 0.25rem;
+  font-weight: bold;
 }
 
 #settings .link {
-    padding: 0.25rem 1rem;
-    white-space: nowrap;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    border-radius: 1rem;
+  padding: 0.25rem 1rem;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  border-radius: 1rem;
 }
 
 #settings .link.active:before {
-    content: "✔️";
-    margin-right: 0.5rem;
+  content: "✔️";
+  margin-right: 0.5rem;
 }
 
 #settings .link:hover {
-    background: #fff;
+  background: #fff;
 }
 
 #settings .link.copy {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 #settings input {
-    margin: 0rem 1rem 1rem;
-    width: calc(100% - 2rem);
+  margin: 0rem 1rem 1rem;
+  width: calc(100% - 2rem);
 }
 
 #actionsWrap {
-    position: fixed;
-    bottom: 1rem;
-    left: 0px;
-    right: 0px;
-    z-index: 100;
-    display: inline-flex;
-    transition: all 0.25s ease-out;
-    opacity: 1;
-    transform: translateY(0rem);
+  position: fixed;
+  bottom: 1rem;
+  left: 0px;
+  right: 0px;
+  z-index: 100;
+  display: inline-flex;
+  transition: all 0.25s ease-out;
+  opacity: 1;
+  transform: translateY(0rem);
 }
 
 #actionsWrap.hidden {
-    opacity: 0;
-    transform: translateY(1rem);
-    z-index: -1;
+  opacity: 0;
+  transform: translateY(1rem);
+  z-index: -1;
 }
 
 #actions {
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.16), 0px 1px 4px rgba(0, 0, 0, 0.16);
-    margin: auto;
-    box-sizing: border-box;
-    border-radius: 1rem;
-    transition: opacity 250ms;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.16), 0px 1px 4px rgba(0, 0, 0, 0.16);
+  margin: auto;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  transition: opacity 250ms;
 }
 
 #actions button {
-    flex: 1;
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    padding: 1rem;
-    cursor: pointer;
-    margin: auto;
+  flex: 1;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  padding: 1rem;
+  cursor: pointer;
+  margin: auto;
 }
 
 #actions button:hover {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 1rem;
 }
 
 #actions button.active {
-    background: #fafafa;
-    border-radius: 1rem;
+  background: #fafafa;
+  border-radius: 1rem;
 }
 
 #actions button.icon-mic-off,
 #actions button.icon-video-off {
-    color: #e74c3c !important;
+  color: #e74c3c !important;
 }
 
 @media only screen and (max-width: 960px) {
-    .video {
-        float: left;
-        width: 50vw;
-        height: 25vh;
-        overflow: hidden;
-    }
+  .video {
+    float: left;
+    width: 50vw;
+    height: 25vh;
+    overflow: hidden;
+  }
 }
 </style>

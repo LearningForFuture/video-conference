@@ -16,6 +16,7 @@ public class ParticipantRoom {
 
     private Timestamp joinedAt;
     private Timestamp leftAt;
+    private Boolean isAdmin;
 
     @ManyToOne
     @MapsId("roomId")

@@ -19,12 +19,12 @@ public class ParticipantMeeting {
     private Timestamp joinedAt;
     private Timestamp leftAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("meetingId")
     @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("participantId")
     @JoinColumn(name = "participant_id")
     private User user;

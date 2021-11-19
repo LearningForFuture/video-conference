@@ -32,7 +32,7 @@ public class RegistrationListener implements
         String subject = "Registration Confirmation";
         String confirmationUrl
                 = event.getAppUrl() + "/register/registration-confirm/" + token;
-        String body = "\r\n" + "http://localhost:8080" + confirmationUrl;
+        String body = "\r\n" + "http://localhost:3000" + confirmationUrl;
 
         emailService.send(subject, body, recipientAddress);
     }

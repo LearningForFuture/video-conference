@@ -180,7 +180,8 @@ export default {
       peers: (state) => state.peers
     }),
 		
-    ...mapGetters('meeting', ['getCopyText', 'getVideoDevices',
+    ...mapGetters('meeting', [
+      'getCopyText', 'getVideoDevices',
       'getAudioDevices', 'getAudioEnabled', 'getVideoEnabled',
       'getScreenshareEnabled', 'getShowIntro', 'getShowChat', 'getShowSettings',
       'getSelectedAudioDeviceId', 'getSelectedVideoDeviceId', 'getUsername',

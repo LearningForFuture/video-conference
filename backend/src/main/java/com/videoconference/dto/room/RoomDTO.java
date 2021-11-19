@@ -37,4 +37,7 @@ public class RoomDTO {
 
     private Boolean isAdmin;
     private List<ParticipantRoom> participantRooms = new ArrayList<>();
+
+    private String roomCode;
+    private Integer avartarId;
 }

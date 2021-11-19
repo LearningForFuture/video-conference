@@ -1,10 +1,11 @@
 package com.videoconference.dto.message;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ICECandidate {
     private Long sdpMLineIndex;
     private String candidate;

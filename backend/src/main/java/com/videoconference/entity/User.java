@@ -45,10 +45,13 @@ public class User {
     @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
     private Set<ParticipantRoom> participantRooms = new HashSet<>();
 
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
+//    private Set<Room> rooms = new HashSet<>();
+
+    @OneToMany(mappedBy = "createdByUser")
     private Set<Room> rooms = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id")
     private Image image;
 

@@ -8,6 +8,7 @@ import com.videoconference.event.OnRegistrationCompleteEvent;
 import com.videoconference.security.JwtRequest;
 import com.videoconference.security.JwtRequestFilter;
 import com.videoconference.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -25,6 +26,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Controller
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
     @Autowired
     private UserService userService;

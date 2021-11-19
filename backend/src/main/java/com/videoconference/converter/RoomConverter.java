@@ -24,7 +24,7 @@ public class RoomConverter {
         roomDTO.setIsPublic(room.getIsPublic());
         roomDTO.setCreatedAt(room.getCreatedAt());
         roomDTO.setUpdatedAt(room.getUpdatedAt());
-        roomDTO.setCreatedBy(room.getCreatedBy().getUserId());
+        roomDTO.setCreatedBy(room.getCreatedByUser().getUserId());
         roomDTO.setIsAdmin(room.getIsAdmin());
 //        roomDTO.setParticipantRooms(new ArrayList<>(room.getParticipantRooms()));
         return roomDTO;

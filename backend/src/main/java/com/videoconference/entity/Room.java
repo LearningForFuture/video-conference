@@ -25,9 +25,13 @@ public class Room {
     private Timestamp updatedAt;
     private Boolean isAdmin;
 
-    @ManyToOne
+//    @ManyToOne
+//    @JoinColumn(name = "created_by")
+//    private User createdBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
-    private User createdBy;
+    private User createdByUser;
 
     @OneToMany(mappedBy = "room")
     private Set<Document> documents = new HashSet<>();
@@ -38,7 +42,7 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private Set<Meeting> meetings = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id")
     private Image image;
 
