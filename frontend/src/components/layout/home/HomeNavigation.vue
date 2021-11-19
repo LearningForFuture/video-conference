@@ -32,7 +32,12 @@
           :key="index"
           class="nav-item"
         >
-          <a href="#"><span>{{ item }}</span></a>
+          <router-link
+            tag="a"
+            :to="{path:item.to}"
+          >
+            <span>{{ item.text }}</span>
+          </router-link>
         </li>
       </ul>
     </nav>
@@ -41,19 +46,19 @@
 
 <script>
 export default {
-    name: 'HomeNavigation',
-    data() {
-        return {
-            dataNav: [
-                'Trang chủ',
-                'Dịch vụ',
-                'Bài viết',
-                'Liên hệ'
-            ],
-            ismobile: false,
-            isactive: false,
-        }
+  name: 'HomeNavigation',
+  data() {
+    return {
+      dataNav: [
+        { text: "Trang chủ", to: "/"},
+        { text: "Dịch vụ", to: "/services"},
+        { text: "Bài viết", to: "/blogs"},
+        { text: "Liên hệ", to: "/contact"}
+      ],
+      ismobile: false,
+      isactive: false,
     }
+  }
 }
 </script>
 

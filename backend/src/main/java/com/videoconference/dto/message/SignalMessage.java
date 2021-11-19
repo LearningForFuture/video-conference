@@ -1,10 +1,9 @@
 package com.videoconference.dto.message;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignalMessage {
@@ -15,6 +14,7 @@ public class SignalMessage {
     private ICECandidate iceCandidate;
     private Object sessionDescription;
     private String peerId;
+    private boolean shouldCreateOffer;
 
     public enum MessageType {
         CHAT,

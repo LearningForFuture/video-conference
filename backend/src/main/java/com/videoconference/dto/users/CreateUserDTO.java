@@ -2,7 +2,6 @@ package com.videoconference.dto.users;
 
 import com.videoconference.validator.*;
 import lombok.Data;
-import lombok.Value;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

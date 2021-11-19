@@ -36,9 +36,9 @@
         </div>
       </form>
       <div class="avatar">
-        <span class="text-muted mr-1">Le Van Ket</span>
+        <span class="text-muted mr-1">{{ full_name }}</span>
         <a href="#"><img
-          src="https://eu.ui-avatars.com/api/?name=Le+Van+Ket&size=40&background=random&rounded=true"
+          :src="'https://eu.ui-avatars.com/api/?name=' + full_name + '&size=40&background=random&rounded=true&quot;'"
           alt=""
         ></a>
       </div>
@@ -47,8 +47,14 @@
 </template>
 
 <script>
+
 export default {
-    name: 'TeamsNavBar'
+  name: 'TeamsNavBar',
+  data() {
+    return {
+      full_name: localStorage.getItem('full_name'),
+    }
+  }
 }
 </script>
 <style scoped>

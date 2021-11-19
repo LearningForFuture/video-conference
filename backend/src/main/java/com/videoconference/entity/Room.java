@@ -23,13 +23,20 @@ public class Room {
     private Boolean isPublic;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private Integer createdBy;
+    private Boolean isAdmin;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User createdBy;
 
     @OneToMany(mappedBy = "room")
     private Set<Document> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "participant")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private Set<ParticipantRoom> participantRooms = new HashSet<>();
+
+    @OneToMany(mappedBy = "room")
+    private Set<Meeting> meetings = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "avatar_id")

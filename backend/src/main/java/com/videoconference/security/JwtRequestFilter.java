@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -27,17 +29,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    public static final String COOKIE_NAME = "access_token";
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        final String bearerHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (bearerHeader == null || bearerHeader.isEmpty() || !bearerHeader.startsWith("Bearer ")) {
+//        final String bearerHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        if (bearerHeader == null || bearerHeader.isEmpty() || !bearerHeader.startsWith("Bearer ")) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+
+//        final String token = bearerHeader.split(" ")[1].trim();
+        Optional<Cookie> cookieToken = Stream.of(Optional.ofNullable(request.getCookies()).orElse(new Cookie[0]))
+                .filter(cookie -> COOKIE_NAME.equals(cookie.getName()))
+                .findFirst();
+        if (!cookieToken.isPresent()) {
             filterChain.doFilter(request, response);
             return;
         }
-
-        final String token = bearerHeader.split(" ")[1].trim();
+        final String token = cookieToken.get().getValue();
 
         // Get user identity and set it on spring security context
         UserDetails userDetails = this.userDetailsService.  loadUserByUsername(jwtTokenUtil.getUsernameFromToken(token));

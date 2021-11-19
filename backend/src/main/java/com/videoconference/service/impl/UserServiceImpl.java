@@ -129,4 +129,9 @@ public class UserServiceImpl implements UserService {
     private Timestamp calExpiredDate(LocalDateTime localDateTime) {
         return Timestamp.valueOf(localDateTime.plusMinutes(VerificationToken.EXPIRATION));
     }
+
+    @Override
+    public boolean isExistUserId(Integer userId) {
+        return userRepository.findFirstByUserId(userId).isPresent();
+    }
 }

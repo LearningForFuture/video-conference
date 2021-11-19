@@ -1,25 +1,9 @@
 <template>
-  <!-- <div class="team-grid">
-    <div class="group-wrapper">
-        <a class="" href="javascript:void(0)">
-            <div class="wrapper-avatar-group">
-                 <img class="img-responsive group-avatar mw-100" src="./images/banner-team-1.png" alt="group-avatar">
-                <div class="avatar bg-primary">
-                    <div class="name-avatar">GX</div>
-                </div>
-            </div>
-            <div class="group-name">
-                <h5 class="text-center">Group_XOMTRO</h5>
-            </div>
-        </a>
-    </div>
-  
-</div> -->
   <div class="team-grid">
     <div class="group-wrapper">
-      <a
-        class=""
-        href="#"
+      <router-link
+        tag="a"
+        :to="{ path: `teams/room/${roomId}/post` }"
       >
         <div class="wrapper-avatar-group">
           <div class="avatar bg-success">
@@ -31,9 +15,11 @@
           </div>
         </div>
         <div class="group-name">
-          <h5 class="text-center">{{ nameGroup }}</h5>
+          <h5 class="text-center">
+            {{ nameGroup }}
+          </h5>
         </div>
-      </a>
+      </router-link>
     </div>
     <div class="dropdown">
       <a
@@ -63,30 +49,47 @@
 
 <script>
 export default {
-    name: 'Teamslistgroupsitems',
-    props: {
-        nameGroup: {
-            type: String,
-            required: true,
-        }
+  name: 'Teamslistgroupsitems',
+  props: {
+    nameGroup: {
+      type: String,
+      required: true,
     },
 
-    data() {
-        return {
-
-        };
+    isPublic: {
+      type: Boolean,
+      required: true,
     },
 
-    mounted() {
-
+    isAdmin: {
+      type: Boolean,
+      required: true,
     },
 
-    methods: {
+    roomId: {
+      type: Number,
+      required: true,
+    }
+  },
 
-    },
+  data() {
+    return {
+
+    };
+  },
+
+  mounted() {
+
+  },
+
+  methods: {
+
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="css" scoped>
+.wrapper-teams .team-grid .group-wrapper a {
+    width: 100%;
+}
 </style>

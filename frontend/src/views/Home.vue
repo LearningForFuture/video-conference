@@ -21,18 +21,18 @@ import '../assets/css/style.css'
 import '../assets/css/home.css'
 
 export default{
-    name: 'HomePage',
-    components: {
-        // Navigation,
-        HomeBanner,
-        HomeTextAnimation,
-        HomeBody,
-        HomeMember,
-        // FooterHome,
-    },
-    mounted() {
-        document.body.classList.add('croll')
-    }
+  name: 'HomePage',
+  components: {
+    // Navigation,
+    HomeBanner,
+    HomeTextAnimation,
+    HomeBody,
+    HomeMember,
+    // FooterHome,
+  },
+  mounted() {
+    document.body.classList.add('croll')
+  }
 }
 </script>
 <style src="../assets/css/home.css">

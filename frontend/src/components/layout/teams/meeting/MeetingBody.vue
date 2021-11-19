@@ -9,26 +9,26 @@
 import MeetingVideoArea from './MeetingVideoArea.vue';
 import MeetingChat from './MeetingChat.vue';
 export default {
-    name: 'MeetingBody',
+  name: 'MeetingBody',
 
-    components: {
-        MeetingVideoArea,
-        MeetingChat,
-    },
+  components: {
+    MeetingVideoArea,
+    MeetingChat,
+  },
 
-    data() {
-        return {
+  data() {
+    return {
             
-        };
-    },
+    };
+  },
 
-    mounted() {
+  mounted() {
         
-    },
+  },
 
-    methods: {
+  methods: {
         
-    },
+  },
 };
 </script>
 
@@ -39,6 +39,6 @@ export default {
         justify-content: center;
         align-items: center;
         height: 100%;
-        background-color: rgb(12, 8, 8);
+        background-color: #292d32;
     }
 </style>

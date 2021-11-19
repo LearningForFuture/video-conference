@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -20,75 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75e5887c-991b-41b2-af35-12a63c566eac" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/config/HttpHandshakeInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/config/UserInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/config/WebSocketConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/config/WebSocketEventListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/dto/message/ICECandidate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/dto/message/SignalMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/security/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/storage/MeetingStorage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/storage/UserStorage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.eslintrc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/babel.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/css/classroom.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/css/home.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/icons/font-awesome/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/icons/themify/fonts/themify.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/Video-Conferencing-App-Logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/avatar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/banner-team-1-copy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/banner-team-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/home-banner.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/map.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/video-call-feature-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/home/HomeBanner.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/home/HomeBody.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/home/HomeFooter.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/home/HomeMember.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/home/HomeNavigation.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/home/HomeTextAnimation.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/Groups.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/TeamsBody.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/TeamsHeader.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/TeamsLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/TeamsListGroups.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/TeamsListGroupsItems.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/TeamsNavBar.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/TeamsSideBar.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/meeting/MeetingBody.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/meeting/MeetingHeader.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/meeting/MeetingLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/meeting/MeetingVideoArea.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/teams/meeting/MeetingVideoSetting.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/modal/ModalSignIn.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/store/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/store/modules/meeting.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/store/modules/rooms.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/utils/config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/views/Home.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/views/Meeting.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/views/Teams.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/videoconference/controller/MessageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +68,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../videoconference" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/backend" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.26206896" />
@@ -206,6 +141,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -261,127 +197,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="668" y="303" key="#Assign_Data_Sources" timestamp="1635078081346">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="668" y="303" key="#Assign_Data_Sources/0.0.1536.824@0.0.1536.824" timestamp="1635078081346" />
-    <state x="249" y="0" key="#Project_Structure" timestamp="1636374968813">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="249" y="0" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1636374968813" />
-    <state x="259" y="57" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1636373628678">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="259" y="57" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1636373628678" />
-    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser" timestamp="1636359436541">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1636359436541" />
-    <state x="552" y="81" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1636375085919">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="552" y="81" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1536.824@0.0.1536.824" timestamp="1636375085919" />
-    <state x="439" y="142" width="657" height="631" key="#com.intellij.jpa.generation.ui.DatabaseSchemaImportDialog" timestamp="1634603151846">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="439" y="142" width="657" height="631" key="#com.intellij.jpa.generation.ui.DatabaseSchemaImportDialog/0.0.1536.824@0.0.1536.824" timestamp="1634603151846" />
-    <state x="478" y="236" key="#com.intellij.refactoring.memberPullUp.PullUpDialog" timestamp="1636363202261">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="478" y="236" key="#com.intellij.refactoring.memberPullUp.PullUpDialog/0.0.1536.824@0.0.1536.824" timestamp="1636363202261" />
-    <state x="459" y="336" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1634603098419">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="459" y="336" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.824@0.0.1536.824" timestamp="1634603098419" />
-    <state x="935" y="281" width="571" height="270" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1635080447502">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="935" y="281" width="571" height="270" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1635080447502" />
-    <state x="201" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1634646214672">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="201" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1634646214672" />
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1635065896565">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1635065896565" />
-    <state x="615" y="199" key="FileChooserDialogImpl" timestamp="1636376641592">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="615" y="199" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1636376641592" />
-    <state width="1493" height="353" key="GridCell.Tab.0.bottom" timestamp="1636382604980">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="353" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1636382604980" />
-    <state width="1493" height="353" key="GridCell.Tab.0.center" timestamp="1636382604980">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="353" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1636382604980" />
-    <state width="1493" height="353" key="GridCell.Tab.0.left" timestamp="1636382604980">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="353" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1636382604980" />
-    <state width="1493" height="353" key="GridCell.Tab.0.right" timestamp="1636382604980">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="353" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1636382604980" />
-    <state width="1493" height="353" key="GridCell.Tab.1.bottom" timestamp="1636382604981">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="353" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1636382604981" />
-    <state width="1493" height="353" key="GridCell.Tab.1.center" timestamp="1636382604981">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="353" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1636382604981" />
-    <state width="1493" height="353" key="GridCell.Tab.1.left" timestamp="1636382604981">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="353" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1636382604981" />
-    <state width="1493" height="353" key="GridCell.Tab.1.right" timestamp="1636382604981">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="353" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1636382604981" />
-    <state x="36" y="33" width="1460" height="695" key="MergeDialog" timestamp="1636382492133">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="36" y="33" width="1460" height="695" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1636382492133" />
-    <state x="310" y="88" width="1124" height="699" key="MultipleFileMergeDialog" timestamp="1636382492149">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="310" y="88" width="1124" height="699" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1636382492149" />
-    <state x="390" y="116" key="NewModule_or_Project.wizard" timestamp="1636376534283">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="390" y="116" key="NewModule_or_Project.wizard/0.0.1536.824@0.0.1536.824" timestamp="1636376534283" />
-    <state x="533" y="132" key="RollbackChangesDialog" timestamp="1636184895375">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="533" y="132" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1636184895375" />
-    <state x="239" y="0" width="1235" height="824" key="SettingsEditor" timestamp="1636380557974">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="239" y="0" width="1235" height="824" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1636380557974" />
-    <state x="584" y="190" key="chooseDestDirectoryDialog" timestamp="1634603154458">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="584" y="190" key="chooseDestDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1634603154458" />
-    <state x="950" y="98" key="extract.method.dialog" timestamp="1636360595757">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="950" y="98" key="extract.method.dialog/0.0.1536.824@0.0.1536.824" timestamp="1636360595757" />
-    <state x="794" y="86" width="581" height="596" key="find.popup" timestamp="1636370885992">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="794" y="86" width="581" height="596" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1636370885992" />
-    <state x="427" y="0" key="new project wizard" timestamp="1636375758057">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="427" y="0" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1636375758057" />
-    <state x="760" y="146" width="672" height="678" key="search.everywhere.popup" timestamp="1636370983104">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="760" y="146" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1636370983104" />
   </component>
 </project>

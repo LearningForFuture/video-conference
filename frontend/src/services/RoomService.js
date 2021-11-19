@@ -1,0 +1,29 @@
+import http from './index';
+
+class Roomservice {
+  findAll() {
+    return http.get('/room');
+  }
+
+  findByParamId(id) {
+    return http.get('/room', { params: { room_id: id } });
+  }
+
+  createRoom(data) {
+    return http.post('/room', JSON.stringify(data));
+  }
+
+  update(data) {
+    return http.update(`/room/${data.roomId}`, JSON.stringify(data));
+  }
+
+  delete(ids) {
+    return http.delete('room', JSON.stringify(ids));
+  }
+
+  findById(id) {
+    return http.get(`/room/${id}`);
+  }
+}
+
+export default Roomservice;

@@ -4,53 +4,53 @@
     class="row-team"
   >
     <teams-list-groups-items
-      v-for="(group, idGroups) in listGroups"
-      :key="idGroups"
-      :name-group="group.nameGroups"
+      v-for="(room, roomId) in getAll"
+      :key="roomId"
+      :is-admin="room.isAdmin"
+      :name-group="room.roomName"
+      :is-public="room.isPublic"
+      :room-id="room.roomId"
     />
   </div>
 </template>
 
 <script>
-import TeamsListGroupsItems from './TeamsListGroupsItems.vue'
+import TeamsListGroupsItems from './TeamsListGroupsItems.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-    name: 'Teamslistgroups',
+  name: 'Teamslistgroups',
 
-    components: {
-        TeamsListGroupsItems,
-    },
+  components: {
+    TeamsListGroupsItems,
+  },
 
-    props: {
-        isJoined: {
-            type: Boolean,
-            required: true
-        }
-    },
+  props: {
+    isJoined: {
+      type: Boolean,
+      required: true
+    }
+  },
 
-    data() {
-        return {
-            listGroups: [
-                {idGroups: 1, nameGroups: 'Group Xom Tro'},
-                {idGroups: 2, nameGroups: 'Group Xom Tro'},
-                {idGroups: 3, nameGroups: 'Group Xom Tro'},
-                {idGroups: 4, nameGroups: 'Group Xom Tro'},
-                {idGroups: 5, nameGroups: 'Group Xom Tro'},
-                {idGroups: 6, nameGroups: 'Group Xom Tro'},
-                {idGroups: 7, nameGroups: 'Group Xom Tro'},
-                {idGroups: 8, nameGroups: 'Group Xom Tro'},
-                {idGroups: 9, nameGroups: 'Group Xom Tro'},
-            ]
-        };
-    },
+  data() {
+    return {
 
-    mounted() {
-        
-    },
+    };
+  },
 
-    methods: {
-        
-    },
+  computed: {
+    ...mapGetters('rooms', ['getAll'])
+  },
+
+  created() {
+    this.getRoomList();
+  },
+
+  mounted() { },
+
+  methods: {
+    ...mapActions('rooms', ['getRoomList']),
+  },
 };
 </script>
 

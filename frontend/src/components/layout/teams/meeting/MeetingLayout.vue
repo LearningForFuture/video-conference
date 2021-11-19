@@ -10,26 +10,26 @@ import MeetingHeader from './MeetingHeader.vue';
 import MeetingBody from './MeetingBody.vue';
 
 export default {
-    name: 'MeetingLayout',
+  name: 'MeetingLayout',
 
-    components: {
-        MeetingHeader,
-        MeetingBody,
-    },
+  components: {
+    MeetingHeader,
+    MeetingBody,
+  },
 
-    data() {
-        return {
+  data() {
+    return {
                 
-        };
-    },
+    };
+  },
 
-    mounted() {
+  mounted() {
             
-    },
+  },
 
-    methods: {
+  methods: {
             
-    },
+  },
 };
 </script>
 

@@ -1,5 +1,6 @@
 package com.videoconference.security;
 
+import com.videoconference.converter.UserConverter;
 import com.videoconference.entity.Role;
 import com.videoconference.entity.User;
 import com.videoconference.exception.UserNotFoundException;
@@ -22,6 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserConverter userConverter;
+
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
         User user = userRepository.findFirstByUsernameOrEmail(usernameOrEmail)
@@ -34,7 +38,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             grantList.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+        UserPrincipal users = new UserPrincipal(user.getUsername(),
                 user.getPassword(), grantList);
+        users.setUser(userConverter.toDTO(user));
+
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+//                user.getPassword(), grantList);
+        return users;
     }
 }

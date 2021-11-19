@@ -44,37 +44,37 @@
 <script>
 import ModalSignIn from '../../modal/ModalSignIn.vue'
 export default {
-    name: 'HomeBanner',
-    components: {
-        ModalSignIn,
-    },
-    data() {
-        return {
-            modal: {
-                isShowModal: false,
-                isSignUp: false,
-            }
-        }
-    },
-    methods: {
-        toggleModal: function() {
-            this.modal.isShowModal = true
-            this.modal.isSignUp = false
-        },
-
-        toggleSignUp: function() {
-            this.modal.isSignUp = true
-            this.modal.isShowModal = true
-        },
-
-        changeIsSignUp: function(toggle) {
-            this.modal.isSignUp = toggle
-        },
-
-        closeModal: function() {
-            this.modal.isShowModal = false
-        }
+  name: 'HomeBanner',
+  components: {
+    ModalSignIn,
+  },
+  data() {
+    return {
+      modal: {
+        isShowModal: false,
+        isSignUp: false,
+      }
     }
+  },
+  methods: {
+    toggleModal: function() {
+      this.modal.isShowModal = true
+      this.modal.isSignUp = false
+    },
+
+    toggleSignUp: function() {
+      this.modal.isSignUp = true
+      this.modal.isShowModal = true
+    },
+
+    changeIsSignUp: function(toggle) {
+      this.modal.isSignUp = toggle
+    },
+
+    closeModal: function() {
+      this.modal.isShowModal = false
+    }
+  }
 }
 </script>
 <style lang="css" scoped>

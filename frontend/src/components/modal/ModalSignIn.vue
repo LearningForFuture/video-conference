@@ -10,32 +10,60 @@
         :class="'container ' + (modal.isSignUp ? 'right-panel-active': '')"
       >
         <div class="form-container sign-up-container">
-          <form action="">
+          <form
+            action=""
+            @submit.prevent="hanldeSubmitSignUp"
+          >
             <h2>Create Account</h2>
             <div class="social-container">
               <!-- <a href="#" class="social"><font-awesome-icon icon="fa-brands fa-twitter" /></a> -->
               <a
                 href="#"
                 class="social"
-              ><i class="fab fa-google-plus-g" /></a>
+              ><i class="ti-google" /></a>
               <a
                 href="#"
                 class="social"
-              ><i class="fab fa-linkedin-in" /></a>
+              ><i class="ti-facebook" /></a>
             </div>
             <span>or use your email for registration</span>
             <input
+              v-model.trim="username"
               type="text"
-              placeholder="Name"
+              minlength="3"
+              placeholder="Username"
             >
+            <span
+              v-if="errors['username'] && !errors['username'].checked"
+              class="error text-danger m-0"
+            >{{ errors['username'].message }}</span>
             <input
+              v-model.trim="email"
               type="email"
               placeholder="Email"
             >
+            <span
+              v-if="errors['email'] && !errors['email'].checked"
+              class="error text-danger m-0"
+            >{{ errors['email'].message }}</span>
             <input
+              v-model.trim="password"
               type="password"
               placeholder="Password"
             >
+            <span
+              v-if="errors['password'] && !errors['password'].checked"
+              class="error text-danger m-0"
+            >{{ errors['password'].message }}</span>
+            <input
+              v-model.trim="confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+            >
+            <span
+              v-if="errors['confirmPassword'] && !errors['confirmPassword'].checked"
+              class="error text-danger m-0"
+            >{{ errors['confirmPassword'].message }}</span>
             <input
               class="btn-submit"
               type="submit"
@@ -45,36 +73,49 @@
               type="button"
               class="ghost btn-submit"
               value="Sign In"
-              @click="tabSignIn"
             >
           </form>
         </div>
         <div class="form-container sign-in-container">
-          <form action="">
+          <form
+            action=""
+            @submit.prevent="handleSubmitSignIn"
+          >
             <h2>Sign in</h2>
             <div class="social-container">
               <a
                 href="#"
                 class="social"
-              ><i class="fab fa-facebook-f" /></a>
+              ><i class="ti-facebook" /></a>
               <a
                 href="#"
                 class="social"
-              ><i class="fab fa-google-plus-g" /></a>
+              ><i class="ti-google" /></a>
               <a
                 href="#"
                 class="social"
-              ><i class="fab fa-linkedin-in" /></a>
+              ><i class="ti-linkedin" /></a>
             </div>
             <span>or use your account</span>
             <input
-              type="email"
-              placeholder="Email"
+              v-model.trim="username"
+              type="text"
+              minlength="3"
+              placeholder="Username or email"
             >
+            <span
+              v-if="errors['username'] && !errors['username'].checked"
+              class="error text-danger m-0"
+            >{{ errors['username'].message }}</span>
             <input
+              v-model.trim="password"
               type="password"
               placeholder="Password"
             >
+            <span
+              v-if="errors['password'] && !errors['password'].checked"
+              class="error text-danger m-0"
+            >{{ errors['password'].message }}</span>
             <a
               class="forgot-pass"
               href="#"
@@ -126,34 +167,228 @@
 </template>
 
 <script>
+import {
+  mapActions
+} from 'vuex';
+
+
+
 export default {
-    name: 'ModalSignIn',
-    props: {
-        modal: {
-            type: Object,
-            required: true,
-        }
-    },
-    data() {
-        return {
-            
-        }
-    },
-    methods: {
-        tabSignUp: function() {
-            this.$emit('changeIsSignUp', true)
-        },
-
-        tabSignIn: function() {
-            this.$emit('changeIsSignUp', false)
-        },
-
-        closeModal: function() {
-            this.$emit('closeModal')
-        }
+  name: 'ModalSignIn',
+  props: {
+    modal: {
+      type: Object,
+      required: true,
     }
+  },
+  data() {
+    return {
+      username: null,
+      password: null,
+      email: null,
+      confirmPassword: null,
+      errors: {},
+    }
+  },
+
+  watch: {
+    username(value) {
+      this.username = value;
+      this.validUsername();
+    },
+    email(value) {
+      this.email = value;
+      this.validEmail();
+    },
+    password(value) {
+      this.password = value;
+      this.validPassword();
+    },
+    confirmPassword(value) {
+      this.cofirmPassword = value;
+      this.validConfirmPassword();
+    }
+  },
+
+  methods: {
+    ...mapActions('users', ['createUser', 'login']),
+
+    tabSignUp: function () {
+      this.$emit('changeIsSignUp', true)
+    },
+
+    tabSignIn: function () {
+      this.$emit('changeIsSignUp', false)
+    },
+
+    closeModal: function () {
+      this.$emit('closeModal')
+    },
+
+    validUsername() {
+      if (!this.username) {
+        this.errors['username'] = {
+          checked: false,
+          message: 'Username required'
+        }
+      } else if (this.username.length < 3) {
+        this.errors['username'] = {
+          checked: false,
+          message: 'Username least must 3 characters'
+        }
+      } else this.errors['username'] = {
+        checked: true
+      };
+
+    },
+
+    validEmail() {
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!this.email) {
+        this.errors['email'] = {
+          checked: false,
+          message: 'Email required'
+        }
+      } else if (this.email) {
+        this.errors['email'] = {
+          checked: emailPattern.test(this.email),
+          message: 'Email invalid'
+        }
+      }
+    },
+
+    validPassword() {
+      if (!this.password) {
+        this.errors['password'] = {
+          checked: false,
+          message: 'Password required'
+        }
+      } else this.errors['password'] = {
+        checked: true
+      };
+    },
+
+    validConfirmPassword() {
+      if (!this.confirmPassword) {
+        this.errors['confirmPassword'] = {
+          checked: false,
+          message: 'ConfirmPassword required'
+        }
+      } else {
+        this.errors['confirmPassword'] = {
+          checked: this.password === this.confirmPassword,
+          message: 'Confirm password not match'
+        }
+      }
+    },
+
+    async hanldeSubmitSignUp() {
+      this.validUsername();
+      this.validPassword();
+      this.validConfirmPassword();
+      this.validEmail();
+      if (this.errors['username'].checked && this.errors['password'].checked &&
+        this.errors['email'].checked && this.errors['confirmPassword'].checked) {
+        try {
+          await this.createUser({
+            username: this.username,
+            password: this.password,
+            email: this.email,
+            confirmPassword: this.confirmPassword
+          })
+
+          this.$toast.success("Register success! Please verify email.", {
+            position: "top-right",
+            timeout: 5000,
+            closeOnClick: true,
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: true,
+            rtl: false
+          });
+          this.$emit('closeModal');
+
+        } catch (errs) {
+          if (errs.response.status === 400) {
+            errs.response.data.errors.forEach(err => {
+              this.errors[`${err.source}`] = {
+                checked: false,
+                message: err.message
+              }
+            })
+          }
+        }
+
+      }
+    },
+
+    async handleSubmitSignIn() {
+      this.validUsername();
+      this.validPassword();
+      if (this.errors['username'].checked && this.errors['password'].checked) {
+        try {
+          await this.login({
+            username: this.username,
+            password: this.password,
+          })
+          this.$emit('closeModal');
+          // this.$router.push({ path: '/teams' });
+          window.location.href = "/conversations/teams";
+        } catch (errs) {
+          if (errs.response.status === 404) {
+            this.$toast.error(errs.response.data.message, {
+              position: "top-right",
+              timeout: 5000,
+              closeOnClick: true,
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              draggable: true,
+              draggablePercent: 0.6,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: "button",
+              icon: true,
+              rtl: false
+            });
+          }
+
+
+          if (errs.response.status === 401) {
+            this.$toast.error("Username or password invalid", {
+              position: "top-right",
+              timeout: 5000,
+              closeOnClick: true,
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              draggable: true,
+              draggablePercent: 0.6,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: "button",
+              icon: true,
+              rtl: false
+            });
+          }
+        }
+
+      }
+    }
+  }
 }
 </script>
 
 <style lang="css">
+form input {
+    margin: 4px 0;
+    padding: 8px 15px;
+}
+
+.error {
+    font-size: 12px;
+}
 </style>

@@ -10,11 +10,11 @@ import TeamsHeader from './TeamsHeader.vue'
 import TeamsBody from './TeamsBody.vue'
 
 export default {
-    name: 'TeamsLayout',
-    components: {
-        TeamsHeader,
-        TeamsBody,
-    },
+  name: 'TeamsLayout',
+  components: {
+    TeamsHeader,
+    TeamsBody,
+  },
 }
 </script>
 <style>

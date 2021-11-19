@@ -23,13 +23,13 @@
 import { mapActions } from 'vuex'
 
 export default {
-    name: 'TeamsHeader',
-    methods: {
-        ...mapActions('rooms', ['changeStateJoined']),
-        showJoinedGroup() {
-            this.changeStateJoined(true)
-        }
-    },
+  name: 'TeamsHeader',
+  methods: {
+    ...mapActions('rooms', ['changeStateJoined']),
+    showJoinedGroup() {
+      this.changeStateJoined(true)
+    }
+  },
 }
 </script>
 <style>

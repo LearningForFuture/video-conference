@@ -18,11 +18,11 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import '../assets/css/classroom.css'
 
 export default{
-    name: 'Teams',
-    components: {
-        // Groups,
-        TeamsLayout,
-    }
+  name: 'Teams',
+  components: {
+    // Groups,
+    TeamsLayout,
+  }
 }
 </script>
 <style scoped>
