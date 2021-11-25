@@ -9,7 +9,8 @@ import configuration from '../../../../utils/config';
 import {
   mapGetters,
   mapActions,
-  mapState
+  mapState,
+  mapMutations
 } from 'vuex';
 import store from '../../../../store/index.js';
 
@@ -47,11 +48,11 @@ export default {
 
     ...mapGetters('meeting', [
       'getRoomLink', 'getCopyText', 'getVideoDevices', 'getAudioDevices',
-      'getAudioEnabled', 'getVideoEnabled', 'getScreenshareEnabled', 'getShowIntro',
+      'getAudioEnabled', 'getVideoEnabled', 'getScreenshareEnabled',
       'getShowChat', 'getShowSettings', 'getSelectedAudioDeviceId', 
       'getSelectedVideoDeviceId', 'getUsername', 'getTyping', 'getShats',
       'getMeetingId', 'getSender', 'getConnected', 'getLocalMediaStream', 'getIsLeave',
-      'getRoomId'
+      'getRoomId', 'getShowParticipants',
     ]),
   },
 
@@ -72,18 +73,27 @@ export default {
 
     getVideoEnabled(videoEnabled) {
       document.getElementById(this.getSender).querySelector(".avatar-user").style.visibility = videoEnabled ? "hidden": "visible";
+    },
+
+    getShowParticipants(isShow) {
+      if (isShow) {
+        this.getUserOnline();
+      }
     }
   },
 
   beforeMount() {
     window.addEventListener("beforeunload", () => {
-      this.stompClient.send("/app/meeting/" + this.getMeetingId,
+      this.stompClient.send(
+        "/app/meeting/" + this.getMeetingId,
         JSON.stringify({
           sender: this.getSender,
           type: 'REMOVE_PEER',
           meetingId: this.getMeetingId
         })
       )
+      // call api update datetime leaves meeting
+      this.leaveMeeting();
     });
   },
 
@@ -94,13 +104,31 @@ export default {
 
   beforeDestroy() {
     if (this.getIsLeave) {
-      this.stompClient.send("/app/meeting/" + this.getMeetingId, 
+      this.stompClient.send(
+        "/app/meeting/" + this.getMeetingId, 
         JSON.stringify({ 
           sender: this.getSender, 
           type: 'REMOVE_PEER', 
           meetingId: this.getMeetingId 
         }) )
     }
+    this.disconnect();
+  },
+
+  beforeRouteLeave (to, from, next) {
+    this.stompClient.send(
+      "/app/meeting/" + this.getMeetingId, 
+      JSON.stringify({ 
+        sender: this.getSender, 
+        type: 'REMOVE_PEER', 
+        meetingId: this.getMeetingId 
+      })
+    )
+
+    // call api update datetime leaves meeting
+    this.leaveMeeting();
+    this.disconnect();
+    next();
   },
 
   methods: {
@@ -112,8 +140,14 @@ export default {
       'setMeetingId', 'setSender', 'setConnected', 'setLocalMediaStream', 'setIsLeave',
       'setPeers', 'addPeers', 'removePeers', 'addIceCandidate', 'sendMsgChannels',
       'setRemoteDescription', 'setLocalDescription', 'closePeers', 'addChannels', 
-      'removeChannels',
+      'removeChannels', 'findMeetingById', 'closeMediaDevices', 'getUsersInCall'
     ]),
+
+    ...mapActions('ParticipantMeeting', ['joinMeeting', 'leftMeeting']),
+
+    ...mapActions('messages', ['getAllMessageByMeeting']),
+
+    ...mapMutations('meeting', ['REFRESH_AUDIO_STATUS']),
 
     toggleSelfVideoMirror: function () {
       document.querySelector("#videos .video #selfVideo").classList.toggle("mirror");
@@ -243,9 +277,11 @@ export default {
     connect() {
       this.socket = new SockJS(this.getServerUrl() + "/meeting");
       this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect({
-        sender: this.getSender
-      }, this.onConnected, this.onError);
+      const header = {
+        sender: this.getSender,
+        meetingId: this.getMeetingId
+      }
+      this.stompClient.connect(header, this.onConnected, this.onError);
 
     },
 
@@ -266,11 +302,11 @@ export default {
       if (this.stompClient) {
         this.stompClient.disconnect();
       }
-      this.connected = false;
       for (let peer_id in peerMediaElements) {
         document.getElementById("videos").removeChild(peerMediaElements[peer_id].parentNode);
         this.resizeVideos();
       }
+      
       for (let peer_id in this.peers) {
         // this.peers[peer_id].close();
         this.closePeers(peer_id);
@@ -283,6 +319,20 @@ export default {
 
     disconnect() {
       if (this.stompClient) {
+        this.leaveMeeting();
+        
+        for (let peer_id in peerMediaElements) {
+          document.getElementById("videos").removeChild(peerMediaElements[peer_id].parentNode);
+          this.resizeVideos();
+        }
+
+        console.log(this.peers)
+
+        for (let peer_id in this.peers) {
+          this.closePeers(peer_id);
+        }
+
+        this.closeMediaDevices();
         this.stompClient.disconnect();
       }
       this.connected = false;
@@ -293,7 +343,8 @@ export default {
     },
 
     joinChatChannel(channel) {
-      this.stompClient.send("/app/meeting/" + this.getMeetingId,
+      this.stompClient.send(
+        "/app/meeting/" + this.getMeetingId,
         JSON.stringify({
           sender: this.getSender,
           type: 'JOIN',
@@ -486,7 +537,7 @@ export default {
 
       this.handleOnIceCandidate(peer_id, this.getMeetingId, this.getSender, this.stompClient);
 
-      this.handleOnTrack(peer_id);
+      this.handleOnTrack(peer_id, config.peerName);
       this.handleRTCDataChannels(peer_id);
 
       /* Add our local stream */
@@ -548,6 +599,11 @@ export default {
                 path[0].setAttribute("d", "M13 8c0 .564-.094 1.107-.266 1.613l-.814-.814A4.02 4.02 0 0 0 12 8V7a.5.5 0 0 1 1 0v1zm-5 4c.818 0 1.578-.245 2.212-.667l.718.719a4.973 4.973 0 0 1-2.43.923V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 1 0v1a4 4 0 0 0 4 4zm3-9v4.879L5.158 2.037A3.001 3.001 0 0 1 11 3z");
                 path[path.length - 1].setAttribute("d", "M9.486 10.607 5 6.12V8a3 3 0 0 0 4.486 2.607zm-7.84-9.253 12 12 .708-.708-12-12-.708.708z");
               }
+
+              this.REFRESH_AUDIO_STATUS({
+                userId: msg.peer_id,
+                audioEnabled: msg.audioEnabled
+              })
 
               break;
             case "refreshStatusVideo":
@@ -638,30 +694,85 @@ export default {
       delete peerMediaElements[peer_id];
     },
 
-    handleOnTrack(peer_id) {
+    handleOnTrack(peer_id, peerName) {
       this.peers[peer_id].ontrack = (event) => {
         // console.log('handleOnTrack', event);
         if (event.track.kind === 'video') {
-          this.loadRemoteMediaStream(event.streams[0], peer_id);
+          this.loadRemoteMediaStream(event.streams[0], peer_id, peerName);
         }
       };
     },
 
-    loadRemoteMediaStream(stream, peer_id) {
+    loadRemoteMediaStream(stream, peer_id, peerName) {
       // console.log("add stream remote" + peer_id)
-      const remoteMedia = this.getVideoElement(peer_id, this.getUsername, this.getVideoEnabled);
+      const remoteMedia = this.getVideoElement(peer_id, peerName, this.getVideoEnabled);
       peerMediaElements[peer_id] = remoteMedia;
       this.attachMediaStream(remoteMedia, stream);
       this.resizeVideos();
       this.showIntro = false;
     },
 
-    init() {
-      this.$log.debug(this.getAudioEnabled);
-      this.setMeetingId(this.roomId());
-      this.setRoomLink(`${location.protocol}//${location.host}:${location.port}/conversations/teams/room/${this.getRoomId}/meeting/${this.getMeetingId}`);
-      this.connect();
-      this.setIsLeave(false);
+    async init() {
+      try {
+        await Promise.all([
+          this.joinMeeting({
+            meetingId: this.roomId(),
+            participantId: parseInt(this.getSender)
+          }),
+
+          this.findMeetingById({
+            meetingId: this.roomId(),
+            roomId: parseInt(localStorage.getItem("room_id_current"))
+          }),
+
+          this.getAllMessageByMeeting({
+            meetingId: this.roomId(),
+            roomId: parseInt(localStorage.getItem("room_id_current"))
+          })
+        ]);
+
+        this.connect();
+        this.setIsLeave(false);
+      } catch (err) {
+        console.log(err);
+        if(err.response.data.error === "Unauthorized" || err.response.status === 401) {
+          this.$router.push({ path : "/"});
+          this.$toast.error("Access is not permitted! Please try logging in again later!", {
+            position: "top-center",
+            timeout: 5000,
+            closeOnClick: true,
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: true,
+            rtl: false
+          });
+        }
+      }
+    },
+
+    async leaveMeeting() {
+      try {
+        await this.leftMeeting({
+          meetingId: this.getMeetingId,
+          participantId: parseInt(this.getSender)
+        });
+      } catch (e) {
+        console.log(e.response);
+      }
+      
+    },
+
+    async getUserOnline() {
+      try {
+        await this.getUsersInCall({ roomId: this.getRoomId, meetingId: this.getMeetingId })
+      } catch (e) {
+        this.$log.debug(e.response);
+      }
     }
   },
 };
@@ -669,7 +780,7 @@ export default {
 
 <style lang="css">
 #videos {
-    flex: 75%;
+    flex: 80%;
     box-sizing: border-box;
     display: flex;
     /* height: 100%; */
@@ -684,12 +795,11 @@ export default {
 .video {
     overflow: hidden;
     position: relative;
-    /* border: 2px solid #332222; */
     background-color: #292d32;
     box-shadow: -4px -4px 5px #3e4247, 7px 7px 7px #1d1f23!important;
     box-sizing: border-box;
     border-radius: 4px;
-    margin: 10px 0 5px 10px;
+    margin: 5px 5px 5px 5px;
     box-sizing: border-box;
 }
 

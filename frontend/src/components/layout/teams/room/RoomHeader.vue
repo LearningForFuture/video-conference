@@ -56,11 +56,11 @@ export default {
       currentActive: 0,
       navItems: [{
         text: "Bài đăng",
-        to: "conversations/teams/room/",
+        to: "post",
         isActive: false
       }, {
         text: "Tệp",
-        to: "conversations/teams/room/",
+        to: "file",
         isActive: true
       }, ]
 
@@ -97,11 +97,15 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.header {
+  position: sticky; top: 0;
+  z-index: 9;
+}
+
 .nav-header-container {
     display: flex;
     justify-content: flex-start;
-    align-items:
-        center;
+    align-items: center;
 }
 
 .img-group img {

@@ -2,10 +2,11 @@ package com.videoconference.service;
 
 import com.videoconference.dto.users.CreateUserDTO;
 import com.videoconference.dto.users.PasswordResetDTO;
+import com.videoconference.dto.users.UserResponse;
 import com.videoconference.entity.User;
 import com.videoconference.entity.VerificationToken;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface UserService {
     User createUser(CreateUserDTO createUserDTO);
@@ -29,4 +30,6 @@ public interface UserService {
     User getUserByEmail(String email);
 
     boolean isExistUserId(Integer userId);
+
+    List<UserResponse> getUserByUserIds(int[] ids);
 }

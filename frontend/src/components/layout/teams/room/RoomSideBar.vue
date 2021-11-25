@@ -36,6 +36,12 @@
               <i class="ti-more" />
             </a>
             <div class="dropdown-menu">
+              <router-link
+                tag="a"
+                class="dropdown-item"
+                to="participant-room"
+              >
+                <i class="ti-settings mr-1" />Quản lý teams</router-link>
               <a
                 class="dropdown-item"
                 href="#"

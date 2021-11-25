@@ -42,8 +42,8 @@ export default {
 <style scoped>
 nav.navigation {
     background: #292d32;
-    height: 100vh - 40px;
-    height: calc(var(--vh, 1vh) * 100 - 40px);
+    height: 100vh - 45px;
+    height: calc(var(--vh, 1vh) * 100 - 45px);
     border: 1px solid #3e4247;
     box-shadow:  7px 7px 7px #1d1f23!important;
     box-sizing: border-box;

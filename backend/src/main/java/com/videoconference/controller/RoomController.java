@@ -48,15 +48,17 @@ public class RoomController {
     }
 
     @GetMapping("/room")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<RoomDTO>> getRoom(HttpServletRequest request) {
         String user_id = cookieRequestFilter.getUserId(request);
-        List<RoomDTO> rooms = roomService.findByCreateBy(Integer.valueOf(user_id))
+        List<RoomDTO> rooms = roomService.findRoomByParticipantId(Integer.valueOf(user_id))
                 .stream().map(room -> roomConverter.toDTO(room))
                 .collect(Collectors.toList());
         return ResponseEntity.status(200).body(rooms);
     }
 
     @GetMapping("/room/{roomId}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<RoomDTO> getDetailRoom(@PathVariable @NotBlank String roomId, HttpServletRequest request) {
         String user_id = cookieRequestFilter.getUserId(request);
         Room room = roomService.findByRoomIdAndUserId(Integer.valueOf(roomId), Integer.valueOf(user_id));
@@ -102,12 +104,11 @@ public class RoomController {
     }
 
     //Join phong bang ma phong
-    @PostMapping("/join-room/")
-    public ResponseEntity<?> joinRoomByRoomCode(@Valid @RequestBody JoinByRoomCodeDTO joinRoomDTO) {
+    @PostMapping("/join-room")
+    public RoomDTO joinRoomByRoomCode(@Valid @RequestBody JoinByRoomCodeDTO joinRoomDTO) {
         // get user in security context
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
-        roomService.joinRoomByRoomCode(joinRoomDTO.getRoomCode(), userDetails.getUsername());
-        return ResponseEntity.ok("OK");
+        return roomService.joinRoomByRoomCode(joinRoomDTO.getRoomCode(), userDetails.getUsername());
     }
 }

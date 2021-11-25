@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/api-docs/**", "/swagger-ui-custom.html", "/swagger-ui/**");
+        web.ignoring().antMatchers("/stomp/**");
     }
 
     @Override
@@ -49,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login", "/authenticate", "/register").permitAll()
-                .antMatchers("/chat/info", "/chat", "/chat/**").permitAll()
+                .antMatchers("/chat/info", "/meeting").permitAll()
                 .antMatchers("/admin").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()
                 .and()

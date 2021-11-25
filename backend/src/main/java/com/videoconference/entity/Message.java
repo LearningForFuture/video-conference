@@ -26,7 +26,7 @@ public class Message {
     private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meeting_id")
+    @JoinColumn(name = "meeting_id", columnDefinition = "BINARY(16)")
     private Meeting meeting;
 
 }

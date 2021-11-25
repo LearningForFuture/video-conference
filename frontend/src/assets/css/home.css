@@ -622,11 +622,12 @@ a {
     z-index: 999
 }
 .modal-content {
-    position: absolute;
+    position: absolute !important;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: auto;
+    width: auto !important;
+    background-color: transparent !important;
     border-radius: 0.5rem;
 }
 .close-button {
@@ -827,7 +828,7 @@ button.ghost {
 }
 
 .social-container {
-	margin: 20px 0;
+	margin: 10px 0;
 }
 
 .social-container a {

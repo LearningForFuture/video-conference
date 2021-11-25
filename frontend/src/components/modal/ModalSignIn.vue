@@ -14,7 +14,7 @@
             action=""
             @submit.prevent="hanldeSubmitSignUp"
           >
-            <h2>Create Account</h2>
+            <h3>Create Account</h3>
             <div class="social-container">
               <!-- <a href="#" class="social"><font-awesome-icon icon="fa-brands fa-twitter" /></a> -->
               <a
@@ -27,6 +27,15 @@
               ><i class="ti-facebook" /></a>
             </div>
             <span>or use your email for registration</span>
+            <input
+              v-model.trim="fullName"
+              type="text"
+              placeholder="Full Name"
+            >
+            <span
+              v-if="errors['fullName'] && !errors['fullName'].checked"
+              class="error text-danger m-0"
+            >{{ errors['fullName'].message }}</span>
             <input
               v-model.trim="username"
               type="text"
@@ -44,8 +53,9 @@
             >
             <span
               v-if="errors['email'] && !errors['email'].checked"
-              class="error text-danger m-0"
-            >{{ errors['email'].message }}</span>
+              class="error text-danger m-0" 
+              v-text="errors['email'].message" />
+            <!-- >{{ errors['email'].message }}</span> -->
             <input
               v-model.trim="password"
               type="password"
@@ -58,7 +68,8 @@
             <input
               v-model.trim="confirmPassword"
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Confirm Password" 
+              @keydown.enter="hanldeSubmitSignUp"
             >
             <span
               v-if="errors['confirmPassword'] && !errors['confirmPassword'].checked"
@@ -168,7 +179,8 @@
 
 <script>
 import {
-  mapActions
+  mapActions,
+  mapGetters
 } from 'vuex';
 
 
@@ -187,8 +199,13 @@ export default {
       password: null,
       email: null,
       confirmPassword: null,
+      fullName: null,
       errors: {},
     }
+  },
+
+  computed: {
+    ...mapGetters('users', ['getRoles']),
   },
 
   watch: {
@@ -207,6 +224,10 @@ export default {
     confirmPassword(value) {
       this.cofirmPassword = value;
       this.validConfirmPassword();
+    },
+    fullName(value) {
+      this.fullName = value;
+      this.validFullName();
     }
   },
 
@@ -237,6 +258,18 @@ export default {
           message: 'Username least must 3 characters'
         }
       } else this.errors['username'] = {
+        checked: true
+      };
+
+    },
+
+    validFullName() {
+      if (!this.fullName) {
+        this.errors['fullName'] = {
+          checked: false,
+          message: 'FullName required'
+        }
+      } else this.errors['fullName'] = {
         checked: true
       };
 
@@ -287,14 +320,17 @@ export default {
       this.validPassword();
       this.validConfirmPassword();
       this.validEmail();
+      this.validFullName();
       if (this.errors['username'].checked && this.errors['password'].checked &&
-        this.errors['email'].checked && this.errors['confirmPassword'].checked) {
+        this.errors['email'].checked && this.errors['confirmPassword'].checked 
+        && this.errors['fullName'].checked) {
         try {
           await this.createUser({
             username: this.username,
             password: this.password,
             email: this.email,
-            confirmPassword: this.confirmPassword
+            confirmPassword: this.confirmPassword,
+            fullName: this.fullName
           })
 
           this.$toast.success("Register success! Please verify email.", {
@@ -337,8 +373,12 @@ export default {
             password: this.password,
           })
           this.$emit('closeModal');
-          // this.$router.push({ path: '/teams' });
-          window.location.href = "/conversations/teams";
+          const roleAdminIdx = this.getRoles.findIndex(r => r.roleName === 'ROLE_ADMIN');
+          if (roleAdminIdx != -1) {
+            this.$router.push({ path: '/admin' });
+          } else {
+            this.$router.push({ path: '/conversations/teams' });
+          }
         } catch (errs) {
           if (errs.response.status === 404) {
             this.$toast.error(errs.response.data.message, {

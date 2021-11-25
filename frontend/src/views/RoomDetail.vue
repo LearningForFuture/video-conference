@@ -6,7 +6,7 @@
       </div>
       <div class="room_body">
         <room-header />
-        <router-view />
+        <router-view :roomId="roomId" />
       </div>
     </div>
   </div>
@@ -14,16 +14,14 @@
 
 <script>
 import RoomSideBar from '../components/layout/teams/room/RoomSideBar.vue';
-// import RoomBody from '../components/layout/teams/room/RoomBody.vue';
 import RoomHeader from '../components/layout/teams/room/RoomHeader.vue';
 import { mapActions} from 'vuex';
 
 export default {
-  name: 'FrontendRoomdetail',
+  name: 'Roomdetail',
     
   components: {
     RoomSideBar,
-    // RoomBody,
     RoomHeader,
   },
     
@@ -58,6 +56,7 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
+    overflow: hidden;
 }
 
 .side_bar {
@@ -74,5 +73,6 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
     box-shadow: 0px 0px 5px #232931ce;
+    overflow: hidden;
 }
 </style>

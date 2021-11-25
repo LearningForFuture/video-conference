@@ -23,8 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.nio.ByteBuffer;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class MeetingServiceImpl implements MeetingService {
@@ -61,10 +65,15 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public MeetingDTO updateMeeting(MeetingDTO meetingDTO) {
+
         Meeting meeting =  meetingRepository.findById(meetingDTO.getMeetingId())
                 .orElseThrow(() -> new MeetingNotFoundException());
         Room roomId = roomRepository.findById(meetingDTO.getRoomId())
                 .orElseThrow(() -> new RoomNotFoundException());
+        if (meeting.getCreatedBy().getUserId() != meetingDTO.getCreatedBy()
+                || meeting.getRoom().getRoomId() != meetingDTO.getRoomId()) {
+            throw new MeetingNotFoundException();
+        }
 
         meeting.setFinishedAt(Timestamp.valueOf(LocalDateTime.now()));
         meeting.setMeetingName(meetingDTO.getMeetingName());
@@ -93,6 +102,12 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
+    @Override
+    public List<MeetingDTO> getMeetingByRoomId(Integer roomId) {
+        return meetingRepository.findByRoomId(roomId).stream()
+                .map(meeting -> meetingConverter.toDTO(meeting)).collect(Collectors.toList());
+    }
+
     public void addPeerTo(String meeting_id, String sessionId, String sender) {
         SignalMessage messagePeerSelf = new SignalMessage();
         messagePeerSelf.setShouldCreateOffer(true);
@@ -102,6 +117,7 @@ public class MeetingServiceImpl implements MeetingService {
         messagePeerOther.setPeerId(sender);
         messagePeerOther.setShouldCreateOffer(false);
         messagePeerOther.setType(SignalMessage.MessageType.ADD_PEER);
+        messagePeerOther.setPeerName(getFullNameByUserId(Integer.parseInt(sender)));
 
         logger.info(MeetingStorage.getInstance().getMeetings().get(meeting_id).toString());
 
@@ -110,6 +126,7 @@ public class MeetingServiceImpl implements MeetingService {
                     messagePeerOther);
 
             messagePeerSelf.setPeerId(id);
+            messagePeerSelf.setPeerName(getFullNameByUserId(Integer.parseInt(id)));
             simpMessagingTemplate.convertAndSendToUser(sender,"/topic/messages/" + meeting_id,
                     messagePeerSelf);
         });
@@ -165,5 +182,22 @@ public class MeetingServiceImpl implements MeetingService {
         });
 
         MeetingStorage.getInstance().getMeetings().get(meeting_id).remove(signalMessage.getSender());
+    }
+
+    @Override
+    public MeetingDTO findByMeetingId(UUID meetingId) {
+        Meeting meeting = meetingRepository.findById(meetingId).orElseThrow(() -> new MeetingNotFoundException());
+        return meetingConverter.toDTO(meeting);
+    }
+
+    @Override
+    public boolean existMeetingByMeetingId(UUID meetingId) {
+        return meetingRepository.findById(meetingId).isPresent();
+    }
+
+    public String getFullNameByUserId(Integer userId) {
+        User user = userRepository.findFirstByUserId(userId)
+                .orElseThrow(() -> new UserNotFoundException());
+        return user.getFullName();
     }
 }

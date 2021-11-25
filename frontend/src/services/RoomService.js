@@ -24,6 +24,10 @@ class Roomservice {
   findById(id) {
     return http.get(`/room/${id}`);
   }
+
+  joindRoomByCode(data) {
+    return http.post('/join-room', JSON.stringify(data));
+  }
 }
 
 export default Roomservice;

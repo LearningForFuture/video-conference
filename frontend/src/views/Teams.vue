@@ -15,7 +15,7 @@
 import TeamsLayout from '../components/layout/teams/TeamsLayout.vue'
 import 'jquery/src/jquery.js'
 import 'bootstrap/dist/js/bootstrap.min.js'
-import '../assets/css/classroom.css'
+// import '../assets/css/classroom.css'
 
 export default{
   name: 'Teams',

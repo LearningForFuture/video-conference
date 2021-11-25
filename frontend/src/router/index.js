@@ -12,6 +12,7 @@ import HomeNavigation from '../components/layout/home/HomeNavigation.vue'
 import HomeFooter from '../components/layout/home/HomeFooter.vue'
 import Conversation from '../views/Conversations.vue'
 import RoomBody from '../components/layout/teams/room/RoomBody.vue';
+import RoomParticipants from '../components/layout/teams/room/RoomParticipants.vue';
 
 const routes = [
   {
@@ -40,6 +41,10 @@ const routes = [
           {
             path: 'post',
             component: RoomBody,
+          },
+          {
+            path: 'participant-room',
+            component: RoomParticipants
           }
         ]
       },
@@ -62,11 +67,11 @@ const routes = [
   //     component: RoomDetail,
   // },
 
-  {
-    path: '/teams/meeting/:id',
-    name: 'Meeting',
-    component: Meeting,
-  },
+  // {
+  //   path: '/teams/meeting/:id',
+  //   name: 'Meeting',
+  //   component: Meeting,
+  // },
   {
     path: '/register/registration-confirm/:token',
     name: 'ConfirmEmailRegistration',

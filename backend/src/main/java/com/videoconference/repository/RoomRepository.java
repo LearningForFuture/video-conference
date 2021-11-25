@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,9 +22,12 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     @Query("SELECT r FROM Room r WHERE r.roomCode = :roomCode")
     Optional<Room> getRoomByRoomCode(String roomCode);
 
-    @Query("SELECT r.roomId FROM Room r WHERE r.roomCode = :roomCode")
-    Optional<Integer> getRoomIdByRoomCode(String roomCode);
+    @Query("SELECT r FROM Room r WHERE r.roomCode = :roomCode")
+    Optional<Room> getRoomIdByRoomCode(String roomCode);
 
     @Query("SELECT r FROM Room r WHERE r.roomName LIKE %:keyword%")
     Page<Room> search(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query("SELECT r FROM Room r INNER JOIN ParticipantRoom p ON r.roomId = p.room.roomId WHERE p.participant.userId = :participantId")
+    List<Room> findByParticipantId(Integer participantId);
 }

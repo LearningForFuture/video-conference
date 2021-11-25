@@ -43,13 +43,36 @@ export default {
   },
 
   created() {
-    this.getRoomList();
+    this.getRoomByParticipant();
   },
 
   mounted() { },
 
   methods: {
     ...mapActions('rooms', ['getRoomList']),
+    async getRoomByParticipant() {
+      try {
+        await this.getRoomList();
+      } catch (err) {
+        if(err.response.data.error === "Unauthorized" || err.response.status === 401) {
+          this.$router.push({ path : "/"});
+          this.$toast.error("Access is not permitted! Please try logging in again later!", {
+            position: "top-center",
+            timeout: 5000,
+            closeOnClick: true,
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: true,
+            rtl: false
+          });
+        }
+      }
+    }
   },
 };
 </script>
