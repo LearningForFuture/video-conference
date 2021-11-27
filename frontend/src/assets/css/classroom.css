@@ -19716,7 +19716,7 @@ body:not(.no-blur-effect) .modal.show .modal-dialog.modal-dialog-zoom {
 } */
 
 nav.navigation .nav-group {
-    width: 64px;
+    width: 62px;
     padding: 0 5px;
     box-sizing: border-box
 }
@@ -19741,6 +19741,11 @@ nav.navigation ul {
 
 nav.navigation ul li {
     list-style: none
+}
+
+nav.navigation ul li:hover {
+    background-color: #292d32;
+    box-shadow: inset -4px -4px 5px #3e4247,inset 7px 7px 7px #1d1f23!important;
 }
 
 nav.navigation ul li a {
@@ -20759,10 +20764,20 @@ input.file-upload {
 
 .header-layout .wrapper-header {
     width: calc(100% - 64px);
-    display: flex;
+    /* display: flex;
     flex-flow: row nowrap;
+    align-items: center; */
+    display: grid;
+    grid-template-columns: 1.5fr 3fr 1.5fr;
     align-items: center;
-    justify-content: space-between
+    justify-content: space-between;
+    background-color: #1e1e1e;
+    -webkit-box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+}
+
+.header-layout .wrapper-header .logo {
+    justify-self: center;
 }
 
 .header-layout .wrapper-header .logo img {
@@ -20771,7 +20786,8 @@ input.file-upload {
 }
 
 .header-layout .wrapper-header .avatar {
-    width:auto
+    width:auto;
+    justify-self: end;
 }
 
 .header-layout .wrapper-header .avatar img {
@@ -20799,7 +20815,7 @@ input.file-upload {
 
 .header-layout .wrapper-header .input-wrapper input { 
     width: 100%; text-indent: 30px; 
-    border-radius: 50px;
+    border-radius: 5px;
 }
 
 .text-logo {
@@ -20920,7 +20936,9 @@ input.file-upload {
 .wrapper-teams .team-grid .group-wrapper .wrapper-avatar-group .avatar {
     width: 70px;
     height: 70px;
-    border-radius: .2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 8px;
     box-shadow: 0 0.2rem 0.4rem -0.075rem rgb(0 0 0 / 10%);
     display: flex;
     justify-content: center;

@@ -24,7 +24,10 @@
                 <div class="group-name">
                   <h5 class="text-center">Create new group</h5>
                 </div>
-                <button class="btn btn-secondary"><i class="fa fa-users mr-1 text-white" />Create group</button>
+                <button
+                  class="btn btn-secondary"
+                  @click="$refs.modalCreateGroup.openModal()"
+                ><i class="fa fa-users mr-1 text-white" />Create group</button>
               </a>
             </div>
           </div>
@@ -64,30 +67,135 @@
         </div>
       </div>
     </div>
+
+    <modal-form
+      ref="modalCreateGroup"
+      @handle-submit="handleSubmit()"
+    >
+      <template v-slot:header>
+        <h5>Create new group</h5>
+      </template>
+      <template v-slot:body>
+        <div class="form-group">
+          <label for="roomName">Tên nhóm</label>
+          <input
+            id="roomName"
+            v-model.trim="nameGroup"
+            type="text"
+            name="roomName"
+            class="form-control"
+            aria-describedby="nameGroup"
+            placeholder="Enter name group"
+          >
+          <span
+            v-if="errors['nameGroup'] && !errors['nameGroup'].checked"
+            class="text-danger"
+          >{{ errors['nameGroup'].message }}</span>
+        </div>
+        <div class="input-group">
+          <select
+            v-model="isPublic"
+            class="custom-select"
+            name="isPublic"
+          >
+            <option value="true">
+              Công khai - Mọi người trong tổ chức bạn đều có thể tham gia
+            </option>
+            <option value="false">
+              Riêng tư - Chỉ chủ sở hữu nhóm mới có thể thêm thành viên
+            </option>
+          </select>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <div>
+          <button
+            class="btn btn-danger"
+            @click="$refs.modalCreateGroup.closeModal()"
+          >
+            Cancel
+          </button>
+          <input
+            type="submit"
+            class="btn btn-success float-right"
+            value="Save"
+            @click="handleSubmit()"
+          >
+        </div>
+      </template>
+    </modal-form>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import {
+  mapState,
+  mapActions,
+  mapGetters
+} from 'vuex'
 import TeamsListGroups from './TeamsListGroups.vue'
+import ModalForm from '../../modal/ModalForm.vue';
 
 export default {
-    name: 'TeamsBody',
-    components: {
-        TeamsListGroups,
-    },
-    computed: {
-        ...mapState({
-            isJoined: state => state.rooms.isJoined
-        }),
-    },
-    methods: {
-        ...mapActions('rooms', ['changeStateJoined']),
-        backLayoutTeams() {
-            this.changeStateJoined(false);
-        },
-            
+  name: 'TeamsBody',
+  components: {
+    TeamsListGroups,
+    ModalForm
+  },
+  data() { return { nameGroup: null, isPublic: false, errors: {} } },
+
+  computed: {
+    ...mapState({
+      isJoined: state => state.rooms.isJoined
+    }),
+
+    ...mapGetters('users', ['getUserId']),
+  },
+
+  watch: {
+    nameGroup(value) {
+      this.nameGroup = value;
+      this.validNameGroup();
     }
+  },
+
+  methods: {
+    ...mapActions('rooms', ['changeStateJoined', 'addNewRoom']),
+
+    backLayoutTeams() {
+      this.changeStateJoined(false);
+    },
+
+    validNameGroup() {
+      if (!this.nameGroup) {
+        this.errors['nameGroup'] = {
+          checked: false,
+          message: 'Name group is required'
+        }
+      } else {
+        this.errors['nameGroup'] = { checked: true, mesage:'' }
+      }
+    },
+
+    async handleSubmit() {
+      try {
+        this.validNameGroup();
+        if (this.errors['nameGroup'].checked) {
+          // do something
+          await this.addNewRoom({
+            roomName: this.nameGroup,
+            isPublic: this.isPublic,
+            createdBy: this.getUserId
+          });
+          this.$refs.modalCreateGroup.closeModal();
+          this.backLayoutTeams();
+        }
+      } catch(error) {
+        console.log(error.response);
+      }
+    }
+
+  }
 }
 </script>
 
@@ -120,5 +228,15 @@ export default {
 
 a {
     cursor: pointer;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.custom-select {
+  font-size: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14.001' height='8.165' viewBox='0 0 14.001 8.165'%3E%3Cdefs%3E%3Cstyle%3E.a%7Bfill:%23212121;%7D%3C/style%3E%3C/defs%3E%3Cpath class='a' d='M13.861,60.224l-.7-.7a.441.441,0,0,0-.645,0L7,65.036,1.487,59.522a.441.441,0,0,0-.645,0l-.7.7a.441.441,0,0,0,0,.645l6.537,6.538a.441.441,0,0,0,.645,0l6.538-6.538a.442.442,0,0,0,0-.645Z' transform='translate(0 -59.382)'/%3E%3C/svg%3E") no-repeat right .75rem center/8px 10px;
+
 }
 </style>

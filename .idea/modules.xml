@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/backend/videoconference.iml" filepath="$PROJECT_DIR$/backend/videoconference.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/videoconference.iml" filepath="$PROJECT_DIR$/.idea/videoconference.iml" />
     </modules>
   </component>
 </project>

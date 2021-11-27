@@ -2,6 +2,7 @@ package com.videoconference.service.impl;
 
 import com.videoconference.dto.users.CreateUserDTO;
 import com.videoconference.dto.users.PasswordResetDTO;
+import com.videoconference.dto.users.RequestUserDTO;
 import com.videoconference.dto.users.UserDTO;
 import com.videoconference.entity.Role;
 import com.videoconference.entity.User;
@@ -149,6 +150,68 @@ public class UserServiceImpl implements UserService {
         return Timestamp.valueOf(localDateTime.plusMinutes(VerificationToken.EXPIRATION));
     }
 
+    @Override
+    public UserDTO createUserHasFullInfo(RequestUserDTO requestUserDTO) {
+        User user = new User();
+        user.setFullName(requestUserDTO.getFullName());
+        user.setUsername(requestUserDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(requestUserDTO.getPassword()));
+        user.setEmail(requestUserDTO.getEmail());
+        user.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        user.setEnabled(true);
+
+        Set<Role> roles = new HashSet<>();
+        for (Integer roleId : requestUserDTO.getRoleId())
+            roles.add(new Role().setRoleId(roleId));
+        user.setRoles(roles);
+
+        User newUser = userRepository.save(user);
+        return map(newUser);
+    }
+
+    @Override
+    public UserDTO getUserByUserId(Integer userId) {
+        User user = userRepository.findFirstByUserId(userId)
+                .orElseThrow(() -> new UserNotFoundException());
+        return map(user);
+    }
+
+    @Override
+    public UserDTO updateUser(Integer userId, RequestUserDTO requestUserDTO) {
+        User user = userRepository.findFirstByUserId(userId)
+                .orElseThrow(() -> new UserNotFoundException());
+        user.setFullName(requestUserDTO.getFullName());
+        user.setUsername(requestUserDTO.getUsername());
+
+        if (requestUserDTO.getPassword() != null) {
+            String hash = passwordEncoder.encode(requestUserDTO.getPassword());
+            if (user.getPassword().equals(hash))
+                user.setPassword(hash);
+        }
+
+        user.setEmail(requestUserDTO.getEmail());
+        user.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+
+        Set<Role> roles = new HashSet<>();
+        for (Integer roleId : requestUserDTO.getRoleId())
+            roles.add(new Role().setRoleId(roleId));
+        user.setRoles(roles);
+
+        User updatedUser = userRepository.save(user);
+        return map(updatedUser);
+    }
+
+    @Override
+    public void deleteUser(Integer userId) {
+        User user = userRepository.findFirstByUserId(userId)
+                .orElseThrow(() -> new UserNotFoundException());
+        userRepository.delete(user);
+    }
+    @Override
+    public boolean isExistUserId(Integer userId) {
+        return userRepository.findFirstByUserId(userId).isPresent();
+    }
+
     private UserDTO map(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(user.getUserId())
@@ -157,15 +220,17 @@ public class UserServiceImpl implements UserService {
                 .setEmail(user.getEmail())
                 .setEnabled(user.isEnabled())
                 .setCreatedAt(user.getCreatedAt())
-                .setUpdatedAt(user.getUpdatedAt());
+                .setUpdatedAt(user.getUpdatedAt())
+                .setRoles(user.getRoles());
         return userDTO;
     }
 
     private List<UserDTO> mapList(List<User> users) {
         List<UserDTO> userDTOs = new ArrayList<>();
-        for(User user : users) {
+        for (User user : users) {
             userDTOs.add(map(user));
         }
         return userDTOs;
     }
+
 }

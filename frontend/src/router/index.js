@@ -3,38 +3,91 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Teams from '../views/Teams.vue';
 import Meeting from '../views/Meeting.vue';
+import ConfirmEmailRegistration from '../views/ConfirmEmail.vue';
+import RoomDetail from '../views/RoomDetail.vue';
 
 Vue.use(VueRouter);
 
+import HomeNavigation from '../components/layout/home/HomeNavigation.vue'
+import HomeFooter from '../components/layout/home/HomeFooter.vue'
+import Conversation from '../views/Conversations.vue'
+import RoomBody from '../components/layout/teams/room/RoomBody.vue';
+import TableUserAdmin from '../components/admin/TableUserAdmin.vue'
+import TableRoomAdmin from '../components/admin/TableRoomAdmin.vue'
+
 const routes = [
-    {
-        path: '/',
-        name: 'Home',
-        component: Home,
+  {
+    path: '/',
+    name: 'Home',
+    components: {
+      default: Home,
+      navigation: HomeNavigation,
+      footer: HomeFooter
     },
-    {
-        path: '/teams',
-        name: 'Teams',
-        component: Teams,
-    // children: [
-    //   {
-    //     path: 'meeting/:id',
-    //     name: 'Meeting',
-    //     component: Meeting,
-    //   }
-    // ]
-    },
-    {
-        path: '/teams/meeting/:id',
-        name: 'Meeting',
+  },
+
+  {
+    path: '/conversations',
+    component: Conversation,
+    children: [
+      {
+        path: 'teams',
+        component: Teams
+      },
+      {
+        path: 'teams/room/:roomId',
+        component: RoomDetail,
+        props: true,
+        children: [
+          {
+            path: 'post',
+            component: RoomBody,
+          }
+        ]
+      },
+      {
+        path: 'teams/room/:roomId/meeting/:meetingId',
         component: Meeting,
-    }
+        props: true,
+      }
+    ]
+  },
+
+  // {
+  //     path: '/teams',
+  //     name: 'Teams',
+  //     component: Teams,
+  // },
+  // {
+  //     path: '/teams/room/:room_id',
+  //     name: 'RoomDetail',
+  //     component: RoomDetail,
+  // },
+
+  {
+    path: '/teams/meeting/:id',
+    name: 'Meeting',
+    component: Meeting,
+  },
+  {
+    path: '/register/registration-confirm/:token',
+    name: 'ConfirmEmailRegistration',
+    component: ConfirmEmailRegistration,
+  },
+  {
+    path: '/admin/users',
+    component: TableUserAdmin,
+  },
+  {
+    path: '/admin/rooms',
+    component: TableRoomAdmin,
+  }
 ];
 
 const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes,
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes,
 });
 
 export default router;

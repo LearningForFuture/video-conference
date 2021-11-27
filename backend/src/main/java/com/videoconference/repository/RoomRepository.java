@@ -12,6 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
+
+    Optional<Room> findByRoomName(String roomName);
+
     @Query("SELECT r FROM Room r WHERE r.roomId = :roomId")
     Optional<Room> getRoomByRoomId(Integer roomId);
 

@@ -23,6 +23,11 @@ public class Room {
     private Boolean isPublic;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private Boolean isAdmin;
+
+//    @ManyToOne
+//    @JoinColumn(name = "created_by")
+//    private User createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
@@ -31,8 +36,11 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private Set<Document> documents = new HashSet<>();
 
-//    @OneToMany(mappedBy = "room")
-//    private Set<ParticipantRoom> participantRooms = new HashSet<>();
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private Set<ParticipantRoom> participantRooms = new HashSet<>();
+
+    @OneToMany(mappedBy = "room")
+    private Set<Meeting> meetings = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id")

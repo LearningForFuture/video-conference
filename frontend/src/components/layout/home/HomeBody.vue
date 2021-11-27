@@ -100,7 +100,7 @@
 
 <script>
 export default {
-    name: 'HomeBody'
+  name: 'HomeBody'
 }
 </script>
 

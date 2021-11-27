@@ -1,11 +1,13 @@
 package com.videoconference.dto.users;
 
+import com.videoconference.entity.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,4 +21,5 @@ public class UserDTO {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private boolean enabled;
+    private Set<Role> roles;
 }

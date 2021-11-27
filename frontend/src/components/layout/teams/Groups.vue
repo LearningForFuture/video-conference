@@ -16,11 +16,11 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import '../../../assets/css/classroom.css'
 
 export default{
-    name: 'Groups',
-    components: {
-        TeamsNavBar,
-        TeamsSideBar,
-    }
+  name: 'Groups',
+  components: {
+    TeamsNavBar,
+    TeamsSideBar,
+  }
 }
 </script>
 <style scoped>

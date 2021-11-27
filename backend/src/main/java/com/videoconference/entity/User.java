@@ -21,6 +21,7 @@ public class User {
     private String fullName;
     private String email;
     private String username;
+    @Column(length = 255)
     private String password;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -38,8 +39,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<ParticipantMeeting> participantMeetings = new HashSet<>();
 
-//    @OneToMany(mappedBy = "participant")
-//    private Set<ParticipantRoom> participantRooms = new HashSet<>();
+    @OneToMany(mappedBy = "createdBy")
+    private Set<Meeting> meetings = new HashSet<>();
+
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
+    private Set<ParticipantRoom> participantRooms = new HashSet<>();
+
+//    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
+//    private Set<Room> rooms = new HashSet<>();
 
     @OneToMany(mappedBy = "createdByUser")
     private Set<Room> rooms = new HashSet<>();

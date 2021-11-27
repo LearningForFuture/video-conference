@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtRequestFilter jwtRequestFilter;
 
     public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder(12).matches("khanhdpdx", "$2a$12$C4vwYfmIB20KNyqZZdzw0eqxPRrxBCSF9YehYkf2z5tHGgAk8gDBi"));
+        System.out.println(new BCryptPasswordEncoder(12).matches("1512001", "$2a$12$0Bt2N7InpcdR6b.m4D.eT.RVPg7Gv8sUE2evZgM7sFCT5PFAKvATy"));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/authenticate", "/register").permitAll()
+                .antMatchers("/login", "/reset-password/**", "/register/**","/users/**", "/roles","/rooms/**").permitAll()
                 .antMatchers("/chat/info", "/chat", "/chat/**").permitAll()
                 .antMatchers("/admin").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()

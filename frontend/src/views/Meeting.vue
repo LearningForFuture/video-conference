@@ -14,21 +14,21 @@ import '../assets/css/classroom.css'
 import 'webrtc-adapter'
 
 export default {
-    name: 'Meeting',
-    components: {
-        MeetingLayout,
-        // Groups,
-    },
+  name: 'Meeting',
+  components: {
+    MeetingLayout,
+    // Groups,
+  },
 
-    data() {
-        return {
+  data() {
+    return {
                 
-        };
-    },
+    };
+  },
 
-    methods: {
+  methods: {
             
-    },
+  },
 };
 </script>
 

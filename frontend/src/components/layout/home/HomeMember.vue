@@ -40,7 +40,7 @@
 </template>
 <script>
 export default {
-    name: 'HomeMember'
+  name: 'HomeMember'
 }
 </script>
 <style lang="">

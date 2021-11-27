@@ -68,21 +68,21 @@
 
 <script>
 export default {
-    name: 'Meetingvideosetting',
+  name: 'Meetingvideosetting',
 
-    data() {
-        return {
+  data() {
+    return {
             
-        };
-    },
+    };
+  },
 
-    mounted() {
+  mounted() {
         
-    },
+  },
 
-    methods: {
+  methods: {
         
-    },
+  },
 };
 </script>
 
