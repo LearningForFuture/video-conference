@@ -52,7 +52,7 @@
               {{ user.fullName }}
             </p>
             <span
-              v-if="user_id && user.userId == user_id"
+              v-if="user.userId == getCreatedBy"
               class="m-0"
             >Organizater</span>
           </div>
@@ -96,12 +96,11 @@ export default {
 
   data() {
     return {
-      user_id: localStorage.getItem('user_id'),
     };
   },
 
   computed: {
-    ...mapGetters('meeting', ['getAllUsersInCall'])
+    ...mapGetters('meeting', ['getAllUsersInCall', 'getCreatedBy'])
   },
 
   mounted() {
@@ -109,7 +108,9 @@ export default {
   },
 
   methods: {
-        
+    countParticipants() {
+      return Object.key(this.getAllUsersInCall).length;
+    }
   },
 };
 </script>

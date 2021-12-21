@@ -58,14 +58,15 @@ public class MeetingController {
     @GetMapping("/{room-id}/meeting/{meeting-id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public MeetingDTO getMeetingByMeetingId(@PathVariable("room-id") Integer roomId,
-                                            @PathVariable("meeting-id") @NotBlank UUID meetingId)  {
+            @PathVariable("meeting-id") @NotBlank UUID meetingId) {
         return meetingService.findByMeetingId(meetingId);
     }
 
     @PostMapping("/{roomId}/meeting")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<MeetingDTO> createMeeting(@PathVariable @NotBlank Integer roomId, @Valid @RequestBody MeetingDTO meetingDTO,
-                                                    HttpServletRequest request) {
+    public ResponseEntity<MeetingDTO> createMeeting(@PathVariable @NotBlank Integer roomId,
+            @Valid @RequestBody MeetingDTO meetingDTO,
+            HttpServletRequest request) {
         String user_id = cookieRequestFilter.getUserId(request);
         meetingDTO.setCreatedBy(Integer.valueOf(user_id));
         meetingDTO.setRoomId(roomId);
@@ -75,10 +76,10 @@ public class MeetingController {
 
     @PutMapping("/{roomId}/meeting/{meetingId}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<MeetingDTO>  endMeeting(@PathVariable @NotBlank String roomId,
-                                                     @PathVariable @NotBlank UUID meetingId,
-                                                     @RequestBody MeetingDTO meetingDTO,
-                                                     HttpServletRequest request) {
+    public ResponseEntity<MeetingDTO> endMeeting(@PathVariable @NotBlank String roomId,
+            @PathVariable @NotBlank UUID meetingId,
+            @RequestBody MeetingDTO meetingDTO,
+            HttpServletRequest request) {
         String user_id = cookieRequestFilter.getUserId(request);
         meetingDTO.setCreatedBy(Integer.valueOf(user_id));
         meetingDTO.setMeetingId(meetingId);
@@ -94,26 +95,23 @@ public class MeetingController {
         return userService.getUserByUserIds(userIds);
     }
 
-
-
-
     @MessageMapping("/meeting/{meeting_id}")
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://videoconferencedut.tk:8080")
     public void sendMessage(@DestinationVariable String meeting_id, @Valid @Payload SignalMessage signalMessage,
-                            SimpMessageHeaderAccessor headerAccessor) {
+            SimpMessageHeaderAccessor headerAccessor) {
         try {
             String sessionId = headerAccessor.getSessionAttributes().get("sessionId").toString();
-//            String sender = headerAccessor.getUser().getName();
+            // String sender = headerAccessor.getUser().getName();
             switch (signalMessage.getType()) {
-                case CHAT:{
+                case CHAT: {
                     signalMessage.getMessage().setMeetingId(UUID.fromString(meeting_id));
                     MessageDTO message = messageService.addMessage(signalMessage.getMessage());
-//                    simpMessagingTemplate.convertAndSendToUser(message.getSenderId().toString(),
-//                            "/topic/meeting/" + meeting_id + "/chat", message);
+                    // simpMessagingTemplate.convertAndSendToUser(message.getSenderId().toString(),
+                    // "/topic/meeting/" + meeting_id + "/chat", message);
                     simpMessagingTemplate.convertAndSend("/topic/meeting/" + meeting_id + "/chat", message);
                     break;
                 }
-                case JOIN:{
+                case JOIN: {
                     logger.info("user is " + headerAccessor.getUser().getName());
                     meetingService.joinMeeting(meeting_id, signalMessage, sessionId);
                     break;

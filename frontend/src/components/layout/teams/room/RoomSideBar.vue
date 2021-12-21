@@ -54,6 +54,11 @@
                 class="dropdown-item"
                 href="#"
               ><i class="ti-link mr-1" />Nhận liên kết đến nhóm</a>
+              <a 
+                class="dropdown-item"
+                href="#"
+                @click="clickBtnCopyCode()"
+              ><i class="ti-clip mr-1" />Copy code {{ getRoomDetails.roomCode }}</a>
             </div>
           </div>
         </div>
@@ -79,10 +84,20 @@ export default {
   },
 
   mounted() {
-
+    document.addEventListener("copy", (event) => {
+      event.preventDefault();
+      if (event.clipboardData) {
+        event.clipboardData.setData("text/plain", this.getRoomDetails.roomCode);
+        console.log(event.clipboardData.getData("text"))
+      }
+    })
   },
 
   methods: {
+
+    clickBtnCopyCode() {
+      document.execCommand("copy");
+    }
 
   },
 };

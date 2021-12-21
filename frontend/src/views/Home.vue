@@ -31,9 +31,9 @@ export default{
     // FooterHome,
   },
   mounted() {
-    document.body.classList.add('croll')
+    document.body.classList.add('home_croll')
   }
 }
 </script>
-<style src="../assets/css/home.css">
+<style src="../assets/css/home.css" scoped>
 </style>

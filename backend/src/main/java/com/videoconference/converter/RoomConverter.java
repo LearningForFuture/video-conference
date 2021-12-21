@@ -21,6 +21,7 @@ public class RoomConverter {
         RoomDTO roomDTO = new RoomDTO();
         roomDTO.setRoomId(room.getRoomId());
         roomDTO.setRoomName(room.getRoomName());
+        roomDTO.setRoomCode(room.getRoomCode());
         roomDTO.setIsPublic(room.getIsPublic());
         roomDTO.setCreatedAt(room.getCreatedAt());
         roomDTO.setUpdatedAt(room.getUpdatedAt());

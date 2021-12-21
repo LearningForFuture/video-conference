@@ -140,7 +140,8 @@ export default {
       'setMeetingId', 'setSender', 'setConnected', 'setLocalMediaStream', 'setIsLeave',
       'setPeers', 'addPeers', 'removePeers', 'addIceCandidate', 'sendMsgChannels',
       'setRemoteDescription', 'setLocalDescription', 'closePeers', 'addChannels', 
-      'removeChannels', 'findMeetingById', 'closeMediaDevices', 'getUsersInCall'
+      'removeChannels', 'findMeetingById', 'closeMediaDevices', 'getUsersInCall',
+      'setAudioToggle', 'setVideoToggle'
     ]),
 
     ...mapActions('ParticipantMeeting', ['joinMeeting', 'leftMeeting']),
@@ -422,6 +423,7 @@ export default {
             this.setVideoDevices(devices.filter((device) => device.kind === "videoinput" && device.deviceId !== "default"));
             this.setAudioDevices(devices.filter((device) => device.kind === "audioinput" && device.deviceId !== "default"));
           });
+
         })
         .catch((err) => {
           console.log(err);
@@ -801,32 +803,6 @@ export default {
     border-radius: 4px;
     margin: 5px 5px 5px 5px;
     box-sizing: border-box;
-}
-
-#video .video.one {
-  width: 100%;
-  height: 100%;
-}
-
-#video .video.two {
-  width: 50%;
-  max-width: 50%;
-  height: 50%;
-}
-
-#video .video.three {
-  width: calc(100 / 3%);
-  height: calc(100 / 3%);
-}
-
-#video .video.four {
-  width: 25%;
-  height: 25%;
-}
-
-#video .video.especially {
-  width: 50%;
-  height: 100%;
 }
 
 .video video {
