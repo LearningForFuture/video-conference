@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/authenticate", "/register").permitAll()
+                .antMatchers("/login", "/register/**","reset-password/**").permitAll()
                 .antMatchers("/chat/info", "/meeting").permitAll()
                 .antMatchers("/admin").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()
@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://videoconferencedut.tk:8080"));
+        configuration.setAllowedOrigins(Arrays.asList("http://tankhanh.tk:8080"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token", "Origin", "Accept"));
