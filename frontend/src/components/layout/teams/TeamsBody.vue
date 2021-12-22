@@ -47,13 +47,24 @@
                 <div class="group-name">
                   <h5 class="text-center">Join group</h5>
                 </div>
-                <form>
+                <form
+                  action
+                  method="post"
+                  @submit.prevent="handleSubmitJoinRoom"
+                >
                   <div class="form-group">
                     <input
+                      v-model.trim="code"
                       type="text"
+                      name="code"
                       class="form-control"
                       placeholder="Enter code"
+                      required
                     >
+                    <small
+                      v-if="!isFieldCode"
+                      class="text-danger"
+                    >Code required</small>
                   </div>
                   <input
                     type="submit"
@@ -142,7 +153,12 @@ export default {
     TeamsListGroups,
     ModalForm
   },
-  data() { return { nameGroup: null, isPublic: false, errors: {} } },
+  data() { 
+    return { 
+      nameGroup: null, isPublic: false, errors: {}, isFieldCode: false,
+      code: null  
+    } 
+  },
 
   computed: {
     ...mapState({
@@ -156,11 +172,16 @@ export default {
     nameGroup(value) {
       this.nameGroup = value;
       this.validNameGroup();
+    },
+
+    code(value) {
+      this.code = value;
+      this.validCode();
     }
   },
 
   methods: {
-    ...mapActions('rooms', ['changeStateJoined', 'addNewRoom']),
+    ...mapActions('rooms', ['changeStateJoined', 'addNewRoom', 'joinRoomByCode']),
 
     backLayoutTeams() {
       this.changeStateJoined(false);
@@ -175,6 +196,12 @@ export default {
       } else {
         this.errors['nameGroup'] = { checked: true, mesage:'' }
       }
+    },
+
+    validCode() {
+      if (!this.code) {
+        this.isFieldCode = false;
+      } else this.isFieldCode = true;
     },
 
     async handleSubmit() {
@@ -192,6 +219,38 @@ export default {
         }
       } catch(error) {
         console.log(error.response);
+      }
+    },
+
+    async handleSubmitJoinRoom() {
+      try {
+        this.validCode();
+        if (this.isFieldCode) {
+          await this.joinRoomByCode({
+            roomCode: this.code
+          })
+        }
+        this.backLayoutTeams();
+      } catch (err) {
+        console.log(err.response)
+        if (err.response.status === 400) {
+          err.response.data.errors.forEach(error => {
+            this.$toast.error(error.message, {
+              position: "top-right",
+              timeout: 5000,
+              closeOnClick: true,
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              draggable: true,
+              draggablePercent: 0.6,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: "button",
+              icon: true,
+              rtl: false
+            });
+          })
+        }
       }
     }
 

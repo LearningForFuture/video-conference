@@ -17,10 +17,7 @@
       >
         <polyline points="9 18 15 12 9 6" />
       </svg>
-      <a
-        href=""
-        class="breadcrumb--active"
-      >Dashboard</a>
+      <a href="" class="breadcrumb--active">Dashboard</a>
     </div>
     <!-- END: Breadcrumb -->
     <!-- BEGIN: Search -->
@@ -35,7 +32,7 @@
             placeholder-theme-13
           "
           placeholder="Search..."
-        >
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -48,23 +45,11 @@
           stroke-linejoin="round"
           class="feather feather-search search__icon dark:text-gray-300"
         >
-          <circle
-            cx="11"
-            cy="11"
-            r="8"
-          />
-          <line
-            x1="21"
-            y1="21"
-            x2="16.65"
-            y2="16.65"
-          />
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
       </div>
-      <a
-        class="notification sm:hidden"
-        href=""
-      >
+      <a class="notification sm:hidden" href="">
         <i
           data-feather="search"
           class="notification__icon dark:text-gray-300"
@@ -72,14 +57,9 @@
       </a>
       <div class="search-result">
         <div class="search-result__content">
-          <div class="search-result__content__title">
-            Pages
-          </div>
+          <div class="search-result__content__title">Pages</div>
           <div class="mb-5">
-            <a
-              href=""
-              class="flex items-center"
-            >
+            <a href="" class="flex items-center">
               <div
                 class="
                   w-8
@@ -92,17 +72,11 @@
                   rounded-full
                 "
               >
-                <i
-                  class="w-4 h-4"
-                  data-feather="inbox"
-                />
+                <i class="w-4 h-4" data-feather="inbox" />
               </div>
               <div class="ml-3">Mail Settings</div>
             </a>
-            <a
-              href=""
-              class="flex items-center mt-2"
-            >
+            <a href="" class="flex items-center mt-2">
               <div
                 class="
                   w-8
@@ -115,17 +89,11 @@
                   rounded-full
                 "
               >
-                <i
-                  class="w-4 h-4"
-                  data-feather="users"
-                />
+                <i class="w-4 h-4" data-feather="users" />
               </div>
               <div class="ml-3">Users & Permissions</div>
             </a>
-            <a
-              href=""
-              class="flex items-center mt-2"
-            >
+            <a href="" class="flex items-center mt-2">
               <div
                 class="
                   w-8
@@ -138,28 +106,20 @@
                   rounded-full
                 "
               >
-                <i
-                  class="w-4 h-4"
-                  data-feather="credit-card"
-                />
+                <i class="w-4 h-4" data-feather="credit-card" />
               </div>
               <div class="ml-3">Transactions Report</div>
             </a>
           </div>
-          <div class="search-result__content__title">
-            Users
-          </div>
+          <div class="search-result__content__title">Users</div>
           <div class="mb-5">
-            <a
-              href=""
-              class="flex items-center mt-2"
-            >
+            <a href="" class="flex items-center mt-2">
               <div class="w-8 h-8 image-fit">
                 <img
                   alt="Midone Tailwind HTML Admin Template"
                   class="rounded-full"
                   src="@/assets/images/profile-13.jpg"
-                >
+                />
               </div>
               <div class="ml-3">Robert De Niro</div>
               <div
@@ -168,16 +128,13 @@
                 robertdeniro@left4code.com
               </div>
             </a>
-            <a
-              href=""
-              class="flex items-center mt-2"
-            >
+            <a href="" class="flex items-center mt-2">
               <div class="w-8 h-8 image-fit">
                 <img
                   alt="Midone Tailwind HTML Admin Template"
                   class="rounded-full"
                   src="@/assets/images/profile-13.jpg"
-                >
+                />
               </div>
               <div class="ml-3">Kevin Spacey</div>
               <div
@@ -186,16 +143,13 @@
                 kevinspacey@left4code.com
               </div>
             </a>
-            <a
-              href=""
-              class="flex items-center mt-2"
-            >
+            <a href="" class="flex items-center mt-2">
               <div class="w-8 h-8 image-fit">
                 <img
                   alt="Midone Tailwind HTML Admin Template"
                   class="rounded-full"
                   src="@/assets/images/profile-7.jpg"
-                >
+                />
               </div>
               <div class="ml-3">Al Pacino</div>
               <div
@@ -204,16 +158,13 @@
                 alpacino@left4code.com
               </div>
             </a>
-            <a
-              href=""
-              class="flex items-center mt-2"
-            >
+            <a href="" class="flex items-center mt-2">
               <div class="w-8 h-8 image-fit">
                 <img
                   alt="Midone Tailwind HTML Admin Template"
                   class="rounded-full"
                   src="@/assets/images/profile-2.jpg"
-                >
+                />
               </div>
               <div class="ml-3">Leonardo DiCaprio</div>
               <div
@@ -223,67 +174,53 @@
               </div>
             </a>
           </div>
-          <div class="search-result__content__title">
-            Products
-          </div>
-          <a
-            href=""
-            class="flex items-center mt-2"
-          >
+          <div class="search-result__content__title">Products</div>
+          <a href="" class="flex items-center mt-2">
             <div class="w-8 h-8 image-fit">
               <img
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/preview-15.jpg"
-              >
+              />
             </div>
             <div class="ml-3">Nike Tanjun</div>
             <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">
               Sport &amp; Outdoor
             </div>
           </a>
-          <a
-            href=""
-            class="flex items-center mt-2"
-          >
+          <a href="" class="flex items-center mt-2">
             <div class="w-8 h-8 image-fit">
               <img
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/preview-8.jpg"
-              >
+              />
             </div>
             <div class="ml-3">Samsung Q90 QLED TV</div>
             <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">
               Electronic
             </div>
           </a>
-          <a
-            href=""
-            class="flex items-center mt-2"
-          >
+          <a href="" class="flex items-center mt-2">
             <div class="w-8 h-8 image-fit">
               <img
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/preview-12.jpg"
-              >
+              />
             </div>
             <div class="ml-3">Nike Air Max 270</div>
             <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">
               Sport &amp; Outdoor
             </div>
           </a>
-          <a
-            href=""
-            class="flex items-center mt-2"
-          >
+          <a href="" class="flex items-center mt-2">
             <div class="w-8 h-8 image-fit">
               <img
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/preview-5.jpg"
-              >
+              />
             </div>
             <div class="ml-3">Apple MacBook Pro 13</div>
             <div class="ml-auto w-48 truncate text-gray-600 text-xs text-right">
@@ -326,16 +263,14 @@
             dark:bg-dark-6
           "
         >
-          <div class="notification-content__title">
-            Notifications
-          </div>
+          <div class="notification-content__title">Notifications</div>
           <div class="cursor-pointer relative flex items-center">
             <div class="w-12 h-12 flex-none image-fit mr-1">
               <img
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/profile-13.jpg"
-              >
+              />
               <div
                 class="
                   w-3
@@ -351,10 +286,9 @@
             </div>
             <div class="ml-2 overflow-hidden">
               <div class="flex items-center">
-                <a
-                  href="javascript:;"
-                  class="font-medium truncate mr-5"
-                >Robert De Niro</a>
+                <a href="javascript:;" class="font-medium truncate mr-5"
+                  >Robert De Niro</a
+                >
                 <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">
                   05:09 AM
                 </div>
@@ -372,7 +306,7 @@
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/profile-13.jpg"
-              >
+              />
               <div
                 class="
                   w-3
@@ -388,10 +322,9 @@
             </div>
             <div class="ml-2 overflow-hidden">
               <div class="flex items-center">
-                <a
-                  href="javascript:;"
-                  class="font-medium truncate mr-5"
-                >Kevin Spacey</a>
+                <a href="javascript:;" class="font-medium truncate mr-5"
+                  >Kevin Spacey</a
+                >
                 <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">
                   05:09 AM
                 </div>
@@ -409,7 +342,7 @@
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/profile-7.jpg"
-              >
+              />
               <div
                 class="
                   w-3
@@ -425,10 +358,9 @@
             </div>
             <div class="ml-2 overflow-hidden">
               <div class="flex items-center">
-                <a
-                  href="javascript:;"
-                  class="font-medium truncate mr-5"
-                >Al Pacino</a>
+                <a href="javascript:;" class="font-medium truncate mr-5"
+                  >Al Pacino</a
+                >
                 <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">
                   01:10 PM
                 </div>
@@ -446,7 +378,7 @@
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/profile-2.jpg"
-              >
+              />
               <div
                 class="
                   w-3
@@ -462,10 +394,9 @@
             </div>
             <div class="ml-2 overflow-hidden">
               <div class="flex items-center">
-                <a
-                  href="javascript:;"
-                  class="font-medium truncate mr-5"
-                >Leonardo DiCaprio</a>
+                <a href="javascript:;" class="font-medium truncate mr-5"
+                  >Leonardo DiCaprio</a
+                >
                 <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">
                   01:10 PM
                 </div>
@@ -483,7 +414,7 @@
                 alt="Midone Tailwind HTML Admin Template"
                 class="rounded-full"
                 src="@/assets/images/profile-2.jpg"
-              >
+              />
               <div
                 class="
                   w-3
@@ -499,10 +430,9 @@
             </div>
             <div class="ml-2 overflow-hidden">
               <div class="flex items-center">
-                <a
-                  href="javascript:;"
-                  class="font-medium truncate mr-5"
-                >Edward Norton</a>
+                <a href="javascript:;" class="font-medium truncate mr-5"
+                  >Edward Norton</a
+                >
                 <div class="text-xs text-gray-500 ml-auto whitespace-nowrap">
                   06:05 AM
                 </div>
@@ -519,10 +449,7 @@
     </div>
     <!-- END: Notifications -->
     <!-- BEGIN: Account Menu -->
-    <div
-      class="intro-x dropdown w-8 h-8"
-      @click="isActive = !isActive"
-    >
+    <div class="intro-x dropdown w-8 h-8" @click="isActive = !isActive">
       <div
         class="
           dropdown-toggle
@@ -540,7 +467,7 @@
         <img
           alt="Midone Tailwind HTML Admin Template"
           src="@/assets/images/profile-2.jpg"
-        >
+        />
       </div>
       <div
         v-if="isActive"
@@ -566,9 +493,7 @@
           "
         >
           <div class="p-4 border-b border-theme-27 dark:border-dark-3">
-            <div class="font-medium">
-              Morgan Freeman
-            </div>
+            <div class="font-medium">Morgan Freeman</div>
             <div class="text-xs text-theme-28 mt-0.5 dark:text-gray-600">
               Software Engineer
             </div>
@@ -602,11 +527,7 @@
                 class="feather feather-user w-4 h-4 mr-2"
               >
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle
-                  cx="12"
-                  cy="7"
-                  r="4"
-                />
+                <circle cx="12" cy="7" r="4" />
               </svg>
               Profile
             </a>
@@ -673,14 +594,7 @@
                 stroke-linejoin="round"
                 class="feather feather-lock w-4 h-4 mr-2"
               >
-                <rect
-                  x="3"
-                  y="11"
-                  width="18"
-                  height="11"
-                  rx="2"
-                  ry="2"
-                />
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </svg>
               Reset Password
@@ -712,18 +626,9 @@
                 stroke-linejoin="round"
                 class="feather feather-help-circle w-4 h-4 mr-2"
               >
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="10"
-                />
+                <circle cx="12" cy="12" r="10" />
                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                <line
-                  x1="12"
-                  y1="17"
-                  x2="12.01"
-                  y2="17"
-                />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
               </svg>
               Help
             </a>
@@ -756,19 +661,8 @@
                 stroke-linejoin="round"
                 class="feather feather-toggle-right w-4 h-4 mr-2"
               >
-                <rect
-                  x="1"
-                  y="5"
-                  width="22"
-                  height="14"
-                  rx="7"
-                  ry="7"
-                />
-                <circle
-                  cx="16"
-                  cy="12"
-                  r="3"
-                />
+                <rect x="1" y="5" width="22" height="14" rx="7" ry="7" />
+                <circle cx="16" cy="12" r="3" />
               </svg>
               Logout
             </a>
@@ -791,5 +685,5 @@ export default {
 };
 </script>
 
-<style>
+<style src="../../assets/css/app.css" scoped>
 </style>

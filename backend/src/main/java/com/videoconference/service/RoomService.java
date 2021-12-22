@@ -27,9 +27,11 @@ public interface RoomService {
 
     boolean isExistRoom(String roomCode);
 
-    void joinRoomByRoomCode(String roomCode, String username);
+    RoomDTO joinRoomByRoomCode(String roomCode, String username);
 
     void removeUser(Integer roomId, Integer userId);
 
     Page<RoomDTO> getRooms(int page, int size, String[] sort, String keyword);
+
+    List<Room> findRoomByParticipantId(Integer participantId);
 }

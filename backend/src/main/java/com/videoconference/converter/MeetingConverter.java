@@ -23,7 +23,7 @@ public class MeetingConverter {
         meetingDTO.setFinishedAt(meeting.getFinishedAt());
         meetingDTO.setStartedAt(meeting.getStartedAt());
         meetingDTO.setRoomId(meeting.getRoom().getRoomId());
-        meetingDTO.setParticipantMeetings(new ArrayList<>(meeting.getParticipantMeetings()));
+//        meetingDTO.setParticipantMeetings(new ArrayList<>(meeting.getParticipantMeetings()));
         return meetingDTO;
     }
 }

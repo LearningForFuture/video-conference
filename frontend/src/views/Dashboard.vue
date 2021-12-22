@@ -6,15 +6,18 @@
 </template>
 
 <script>
-// import "../assets/css/app.css";
 import SideBarAdmin from "../components/admin/SideBarAdmin.vue";
 export default {
   name: "Dashboard",
   components: {
     SideBarAdmin,
   },
+  mounted() {
+    document.body.classList.add("home_croll");
+    document.body.style.backgroundColor = "#2e51bb";
+  },
 };
 </script>
 
-<style>
+<style src="../assets/css/app.css" scoped>
 </style>

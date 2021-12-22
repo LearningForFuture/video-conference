@@ -10,7 +10,7 @@
 import MeetingLayout from '../components/layout/teams/meeting/MeetingLayout.vue'
 import 'jquery/src/jquery.js'
 import 'bootstrap/dist/js/bootstrap.min.js'
-import '../assets/css/classroom.css'
+// import '../assets/css/classroom.css'
 import 'webrtc-adapter'
 
 export default {

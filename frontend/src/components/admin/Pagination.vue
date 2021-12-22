@@ -60,11 +60,7 @@
         </a>
       </li>
 
-      <li
-        v-for="(page, index) in pages"
-        :key="index"
-        class="pagination-item"
-      >
+      <li v-for="(page, index) in pages" :key="index" class="pagination-item">
         <a
           class="pagination__link"
           href=""
@@ -72,7 +68,8 @@
           :class="{ 'pagination__link--active': isPageActive(page.name) }"
           :aria-label="`Go to page number ${page.name}`"
           @click.prevent="onClickPage(page.name)"
-        >{{ page.name }}</a>
+          >{{ page.name }}</a
+        >
       </li>
 
       <li class="pagination-item">
@@ -217,5 +214,5 @@ export default {
 };
 </script>
 
-<style>
+<style src="../../assets/css/app.css" scoped>
 </style>

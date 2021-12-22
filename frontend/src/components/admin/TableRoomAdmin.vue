@@ -1,9 +1,7 @@
 <template>
   <div class="content">
     <top-bar-admin />
-    <h2 class="intro-y text-lg font-medium mt-10">
-      Quản lý room
-    </h2>
+    <h2 class="intro-y text-lg font-medium mt-10">Quản lý room</h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
       <div
         class="
@@ -15,9 +13,7 @@
           mt-2
         "
       >
-        <button class="btn btn-primary shadow-md mr-2">
-          Thêm room
-        </button>
+        <button class="btn btn-primary shadow-md mr-2">Thêm room</button>
         <div class="dropdown">
           <button
             class="
@@ -43,18 +39,8 @@
                 stroke-linejoin="round"
                 class="feather feather-plus w-4 h-4"
               >
-                <line
-                  x1="12"
-                  y1="5"
-                  x2="12"
-                  y2="19"
-                />
-                <line
-                  x1="5"
-                  y1="12"
-                  x2="19"
-                  y2="12"
-                />
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
               </svg>
             </span>
           </button>
@@ -77,10 +63,7 @@
                   rounded-md
                 "
               >
-                <i
-                  data-feather="printer"
-                  class="w-4 h-4 mr-2"
-                /> Print
+                <i data-feather="printer" class="w-4 h-4 mr-2" /> Print
               </a>
               <a
                 href=""
@@ -99,10 +82,7 @@
                   rounded-md
                 "
               >
-                <i
-                  data-feather="file-text"
-                  class="w-4 h-4 mr-2"
-                /> Export to
+                <i data-feather="file-text" class="w-4 h-4 mr-2" /> Export to
                 Excel
               </a>
               <a
@@ -122,10 +102,7 @@
                   rounded-md
                 "
               >
-                <i
-                  data-feather="file-text"
-                  class="w-4 h-4 mr-2"
-                /> Export to
+                <i data-feather="file-text" class="w-4 h-4 mr-2" /> Export to
                 PDF
               </a>
             </div>
@@ -141,11 +118,8 @@
               type="text"
               class="form-control w-56 box pr-10 placeholder-theme-13"
               placeholder="Search..."
-            >
-            <button
-              class="btn-search"
-              @click="search"
-            >
+            />
+            <button class="btn-search" @click="search">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -167,17 +141,8 @@
                   right-0
                 "
               >
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="8"
-                />
-                <line
-                  x1="21"
-                  y1="21"
-                  x2="16.65"
-                  y2="16.65"
-                />
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </button>
           </div>
@@ -188,21 +153,11 @@
         <table class="table table-report -mt-2">
           <thead>
             <tr>
-              <th class="whitespace-nowrap">
-                STT
-              </th>
-              <th class="whitespace-nowrap">
-                ROOM NAME
-              </th>
-              <th class="whitespace-nowrap">
-                ROOM CODE
-              </th>
-              <th class="text-center whitespace-nowrap">
-                STATUS
-              </th>
-              <th class="text-center whitespace-nowrap">
-                ACTIONS
-              </th>
+              <th class="whitespace-nowrap">STT</th>
+              <th class="whitespace-nowrap">ROOM NAME</th>
+              <th class="whitespace-nowrap">ROOM CODE</th>
+              <th class="text-center whitespace-nowrap">STATUS</th>
+              <th class="text-center whitespace-nowrap">ACTIONS</th>
             </tr>
           </thead>
           <tbody>
@@ -214,15 +169,12 @@
               <td class="">
                 {{
                   ++index +
-                    getRoomPage.totalItems * (getRoomPage.currentPage - 1)
+                  getRoomPage.totalItems * (getRoomPage.currentPage - 1)
                 }}
               </td>
               <td>{{ room.roomName }}</td>
               <td>{{ room.roomCode }}</td>
-              <td
-                v-if="room.isPublic"
-                class="w-40"
-              >
+              <td v-if="room.isPublic" class="w-40">
                 <div class="flex items-center justify-center text-theme-9">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -239,13 +191,11 @@
                     <polyline points="9 11 12 14 22 4" />
                     <path
                       d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                    /></svg>Public
+                    /></svg
+                  >Public
                 </div>
               </td>
-              <td
-                v-else
-                class="w-40"
-              >
+              <td v-else class="w-40">
                 <div class="flex items-center justify-center text-theme-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -262,15 +212,13 @@
                     <polyline points="9 11 12 14 22 4" />
                     <path
                       d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                    /></svg>Private
+                    /></svg
+                  >Private
                 </div>
               </td>
               <td class="table-report__action w-56">
                 <div class="flex justify-center items-center">
-                  <a
-                    class="flex items-center mr-3"
-                    href="javascript:;"
-                  >
+                  <a class="flex items-center mr-3" href="javascript:;">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -286,12 +234,10 @@
                       <polyline points="9 11 12 14 22 4" />
                       <path
                         d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                      /></svg>Edit
+                      /></svg
+                    >Edit
                   </a>
-                  <a
-                    class="flex items-center text-theme-6"
-                    href="javascript:;"
-                  >
+                  <a class="flex items-center text-theme-6" href="javascript:;">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -308,18 +254,9 @@
                       <path
                         d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
                       />
-                      <line
-                        x1="10"
-                        y1="11"
-                        x2="10"
-                        y2="17"
-                      />
-                      <line
-                        x1="14"
-                        y1="11"
-                        x2="14"
-                        y2="17"
-                      /></svg>Delete
+                      <line x1="10" y1="11" x2="10" y2="17" />
+                      <line x1="14" y1="11" x2="14" y2="17" /></svg
+                    >Delete
                   </a>
                 </div>
               </td>
@@ -388,5 +325,5 @@ export default {
 };
 </script>
 
-<style>
+<style src="../../assets/css/app.css" scoped>
 </style>

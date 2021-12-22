@@ -30,4 +30,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.fullName like %:keyword% or u.username like %:keyword% or u.email like %:keyword%")
     Page<User> search(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query("SELECT u FROM User  u WHERE u.userId in :ids")
+    List<User> findByUserIds(int[] ids);
 }

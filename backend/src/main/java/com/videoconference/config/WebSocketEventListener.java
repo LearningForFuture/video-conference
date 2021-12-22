@@ -1,7 +1,10 @@
 package com.videoconference.config;
 
+import com.videoconference.dto.ParticipantMeeting.ParticipantMeetingDTO;
+import com.videoconference.service.ParticipantMeetingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
@@ -9,13 +12,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.util.UUID;
+
+
 @CrossOrigin(origins = "http://localhost:8080")
 @Component
 public class WebSocketEventListener {
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
-//    @Autowired
-//    private SimpMessagingTemplate simpMessagingTemplate;
+    @Autowired
+    private ParticipantMeetingService participantMeetingService;
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
@@ -31,4 +37,5 @@ public class WebSocketEventListener {
             logger.info("User Disconnected : " + sessionId);
         }
     }
+
 }

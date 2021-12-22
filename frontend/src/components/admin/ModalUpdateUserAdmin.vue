@@ -3,9 +3,7 @@
     <div class="modal-wrapper">
       <div class="modal-container">
         <div class="modal-header">
-          <slot name="header">
-            Cập nhật thành viên
-          </slot>
+          <slot name="header"> Cập nhật thành viên </slot>
         </div>
 
         <div class="modal-body">
@@ -33,5 +31,5 @@ export default {
 };
 </script>
 
-<style src="@/assets/css/modal.css">
+<style src="@/assets/css/modal.css" scoped>
 </style>

@@ -1,9 +1,7 @@
 package com.videoconference.service.impl;
 
-import com.videoconference.dto.users.CreateUserDTO;
-import com.videoconference.dto.users.PasswordResetDTO;
-import com.videoconference.dto.users.RequestUserDTO;
-import com.videoconference.dto.users.UserDTO;
+import com.videoconference.converter.UserConverter;
+import com.videoconference.dto.users.*;
 import com.videoconference.entity.Role;
 import com.videoconference.entity.User;
 import com.videoconference.entity.VerificationToken;
@@ -24,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.videoconference.constant.SystemConstant.ROLE_USER;
 
@@ -38,6 +37,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private VerificationTokenRepository tokenRepository;
 
+    @Autowired
+    private UserConverter userConverter;
+
     public User createUser(CreateUserDTO createUserDTO) {
         //mapping to user
         User user = new User();
@@ -45,6 +47,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(createUserDTO.getEmail());
         user.setPassword(passwordEncoder.encode(createUserDTO.getPassword()));
         user.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        user.setFullName(createUserDTO.getFullName());
 
         Set<Role> roles = new HashSet<>();
         roles.add(new Role().setRoleId(ROLE_USER));
@@ -207,9 +210,17 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException());
         userRepository.delete(user);
     }
+
     @Override
     public boolean isExistUserId(Integer userId) {
         return userRepository.findFirstByUserId(userId).isPresent();
+    }
+
+    @Override
+    public List<UserResponse> getUserByUserIds(int[] ids) {
+        return userRepository.findByUserIds(ids)
+                .stream().map(user -> userConverter.toDTO(user))
+                .collect(Collectors.toList());
     }
 
     private UserDTO map(User user) {

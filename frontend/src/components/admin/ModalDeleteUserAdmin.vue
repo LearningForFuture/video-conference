@@ -3,9 +3,7 @@
     <div class="modal-wrapper">
       <div class="modal-container">
         <div class="modal-header">
-          <slot name="header">
-            Bạn có chắc chắn muốn xóa người dùng này?
-          </slot>
+          <slot name="header"> Bạn có chắc chắn muốn xóa người dùng này? </slot>
         </div>
 
         <div class="modal-body">
@@ -60,5 +58,5 @@ export default {
 };
 </script>
 
-<style src="@/assets/css/modal.css">
+<style src="@/assets/css/modal.css" scoped>
 </style>

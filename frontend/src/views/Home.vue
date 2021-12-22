@@ -12,16 +12,15 @@
 </template>
 
 <script>
+import HomeBanner from "../components/layout/home/HomeBanner.vue";
+import HomeTextAnimation from "../components/layout/home/HomeTextAnimation.vue";
+import HomeBody from "../components/layout/home/HomeBody.vue";
+import HomeMember from "../components/layout/home/HomeMember.vue";
+import "../assets/css/style.css";
+import "../assets/css/home.css";
 
-import HomeBanner from '../components/layout/home/HomeBanner.vue'
-import HomeTextAnimation from '../components/layout/home/HomeTextAnimation.vue'
-import HomeBody from '../components/layout/home/HomeBody.vue'
-import HomeMember from '../components/layout/home/HomeMember.vue'
-import '../assets/css/style.css'
-import '../assets/css/home.css'
-
-export default{
-  name: 'HomePage',
+export default {
+  name: "HomePage",
   components: {
     // Navigation,
     HomeBanner,
@@ -31,9 +30,9 @@ export default{
     // FooterHome,
   },
   mounted() {
-    document.body.classList.add('croll')
-  }
-}
+    document.body.classList.add("home_croll");
+  },
+};
 </script>
 <style src="../assets/css/home.css">
 </style>

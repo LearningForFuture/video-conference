@@ -1,102 +1,82 @@
 <template>
   <div :class="'modal ' + (modal.isShowModal ? 'show-modal' : '')">
     <div class="modal-content">
-      <span
-        class="close-button"
-        @click="closeModal"
-      >&times;</span>
+      <span class="close-button" @click="closeModal">&times;</span>
       <div
         id="container"
         :class="'container ' + (modal.isSignUp ? 'right-panel-active' : '')"
       >
         <div class="form-container sign-up-container">
-          <form
-            action=""
-            @submit.prevent="hanldeSubmitSignUp"
-          >
-            <h2>Create Account</h2>
+          <form action="" @submit.prevent="hanldeSubmitSignUp">
+            <h3>Create Account</h3>
             <div class="social-container">
               <!-- <a href="#" class="social"><font-awesome-icon icon="fa-brands fa-twitter" /></a> -->
-              <a
-                href="#"
-                class="social"
-              ><i class="ti-google" /></a>
-              <a
-                href="#"
-                class="social"
-              ><i class="ti-facebook" /></a>
+              <a href="#" class="social"><i class="ti-google" /></a>
+              <a href="#" class="social"><i class="ti-facebook" /></a>
             </div>
             <span>or use your email for registration</span>
+            <input
+              v-model.trim="fullName"
+              type="text"
+              placeholder="Full Name"
+            />
+            <span
+              v-if="errors['fullName'] && !errors['fullName'].checked"
+              class="error text-danger m-0"
+              >{{ errors["fullName"].message }}</span
+            >
             <input
               v-model.trim="username"
               type="text"
               minlength="3"
               placeholder="Username"
-            >
+            />
             <span
               v-if="errors['username'] && !errors['username'].checked"
               class="error text-danger m-0"
-            >{{ errors["username"].message }}</span>
-            <input
-              v-model.trim="email"
-              type="email"
-              placeholder="Email"
+              >{{ errors["username"].message }}</span
             >
+            <input v-model.trim="email" type="email" placeholder="Email" />
             <span
               v-if="errors['email'] && !errors['email'].checked"
               class="error text-danger m-0"
-            >{{ errors["email"].message }}</span>
+              v-text="errors['email'].message"
+            />
+            <!-- >{{ errors['email'].message }}</span> -->
             <input
               v-model.trim="password"
               type="password"
               placeholder="Password"
-            >
+            />
             <span
               v-if="errors['password'] && !errors['password'].checked"
               class="error text-danger m-0"
-            >{{ errors["password"].message }}</span>
+              >{{ errors["password"].message }}</span
+            >
             <input
               v-model.trim="confirmPassword"
               type="password"
               placeholder="Confirm Password"
-            >
+              @keydown.enter="hanldeSubmitSignUp"
+            />
             <span
               v-if="
                 errors['confirmPassword'] && !errors['confirmPassword'].checked
               "
               class="error text-danger m-0"
-            >{{ errors["confirmPassword"].message }}</span>
-            <input
-              class="btn-submit"
-              type="submit"
-              value="Sign Up"
+              >{{ errors["confirmPassword"].message }}</span
             >
-            <input
-              type="button"
-              class="ghost btn-submit"
-              value="Sign In"
-            >
+            <input class="btn-submit" type="submit" value="Sign Up" />
+            <input type="button" class="ghost btn-submit" value="Sign In" />
           </form>
         </div>
         <div class="form-container sign-in-container">
-          <form
-            action=""
-            @submit.prevent="handleSubmitSignIn"
-          >
+          <form action="" @submit.prevent="handleSubmitSignIn">
             <h2>Sign in</h2>
             <div class="social-container">
-              <a
-                href="#"
-                class="social"
-              ><i class="ti-facebook" /></a>
-              <a
-                href="#"
-                class="social"
-              ><i class="ti-google" /></a>
-              <a
-                href="#"
-                class="social"
-              ><i class="ti-linkedin" /></a>
+              <a href="#" class="social"><i class="ti-facebook" /></a>
+              <a href="#" class="social"><i class="ti-google" /></a>
+              <a href="#" class="social"><i class="ti-linkedin" /></a>
             </div>
             <span>or use your account</span>
             <input
@@ -104,35 +84,30 @@
               type="text"
               minlength="3"
               placeholder="Username or email"
-            >
+            />
             <span
               v-if="errors['username'] && !errors['username'].checked"
               class="error text-danger m-0"
-            >{{ errors["username"].message }}</span>
+              >{{ errors["username"].message }}</span
+            >
             <input
               v-model.trim="password"
               type="password"
               placeholder="Password"
-            >
+            />
             <span
               v-if="errors['password'] && !errors['password'].checked"
               class="error text-danger m-0"
-            >{{ errors["password"].message }}</span>
-            <a
-              class="forgot-pass"
-              href="#"
-            >Forgot your password?</a>
-            <input
-              class="btn-submit"
-              type="submit"
-              value="Sign In"
+              >{{ errors["password"].message }}</span
             >
+            <a class="forgot-pass" href="#">Forgot your password?</a>
+            <input class="btn-submit" type="submit" value="Sign In" />
             <input
               type="button"
               class="ghost btn-submit"
               value="Sign Up"
               @click="tabSignUp"
-            >
+            />
           </form>
         </div>
         <div class="overlay-container">
@@ -142,10 +117,7 @@
               <p class="text-p">
                 To keep connected with us please login with your personal info
               </p>
-              <button
-                class="ghost btn-submit"
-                @click="tabSignIn"
-              >
+              <button class="ghost btn-submit" @click="tabSignIn">
                 Sign In
               </button>
             </div>
@@ -154,10 +126,7 @@
               <p class="text-p">
                 Enter your personal details and start journey with us
               </p>
-              <button
-                class="ghost btn-submit"
-                @click="tabSignUp"
-              >
+              <button class="ghost btn-submit" @click="tabSignUp">
                 Sign Up
               </button>
             </div>
@@ -169,7 +138,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ModalSignIn",
@@ -185,9 +154,15 @@ export default {
       password: null,
       email: null,
       confirmPassword: null,
+      fullName: null,
       errors: {},
     };
   },
+
+  computed: {
+    ...mapGetters("users", ["getRoles"]),
+  },
+
   watch: {
     username(value) {
       this.username = value;
@@ -204,6 +179,10 @@ export default {
     confirmPassword(value) {
       this.cofirmPassword = value;
       this.validConfirmPassword();
+    },
+    fullName(value) {
+      this.fullName = value;
+      this.validFullName();
     },
   },
 
@@ -235,6 +214,18 @@ export default {
         };
       } else
         this.errors["username"] = {
+          checked: true,
+        };
+    },
+
+    validFullName() {
+      if (!this.fullName) {
+        this.errors["fullName"] = {
+          checked: false,
+          message: "FullName required",
+        };
+      } else
+        this.errors["fullName"] = {
           checked: true,
         };
     },
@@ -285,11 +276,13 @@ export default {
       this.validPassword();
       this.validConfirmPassword();
       this.validEmail();
+      this.validFullName();
       if (
         this.errors["username"].checked &&
         this.errors["password"].checked &&
         this.errors["email"].checked &&
-        this.errors["confirmPassword"].checked
+        this.errors["confirmPassword"].checked &&
+        this.errors["fullName"].checked
       ) {
         try {
           await this.createUser({
@@ -297,6 +290,7 @@ export default {
             password: this.password,
             email: this.email,
             confirmPassword: this.confirmPassword,
+            fullName: this.fullName,
           });
 
           this.$toast.success("Register success! Please verify email.", {
@@ -337,9 +331,14 @@ export default {
             password: this.password,
           });
           this.$emit("closeModal");
-          // this.$router.push({ path: '/teams' });
-          console.log(this.getRoles);
-          // window.location.href = "/conversations/teams";
+          const roleAdminIdx = this.getRoles.findIndex(
+            (r) => r.roleName === "ROLE_ADMIN"
+          );
+          if (roleAdminIdx != -1) {
+            this.$router.push({ path: "/admin" });
+          } else {
+            this.$router.push({ path: "/conversations/teams" });
+          }
         } catch (errs) {
           if (errs.response.status === 404) {
             this.$toast.error(errs.response.data.message, {

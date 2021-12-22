@@ -21,7 +21,7 @@ public class ParticipantMeeting {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("meetingId")
-    @JoinColumn(name = "meeting_id")
+    @JoinColumn(name = "meeting_id", columnDefinition = "BINARY(16)")
     private Meeting meeting;
 
     @ManyToOne(fetch = FetchType.LAZY)

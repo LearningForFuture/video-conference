@@ -4,7 +4,7 @@
       <div class="wrap-devices">
         <div class="btn-camera">
           <a
-            :class="getVideoEnabled ? '' : 'icon-video-off'"
+            :class="getVideoEnabled ? '': 'icon-video-off'"
             @click="videoToggle"
           >
             <font-awesome-icon
@@ -31,7 +31,7 @@
         </div>
         <div class="btn-microphone">
           <a
-            :class="getAudioEnabled ? '' : 'icon-mic-off'"
+            :class="getAudioEnabled ? '': 'icon-mic-off'"
             @click="audioToggle"
           >
             <svg
@@ -70,6 +70,7 @@
                 d="M9.486 10.607 5 6.12V8a3 3 0 0 0 4.486 2.607zm-7.84-9.253 12 12 .708-.708-12-12-.708.708z"
               />
             </svg>
+
           </a>
         </div>
         <div
@@ -87,7 +88,10 @@
       </div>
       <div class="wrap-btn-show">
         <div class="wrapper-icon-show">
-          <div class="btn-paticipant">
+          <div
+            class="btn-paticipant" 
+            @click="showParticipants()"
+          >
             <button>
               <font-awesome-icon
                 color="orange"
@@ -96,7 +100,10 @@
             </button>
           </div>
 
-          <div class="btn-chat">
+          <div 
+            class="btn-chat" 
+            @click="showChat()"
+          >
             <i class="ti-comments text-white" />
           </div>
           <div
@@ -119,7 +126,8 @@
                 <a
                   v-if="user_id && getCreatedBy == user_id"
                   class="dropdown-item"
-                  href="#"
+                  href="#" 
+                  @click="terminatingMeeting()"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -142,10 +150,9 @@
                   Terminating meeting</a>
                 <a
                   class="dropdown-item"
-                  href="#"
+                  href="#" 
                   @click="copyURL()"
-                ><i class="ti-link mr-1 text-primary" />Share link join
-                  meeting</a>
+                ><i class="ti-link mr-1 text-primary" />Share link join meeting</a>
               </div>
             </div>
           </div>
@@ -161,71 +168,55 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
+import {
+  mapGetters,
+  mapActions,
+  mapState,
+  mapMutations
+} from 'vuex';
 
 export default {
-  name: "MeetingHeader",
+  name: 'MeetingHeader',
 
   data() {
     return {
-      user_id: localStorage.getItem("user_id"),
+      user_id: localStorage.getItem('user_id'),
     };
   },
 
   computed: {
-    ...mapState("meeting", {
-      peers: (state) => state.peers,
+    ...mapState('meeting', {
+      peers: (state) => state.peers
     }),
-
-    ...mapGetters("meeting", [
-      "getCopyText",
-      "getVideoDevices",
-      "getAudioDevices",
-      "getAudioEnabled",
-      "getVideoEnabled",
-      "getScreenshareEnabled",
-      "getShowIntro",
-      "getShowChat",
-      "getShowSettings",
-      "getSelectedAudioDeviceId",
-      "getSelectedVideoDeviceId",
-      "getUsername",
-      "getTyping",
-      "getShats",
-      "getMeetingId",
-      "getSender",
-      "getCreatedBy",
-      "getRoomLink",
+		
+    ...mapGetters('meeting', [
+      'getCopyText', 'getVideoDevices',
+      'getAudioDevices', 'getAudioEnabled', 'getVideoEnabled',
+      'getScreenshareEnabled', 'getShowIntro', 'getShowChat', 'getShowSettings',
+      'getSelectedAudioDeviceId', 'getSelectedVideoDeviceId', 'getUsername',
+      'getTyping', 'getShats', 'getMeetingId', 'getSender', 'getCreatedBy', 'getRoomLink',
+      'getRoomId', 'getShowChat', 'getShowParticipants',
     ]),
   },
 
   mounted() {},
 
   methods: {
-    ...mapActions("meeting", [
-      "setVideoDevices",
-      "setAudioDevices",
-      "setAudioEnabled",
-      "setVideoEnabled",
-      "setScreenshareEnabled",
-      "setShowIntro",
-      "setShowChat",
-      "setShowSettings",
-      "setSelectedAudioDeviceId",
-      "setSelectedVideoDeviceId",
-      "setUsername",
-      "setTyping",
-      "setShats",
-      "setAudioToggle",
-      "setVideoToggle",
-      "setIsLeave",
-      "sendMsgChannels",
+    ...mapActions('meeting', [
+      'setVideoDevices',
+      'setAudioDevices', 'setAudioEnabled', 'setVideoEnabled',
+      'setScreenshareEnabled', 'setShowIntro', 'setShowChat', 'setShowSettings',
+      'setSelectedAudioDeviceId', 'setSelectedVideoDeviceId', 'setUsername',
+      'setTyping', 'setShats', 'setAudioToggle', 'setVideoToggle', 'setIsLeave',
+      'sendMsgChannels', 'endMeeting'
     ]),
+
+    ...mapMutations('meeting', ['SET_SHOW_PARTICIPANTS', 'SET_SHOW_CHAT']),
 
     videoToggle: function () {
       // e.stopPropagation();
       this.setVideoToggle();
-      this.$log.debug(this.getVideoEnabled);
+      this.$log.debug(this.getVideoEnabled)
       this.setVideoEnabled(!this.getVideoEnabled);
       const msgStatusVideo = {
         type: "refreshStatusVideo",
@@ -238,7 +229,7 @@ export default {
     audioToggle: function (e) {
       e.stopPropagation();
       this.setAudioToggle();
-      this.$log.debug(this.getAudioEnabled);
+      this.$log.debug(this.getAudioEnabled)
       this.setAudioEnabled(!this.getAudioEnabled);
       const msgStatusAudio = {
         type: "refreshStatusAudio",
@@ -254,22 +245,22 @@ export default {
       if (!this.getScreenshareEnabled) {
         if (navigator.getDisplayMedia) {
           screenMediaPromise = navigator.getDisplayMedia({
-            video: true,
+            video: true
           });
         } else if (navigator.mediaDevices.getDisplayMedia) {
           screenMediaPromise = navigator.mediaDevices.getDisplayMedia({
-            video: true,
+            video: true
           });
         } else {
           screenMediaPromise = navigator.mediaDevices.getUserMedia({
             video: {
-              mediaSource: "screen",
+              mediaSource: "screen"
             },
           });
         }
       } else {
         screenMediaPromise = navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: true
         });
       }
       screenMediaPromise
@@ -277,22 +268,14 @@ export default {
           this.setScreenshareEnabled(!this.getScreenshareEnabled);
 
           for (let peer_id in this.peers) {
-            const sender = this.peers[peer_id]
-              .getSenders()
-              .find((s) => (s.track ? s.track.kind === "video" : false));
+            const sender = this.peers[peer_id].getSenders().find((s) => (s.track ? s.track.kind === "video" : false));
             sender.replaceTrack(screenStream.getVideoTracks()[0]);
           }
           screenStream.getVideoTracks()[0].enabled = true;
-          const newStream = new MediaStream([
-            screenStream.getVideoTracks()[0],
-            this.getLocalMediaStream.getAudioTracks()[0],
-          ]);
+          const newStream = new MediaStream([screenStream.getVideoTracks()[0], this.getLocalMediaStream.getAudioTracks()[0]]);
           // localMediaStream = newStream;
           this.setLocalMediaStream(newStream);
-          this.attachMediaStream(
-            document.getElementById("selfVideo"),
-            newStream
-          );
+          this.attachMediaStream(document.getElementById("selfVideo"), newStream);
           this.toggleSelfVideoMirror();
 
           screenStream.getVideoTracks()[0].onended = function () {
@@ -300,177 +283,194 @@ export default {
           };
         })
         .catch((e) => {
-          console.log(
-            "Unable to share screen. Please use a supported browser."
-          );
+          console.log("Unable to share screen. Please use a supported browser.");
           this.$log.debug(e);
         });
     },
 
     toggleSelfVideoMirror: function () {
-      document
-        .querySelector("#videos .video #selfVideo")
-        .classList.toggle("mirror");
+      document.querySelector("#videos .video #selfVideo").classList.toggle("mirror");
     },
 
     copyURL: function () {
-      this.$log.debug(this.getRoomLink);
-      navigator.clipboard.writeText(this.getRoomLink).then(
-        () => {
-          // this.setCopyText("Copied 👍");
-          // setTimeout(() => (this.setCopyText("")), 2000);
-        },
-        (err) => console.error(err)
-      );
+      this.$log.debug(this.getRoomLink)
+      navigator.clipboard.writeText(this.getRoomLink).then(() => {
+        // this.setCopyText("Copied 👍");
+        // setTimeout(() => (this.setCopyText("")), 2000);
+      }, (err) => console.error(err));
     },
 
     showSettings() {},
 
     leaveMeeting() {
       this.setIsLeave(true);
-      this.$router.push({ name: "Teams" });
+      const room_id = this.getRoomId ? this.getRoomId: localStorage.getItem("room_id_current");
+      this.$router.push({ path: `/conversations/teams/room/${room_id}/post` });
     },
+
+    async terminatingMeeting() {
+      try {
+        const room_id = this.getRoomId ? this.getRoomId: localStorage.getItem("room_id_current");
+        await this.endMeeting({
+          meetingId: this.getMeetingId,
+          participantId: parseInt(this.getSender),
+          roomId: parseInt(room_id)
+        })
+        
+        this.$router.push({ path: `/conversations/teams/room/${room_id}/post` });
+      } catch (e) {
+        console.log(e.response)
+      }
+    },
+
+    showParticipants() {
+      this.SET_SHOW_PARTICIPANTS(!this.getShowParticipants);
+      this.SET_SHOW_CHAT(!this.getShowParticipants);
+    },
+
+    showChat() {
+      this.SET_SHOW_CHAT(!this.getShowChat);
+      this.SET_SHOW_PARTICIPANTS(!this.getShowChat);
+    }
   },
 };
 </script>
 
 <style lang="css" scoped>
 .container-video-call {
-  background-color: #292d32;
-  width: 100%;
+    background-color: #292d32;
+    width: 100%;
 }
 
 .row-video-call {
-  /* display: flex;
-    flex-flow: row nowrap;
-    justify-content: center; */
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  align-items: center;
-  padding: 4px 15px;
-  margin: 10px;
-  background-color: #292d32;
-  box-shadow: -3px -3px 4px #3e4247, 5px 5px 5px #1d1f23 !important;
-  border-radius: 4px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    padding: 4px 15px;
+    margin: 8px 8px 4px 8px;
+    background-color: #292d32;
+    box-shadow: -2px -2px 3px #3e4247, 4px 4px 4px #1d1f23!important;
+    border-radius: 4px;
 }
 
 .wrap-devices {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .wrapper-icon-show {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  /* border: 1px solid rgba(43, 13, 13, 0.842);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* border: 1px solid rgba(43, 13, 13, 0.842);
     background-color: rgba(43, 13, 13,
             0.842); */
-  border-radius: 5px;
-  height: 100%;
-  border-right: 1px solid rgb(77, 18, 18);
-  margin-right: 15px;
+    border-radius: 5px;
+    height: 100%;
+    border-right: 1px solid rgb(77, 18, 18);
+    margin-right: 15px;
 }
 
 .wrap-btn-show {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .btn-chat,
 .btn-setting {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-setting i {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.705);
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.705);
 }
 
 .btn-share-screen,
 .btn-microphone,
 .btn-camera {
-  padding: 0 15px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #3a3030; 
+    border-color: #e6e6e6;
+    border-radius: 50%;
 }
 
 .btn-share-screen:hover,
 .btn-microphone:hover,
 .btn-camera:hover {
-  background-color: #272727;
+    background-color:#272727;
 }
-
-.btn-camera:hover svg,
-i {
-  color: rgb(155, 21, 21);
-}
-
-.btn-microphone a:hover svg {
-  color: rgb(155, 21, 21);
-}
-
-.btn-share-screen a:hover i {
-  color: rgb(155, 21, 21);
+ 
+.btn-share-screen:hover i,
+.btn-microphone:hover svg,
+.btn-camera:hover svg, i{
+	color: rgb(155, 21, 21)
 }
 
 .btn-share-screen,
 .btn-chat i,
 .btn-microphone i,
 .btn-camera i {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 .btn-camera,
 .btn-microphone {
-  position: relative;
+    position: relative;
 }
 
 .btn-paticipant button {
-  outline: none;
-  border: none;
-  padding: 0 15px;
-  background-color: transparent;
-  /* border: 1px solid rgba(43, 13, 13, 0.842); */
-  color: #fff;
-  font-weight: 600;
-  /* background-color:rgba(43, 13, 13, 0.842); */
+    outline: none;
+    border: none;
+    padding: 0 15px;
+    background-color: transparent;
+    /* border: 1px solid rgba(43, 13, 13, 0.842); */
+    color: #FFF;
+    font-weight: 600;
+    /* background-color:rgba(43, 13, 13, 0.842); */
 }
 
 .btn-paticipant button svg {
-  width: 1.2rem;
+    width: 1.2rem;
 }
 
 .btn-leave-meeting {
-  justify-self: end;
+    justify-self: end;
 }
 
 .btn-leave-meeting button {
-  outline: none;
-  margin: 0 10px;
-  padding: 4px 15px;
-  border: 1px solid rgb(216, 67, 67);
-  color: #fff;
-  font-weight: 600;
-  background-color: rgb(214, 30, 30);
-  border-radius: 5px;
-  box-shadow: 1px 1px 1px rgb(216, 33, 33);
+    outline: none;
+    margin: 0 10px;
+    padding: 6px 15px;
+    border: 1px solid rgb(216, 67, 67);
+    color: #FFF;
+    font-weight: 600;
+    background-color: rgb(214, 30, 30);
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px rgb(216, 33, 33);
+}
+
+.btn-leave-meeting button:hover {
+  background-color: rgb(167, 6, 6);
 }
 
 .btn-microphone svg,
 .btn-camera svg {
-  width: 1.2rem;
+    width: 1.2rem;
 }
 
 .dropdown-menu svg {
-  width: 16px;
-}
+    width: 16px;
+ }
 </style>

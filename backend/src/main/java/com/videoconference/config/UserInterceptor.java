@@ -11,6 +11,7 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class UserInterceptor implements ChannelInterceptor {
@@ -24,6 +25,10 @@ public class UserInterceptor implements ChannelInterceptor {
 
             if (raw instanceof Map) {
                 Object name = ((Map) raw).get("sender");
+                Object meetingId = ((Map)raw).get("meetingId");
+                if (meetingId instanceof ArrayList && meetingId != null) {
+                    accessor.getSessionAttributes().put("meeting_id", ((ArrayList<String>) meetingId).get(0).toString());
+                }
 
                 if (name instanceof ArrayList) {
                     accessor.setUser(new User(((ArrayList<String>) name).get(0).toString()));

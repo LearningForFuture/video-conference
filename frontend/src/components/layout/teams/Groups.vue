@@ -11,9 +11,9 @@
 
 import TeamsNavBar from './TeamsNavBar.vue'
 import TeamsSideBar from './TeamsSideBar.vue'
-import 'jquery/src/jquery.js'
-import 'bootstrap/dist/js/bootstrap.min.js'
-import '../../../assets/css/classroom.css'
+// import 'jquery/src/jquery.js'
+// import 'bootstrap/dist/js/bootstrap.min.js'
+// import '../../../assets/css/classroom.css'
 
 export default{
   name: 'Groups',

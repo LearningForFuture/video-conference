@@ -25,4 +25,7 @@ public class CreateUserDTO implements Serializable {
     @NotNull
     @NotEmpty(message = "Không được bỏ trống confirmPassword")
     private String confirmPassword;
+    @NotNull
+    @NotEmpty(message = "không được bỏ trống full name")
+    private String fullName;
 }

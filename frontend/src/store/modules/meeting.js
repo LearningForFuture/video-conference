@@ -18,12 +18,12 @@ const state = {
   audioEnabled: true,
   videoEnabled: true,
   screenshareEnabled: false,
-  showIntro: true,
-  showChat: false,
+  showChat: true,
+  showParticipants: false,
   showSettings: false,
   selectedAudioDeviceId: "",
   selectedVideoDeviceId: "",
-  username: "le van ket",
+  username: localStorage.getItem('full_name'),
   typing: "",
   chats: [],
   meeting_id: null,
@@ -34,16 +34,63 @@ const state = {
   isLeave: true,
   peers: {},
   dataChannels: {},
+  meetings: [],
+  usersInCall: []
 }
 
 const mutations = {
+  REFRESH_AUDIO_STATUS(state, payload) {
+    const { usersInCall } = state;
+    const userIdx = usersInCall.findIndex(user => user.userId == payload.userId);
+    if (userIdx != -1) {
+      usersInCall[userIdx].turnOffMic = payload.audioEnabled;
+    }
+  },
+
+  ADD_USER_IN_CALL(state, user) {
+    const { usersInCall } = state;
+    usersInCall.push(user);
+    state.usersInCall = [...usersInCall];
+  },
+
+  SET_USERS_IN_CALL(state, users) {
+    state.usersInCall = [...users];
+  },
+
+  REMOVE_USER_IN_CALL(state, user) {
+    state.usersInCall.splice(state.usersInCall.indexOf(user), 1);
+  },
+
+  ADD_NEW_MEETING(state, meeting) {
+    const { meetings } = state;
+    meetings.push(meeting);
+    state.meetings = [...meetings];
+  },
+
+  UPDATE_MEETING(state, meeting) {
+    const { meetings } = state;
+    const meetingIdx = meetings.findIndex(m => m.meetingId === meeting.meetingId);
+    if (meetingIdx !== -1) {
+      meetings[meetingIdx] = meeting;
+    }
+  },
+
+  REMOVE_MEETING(state, meeting) {
+    state.meetings.splice(state.meetings.indexOf(meeting), 1);
+  },
 
   SEND_MSG_CHANNELS(state, mesages) {
+    const values = Object.values(state.dataChannels);
+    if (values.length === 0) return;
     Object.keys(state.dataChannels[state.meeting_id]).map((peer_id) => {
       if (state.dataChannels[state.meeting_id][peer_id].readyState === 'open') {
         state.dataChannels[state.meeting_id][peer_id].send(JSON.stringify(mesages))
       }
     });
+  },
+
+  SET_MEETINGS(state, meetings) {
+    state.meetings = [...meetings];
   },
 
   ADD_CHANNELS(state, channel) {
@@ -63,7 +110,6 @@ const mutations = {
 
   ADD_PEERS(state, peer) {
     state.peers[peer.peer_id] = peer.value;
-    console.log(state.peers);
   },
 
   REMOVE_PEERS(state, peer_id) {
@@ -79,7 +125,6 @@ const mutations = {
   },
 
   ADD_ICE_CANDIDATE(state, config) {
-    console.log(state.peers)
     state.peers[config.peerId].addIceCandidate(new RTCIceCandidate(config.iceCandidate))
       .catch((err) => {
         // this.$log.debug('[Error] addIceCandidate', err);
@@ -131,12 +176,12 @@ const mutations = {
     state.screenshareEnabled = payload;
   },
 
-  SET_SHOW_INTRO(state, payload) {
-    state.showIntro = payload;
-  },
-
   SET_SHOW_CHAT(state, payload) {
     state.showChat = payload;
+  },
+
+  SET_SHOW_PARTICIPANTS(state, isShow) {
+    state.showParticipants = isShow;
   },
 
   SET_SHOW_SETTINGS(state, payload) {
@@ -175,7 +220,20 @@ const mutations = {
     state.connected = payload;
   },
 
+  CLOSE_MEDIA_DEVICES(state, payload) {
+    // close stream
+    state.localMediaStream.getTracks().forEach( (track) => {
+      track.stop();
+    });
+
+    // stop only audio
+    // state.localMediaStream.getAudioTracks()[0].stop();
+    // stop only video
+    // state.localMediaStream.getVideoTracks()[0].stop();
+  },
+
   CLOSE_PEERS(state, peer_id) {
+    // close peer
     state.peers[peer_id].close();
   },
 
@@ -193,11 +251,23 @@ const mutations = {
 
   SET_MEETING_NAMES(state, meetingName) {
     state.meetingName = meetingName;
+  },
+
+  SET_TIME_MEETING(state, data) {
+    const { meetings } = state;
+    const meetingIdx = meetings.findIndex(meeting => meeting.meetingId === data.meetingId);
+    if (meetingIdx !== -1) {
+      meetings[meetingIdx].time = data.time;
+    }
   }
 
 }
 
 const actions = {
+  closeMediaDevices({ commit }) {
+    commit('CLOSE_MEDIA_DEVICES');
+  },
+
   sendMsgChannels({ commit }, message) {
     commit('SEND_MSG_CHANNELS', message);
   },
@@ -211,7 +281,7 @@ const actions = {
   },
 
   closePeers({ commit }, peer_id) {
-    commit('CLOSE_PEERS', peer_id);
+    commit('CLOSE_PEERS', peer_id);    
   },
 
   setRemoteDescription({ commit }, peer) {
@@ -239,7 +309,7 @@ const actions = {
   },
 
   setIsLeave({ commit }, isleave) {
-    commit("SET_IS_LEAVE", isleave);
+    commit("SET_IS_LEAVE", isleave);  
   },
 
   setLocalMediaStream({ commit }, localMediaStream) {
@@ -254,7 +324,7 @@ const actions = {
     commit('SET_VIDEO_TOGGLE');
   },
 
-  setRoomLink({ commit }, roomLink) {
+  setRoomLink ({ commit }, roomLink) {
     commit('SET_ROOM_LINK', roomLink);
     // console.log(state.roomLink);
   },
@@ -303,24 +373,67 @@ const actions = {
     commit('SET_SELECTED_VIDEO_DEVICES_ID', selectedVideoDeviceId);
   },
 
-  setUsername: ({ commit }, username) => commit('SET_USERNAME', username),
-  setTyping: ({ commit }, typing) => commit('SET_TYPING', typing),
-  setShats: ({ commit }, chats) => commit('SET_SHAT', chats),
-  setMeetingId: ({ commit }, meeting_id) => commit('SET_MEETING_ID', meeting_id),
-  setSender: ({ commit }, sender) => commit('SET_SENDER', sender),
+  setUsername: ({commit}, username) => commit('SET_USERNAME', username),
+  setTyping: ({commit}, typing) => commit('SET_TYPING', typing),
+  setShats: ({commit}, chats) => commit('SET_SHAT', chats),
+  setMeetingId: ({commit}, meeting_id) => commit('SET_MEETING_ID', meeting_id),
+  setSender: ({commit}, sender) => commit('SET_SENDER', sender),
   setConnected: ({ commit }, connected) => commit('SET_CONNECTED', connected),
+
+  setTimeMeeting({ commit }, data) {
+    commit('SET_TIME_MEETING', data);
+  },
 
   async createMeeting({ commit }, data) {
     const meeting = await service.createMeetings(data.roomId, data);
     if (meeting) {
-      console.log(meeting);
       commit('SET_MEETING_ID', meeting.data.meetingId);
       commit('SET_ROOM_ID', meeting.data.roomId);
       commit('SET_MEETING_NAMES', meeting.data.meetingNames);
       commit('SET_STARTED_AT', meeting.data.startedAt);
-      commit('SET_CREATE_BY_ID', meeting.data.createBy);
+      commit('SET_CREATE_BY_ID', meeting.data.createdBy);
       // set room link used for sharing others
-      commit('SET_ROOM_LINK', `${location.protocol}//${location.host}:${location.port}/conversations/teams/room/${meeting.data.roomId}/meeting/${meeting.data.meetingId}`);
+      commit('SET_ROOM_LINK', `${location.protocol}//${location.host}/conversations/teams/room/${meeting.data.roomId}/meeting/${meeting.data.meetingId}`);
+      localStorage.setItem('room_id_current', meeting.data.roomId);
+      // add new meeting into list
+      commit('ADD_NEW_MEETING', meeting.data);
+    }
+  },
+
+  async endMeeting({ commit }, data) {
+    const meeting = await service.updateMeeting(data.roomId, data.meetingId, data);
+    if (meeting) {
+      commit('UPDATE_MEETING', meeting.data);
+    }
+  },
+
+  async getMeetingByRoomId({ commit }, roomId) {
+    const meetings = await service.getAllMeetingByRoomId(roomId);
+    commit('SET_MEETINGS', []);
+    if (meetings) {
+      let meetingsList = meetings.data.map(meeting => ({ ...meeting, time: null }));
+      commit('SET_MEETINGS', meetingsList);
+    }
+  },
+
+  async findMeetingById({ commit }, data) {
+    const meeting = await service.findByMeetingId(data);
+    if (meeting) {
+      commit('SET_MEETING_ID', meeting.data.meetingId);
+      commit('SET_ROOM_ID', meeting.data.roomId);
+      commit('SET_MEETING_NAMES', meeting.data.meetingNames);
+      commit('SET_STARTED_AT', meeting.data.startedAt);
+      commit('SET_CREATE_BY_ID', meeting.data.createdBy);
+      commit('SET_ROOM_LINK', `${location.protocol}//${location.host}/conversations/teams/room/${meeting.data.roomId}/meeting/${meeting.data.meetingId}`);
+      localStorage.setItem('room_id_current', meeting.data.roomId);
+    }
+  },
+
+  async getUsersInCall({ commit }, data) {
+    const users = await service.getUsersInCall(data);
+    if (users) {
+      const usersList = users.data.map(user => ({...user, turnOffMic: false}));
+      commit('SET_USERS_IN_CALL', usersList);
     }
   }
 }
@@ -335,7 +448,6 @@ const getters = {
   getAudioEnabled: (state) => state.audioEnabled,
   getVideoEnabled: (state) => state.videoEnabled,
   getScreenshareEnabled: (state) => state.screenshareEnabled,
-  getShowIntro: (state) => state.showIntro,
   getShowChat: (state) => state.showChat,
   getShowSettings: (state) => state.showSettings,
   getSelectedAudioDeviceId: (state) => state.selectedAudioDeviceId,
@@ -349,6 +461,9 @@ const getters = {
   getRoomId: (state) => state.roomId,
   getCreatedBy: (state) => state.createBy,
   getStartedAt: (state) => state.startedAt,
+  getAllMeetings: (state) => state.meetings,
+  getShowParticipants: (state) => state.showParticipants,
+  getAllUsersInCall: (state) => state.usersInCall
 }
 
 const modules = {};

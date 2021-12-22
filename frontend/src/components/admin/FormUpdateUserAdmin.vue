@@ -1,8 +1,5 @@
 <template>
-  <form
-    class="validate-form"
-    @submit.prevent="updateUser"
-  >
+  <form class="validate-form" @submit.prevent="updateUser">
     <div class="input-form">
       <label
         for="validation-form-1"
@@ -18,7 +15,7 @@
         class="form-control"
         placeholder="John Legend"
         minlength="2"
-      >
+      />
     </div>
     <div class="input-form mt-3">
       <label
@@ -35,7 +32,7 @@
         class="form-control"
         placeholder="username"
         required
-      >
+      />
     </div>
     <div class="input-form mt-3">
       <label
@@ -52,7 +49,7 @@
         class="form-control"
         placeholder="example@gmail.com"
         required
-      >
+      />
     </div>
     <div class="input-form mt-3">
       <label
@@ -69,7 +66,7 @@
         class="form-control"
         placeholder="secret"
         minlength="6"
-      >
+      />
     </div>
     <div class="input-form mt-3">
       <label
@@ -78,26 +75,17 @@
       >
         Phân quyền
       </label>
-      <span
-        v-for="role in roles"
-        :key="role.roleId"
-        class="mr-4"
-      >
+      <span v-for="role in roles" :key="role.roleId" class="mr-4">
         <input
           :id="role.roleName"
           v-model="user.roleId"
           type="checkbox"
           :value="role.roleId"
-        >
+        />
         <label :for="role.roleName">{{ role.roleName }}</label>
       </span>
     </div>
-    <button
-      type="submit"
-      class="btn btn-primary mt-5"
-    >
-      Cập nhật
-    </button>
+    <button type="submit" class="btn btn-primary mt-5">Cập nhật</button>
   </form>
 </template>
 
@@ -148,6 +136,5 @@ export default {
   },
 };
 </script>
-
-<style>
+<style src="../../assets/css/app.css" scoped>
 </style>

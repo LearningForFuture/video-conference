@@ -63,6 +63,7 @@ public class RoomServiceImpl implements RoomService {
 
         ParticipantRoom participantRoom = new ParticipantRoom();
         participantRoom.setParticipant(creator);
+        participantRoom.setIsAdmin(true);
         participantRoom.setRoom(room);
         participantRoom.setJoinedAt(Timestamp.valueOf(LocalDateTime.now()));
 
@@ -86,6 +87,11 @@ public class RoomServiceImpl implements RoomService {
         User user = userRepository.findFirstByUserId(createBy)
                 .orElseThrow(() -> new UserNotFoundException());
         return new ArrayList<>(user.getRooms());
+    }
+
+    @Override
+    public List<Room> findRoomByParticipantId(Integer participantId) {
+        return roomRepository.findByParticipantId(participantId);
     }
 
     @Override
@@ -138,20 +144,21 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void joinRoomByRoomCode(String roomCode, String username) {
-        User participant = userRepository.findFirstByUsername(username)
+    public RoomDTO joinRoomByRoomCode(String roomCode, String username) {
+        User user = userRepository.findFirstByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException());
-        Room room= roomRepository.getRoomByRoomCode(roomCode)
+        Room room = roomRepository.getRoomIdByRoomCode(roomCode)
                 .orElseThrow(() -> new RoomNotFoundException());
 
         ParticipantRoom participantRoom = new ParticipantRoom();
-        participantRoom.setId(new ParticipantRoomPK().setRoomId(room.getRoomId()).setParticipantId(participant.getUserId()));
+        participantRoom.setId(new ParticipantRoomPK().setRoomId(room.getRoomId()).setParticipantId(user.getUserId()));
         participantRoom.setJoinedAt(Timestamp.valueOf(LocalDateTime.now()));
         participantRoom.setIsAdmin(false);
-        participantRoom.setParticipant(participant);
         participantRoom.setRoom(room);
+        participantRoom.setParticipant(user);
 
         participantRoomRepository.save(participantRoom);
+        return roomConverter.toDTO(room);
     }
 
     @Override

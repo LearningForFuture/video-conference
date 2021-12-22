@@ -12,14 +12,19 @@
         <router-view :key="$route.path" />
       </groups>
     </div> -->
-    <router-view name="navigation" />
-    <router-view />
-    <router-view name="footer" />
-    <!-- <dashboard /> -->
+    <div v-if="isAdminPage">
+      <dashboard />
+    </div>
+    <div v-else>
+      <router-view name="navigation" />
+      <router-view />
+      <router-view name="footer" />
+    </div>
   </div>
 </template>
 
 <script>
+import Dashboard from "./views/Dashboard.vue";
 // import HomeNavigation from './components/layout/home/HomeNavigation.vue'
 // import HomeFooter from './components/layout/home/HomeFooter.vue'
 // import Groups from './components/layout/teams/Groups.vue'
@@ -28,6 +33,24 @@
 
 export default {
   name: "App",
+  components: {
+    Dashboard,
+  },
+  data() {
+    return {
+      isAdminPage: false,
+    };
+  },
+  created() {
+    this.checkAdminPage();
+  },
+  methods: {
+    checkAdminPage() {
+      const url = window.location.href;
+      if (url.search("/admin") !== -1) this.isAdminPage = true;
+    },
+  },
+
   // components: {
   // HomeNavigation,
   // HomeFooter,
