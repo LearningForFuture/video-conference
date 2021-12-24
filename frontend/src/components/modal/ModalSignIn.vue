@@ -368,6 +368,7 @@ export default {
       this.validPassword();
       if (this.errors['username'].checked && this.errors['password'].checked) {
         try {
+          console.log(process.env.VUE_APP_SERVICE_ENDPOINT);
           await this.login({
             username: this.username,
             password: this.password,

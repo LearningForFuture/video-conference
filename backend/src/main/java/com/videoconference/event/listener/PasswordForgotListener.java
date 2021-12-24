@@ -12,27 +12,27 @@ import java.util.UUID;
 
 @Component
 public class PasswordForgotListener implements
-        ApplicationListener<OnPasswordForgotEvent> {
-    @Autowired
-    private UserService service;
-    @Autowired
-    private EmailService emailService;
+                ApplicationListener<OnPasswordForgotEvent> {
+        @Autowired
+        private UserService service;
+        @Autowired
+        private EmailService emailService;
 
-    @Override
-    public void onApplicationEvent(OnPasswordForgotEvent event) {
-        this.forgotPasswordEmail(event);
-    }
+        @Override
+        public void onApplicationEvent(OnPasswordForgotEvent event) {
+                this.forgotPasswordEmail(event);
+        }
 
-    public void forgotPasswordEmail(OnPasswordForgotEvent event) {
-        User user = event.getUser();
-        String token = UUID.randomUUID().toString();
-        service.createVerificationToken(user, token);
+        public void forgotPasswordEmail(OnPasswordForgotEvent event) {
+                User user = event.getUser();
+                String token = UUID.randomUUID().toString();
+                service.createVerificationToken(user, token);
 
-        String recipientAddress = user.getEmail();
-        String subject = "Reset password";
-        String confirmationUrl = event.getAppUrl() + "/reset-password/" + token;
-        String body = "\r\n" + "https://videoconferencedut.tk" + confirmationUrl;
+                String recipientAddress = user.getEmail();
+                String subject = "Reset password";
+                String confirmationUrl = event.getAppUrl() + "/reset-password/" + token;
+                String body = "\r\n" + "https://videoconferencedut.tk" + confirmationUrl;
 
-        emailService.send(subject, body, recipientAddress);
-    }
+                emailService.send(subject, body, recipientAddress);
+        }
 }
