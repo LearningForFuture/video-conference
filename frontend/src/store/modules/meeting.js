@@ -383,7 +383,7 @@ const actions = {
   setTimeMeeting({ commit }, data) {
     commit('SET_TIME_MEETING', data);
   },
-    
+
   async createMeeting({ commit }, data) {
     const meeting = await service.createMeetings(data.roomId, data);
     if (meeting) {

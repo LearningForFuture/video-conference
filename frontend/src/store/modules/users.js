@@ -11,6 +11,12 @@ const state = {
   createdAt: null,
   updateAt: null,
   roles: [],
+  userPage: {
+    users: [],
+    currentPage: 0,
+    totalItems: 0,
+    totalPages: 0,
+  }
 }
 
 const mutations = {
@@ -34,6 +40,12 @@ const mutations = {
   },
   SET_USER_ID(state, userId) {
     state.userId = userId;
+  },
+  SET_USER_PAGE(state, userPage) {
+    state.userPage.currentPage = userPage.currentPage;
+    state.userPage.totalItems = userPage.totalItems;
+    state.userPage.totalPages = userPage.totalPages;
+    state.userPage.users = [...userPage.data];
   }
 }
 
@@ -49,7 +61,6 @@ const actions = {
       localStorage.setItem('password', user.password);
       localStorage.setItem('user_id', user.userId);
     }
-
   },
 
   async confirmEmailRegistration({ commit }, token) {
@@ -71,7 +82,11 @@ const actions = {
       localStorage.setItem('user_id', account.data.userId);
       // do something with status user
     }
-  }
+  },
+  async getAllUsers({ commit }, pageUser) {
+    let response = await service.findAll(pageUser);
+    commit('SET_USER_PAGE', response.data);
+  },
 }
 const getters = {
   getUsername: (state) => state.username,
@@ -80,6 +95,7 @@ const getters = {
   getFullName: (state) => state.fullName,
   getUserId: (state) => state.userId,
   getRoles: (state) => state.roles,
+  getUserPage: (state) => state.userPage,
 }
 
 export default {

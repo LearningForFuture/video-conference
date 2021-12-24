@@ -66,7 +66,7 @@ public class RoomController {
     }
 
     @GetMapping("/rooms")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<?> getRooms(@Valid PaginationParams params) {
         Page<RoomDTO> pageRoomDTO = roomService.getRooms(params.getPage(),
                 params.getSize(), params.getSort(), params.getKeyword());
@@ -76,6 +76,7 @@ public class RoomController {
     }
 
     @GetMapping("/rooms/{room-id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public RoomDTO getRoomByRoomId(@PathVariable("room-id") Integer roomId) {
         // tra ve room theo id
         return roomService.getRoomByRoomId(roomId);

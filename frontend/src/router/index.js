@@ -13,6 +13,9 @@ import HomeFooter from '../components/layout/home/HomeFooter.vue'
 import Conversation from '../views/Conversations.vue'
 import RoomBody from '../components/layout/teams/room/RoomBody.vue';
 import RoomParticipants from '../components/layout/teams/room/RoomParticipants.vue';
+import TableUserAdmin from '../components/admin/TableUserAdmin.vue'
+import TableRoomAdmin from '../components/admin/TableRoomAdmin.vue'
+import DashBoard from '../views/Dashboard.vue'
 
 const routes = [
   {
@@ -76,6 +79,18 @@ const routes = [
     path: '/register/registration-confirm/:token',
     name: 'ConfirmEmailRegistration',
     component: ConfirmEmailRegistration,
+  },
+  {
+    path: '/admin',
+    component: DashBoard,
+  },
+  {
+    path: '/admin/users',
+    component: TableUserAdmin,
+  },
+  {
+    path: '/admin/rooms',
+    component: TableRoomAdmin,
   }
 ];
 

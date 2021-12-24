@@ -70,8 +70,8 @@ public class MeetingServiceImpl implements MeetingService {
                 .orElseThrow(() -> new MeetingNotFoundException());
         Room roomId = roomRepository.findById(meetingDTO.getRoomId())
                 .orElseThrow(() -> new RoomNotFoundException());
-        if (meeting.getCreatedBy().getUserId() != meetingDTO.getCreatedBy()
-                || meeting.getRoom().getRoomId() != meetingDTO.getRoomId()) {
+        if (!meeting.getCreatedBy().getUserId().equals(meetingDTO.getCreatedBy())
+                || !meeting.getRoom().getRoomId().equals(meetingDTO.getRoomId())) {
             throw new MeetingNotFoundException();
         }
 

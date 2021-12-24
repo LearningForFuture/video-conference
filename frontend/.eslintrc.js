@@ -18,6 +18,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     // 'vue/no-unused-vars': 'error'
     "vue/script-indent": ["error", 2],
-    indent: ["error", 2]
+    indent: ["error", 2],
   }
 }

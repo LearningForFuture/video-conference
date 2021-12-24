@@ -204,7 +204,7 @@ public class RoomServiceImpl implements RoomService {
         roomDTO.setCreatedAt(room.getCreatedAt());
         roomDTO.setUpdatedAt(room.getUpdatedAt());
         roomDTO.setIsPublic(room.getIsPublic());
-        roomDTO.setAvartarId(room.getImage().getImageId());
+//        roomDTO.setAvartarId(room.getImage().getImageId());
         roomDTO.setCreatedBy(room.getCreatedByUser().getUserId());
         return roomDTO;
     }

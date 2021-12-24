@@ -79,7 +79,6 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    @ResponseBody
     public ResponseEntity<User> register(@Valid @RequestBody CreateUserDTO createUserDTO,
             HttpServletRequest request) {
         User registered = userService.createUser(createUserDTO);
@@ -90,14 +89,12 @@ public class AuthenticationController {
     }
 
     @GetMapping("/register/registration-confirm/{token}")
-    @ResponseBody
     public ResponseEntity<String> confirmRegistration(@PathVariable("token") String token) {
         userService.confirmRegistration(token);
         return ResponseEntity.status(200).body("verify success");
     }
 
     @PostMapping("/register/resend-registration-confirm")
-    @ResponseBody
     public ResponseEntity<?> resendRegistration(@RequestBody ResendRegistration resendRegistration,
             HttpServletRequest request) {
         User user = userService.getUserByEmail(resendRegistration.getEmail());

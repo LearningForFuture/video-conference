@@ -6,6 +6,12 @@ const state = {
   isJoined: false,
   rooms: [],
   roomDetails: {},
+  roomPage: {
+    rooms: [],
+    currentPage: 0,
+    totalItems: 0,
+    totalPages: 0,
+  }
 }
 
 const mutations = {
@@ -38,6 +44,13 @@ const mutations = {
   SET_ROOM_DETAILS(state, room) {
     state.roomDetails = {};
     state.roomDetails = { ...room };
+  },
+
+  SET_ROOM_PAGE(state, roomPage) {
+    state.roomPage.currentPage = roomPage.currentPage;
+    state.roomPage.totalItems = roomPage.totalItems;
+    state.roomPage.totalPages = roomPage.totalPages;
+    state.roomPage.rooms = [...roomPage.data];
   }
 }
 
@@ -46,7 +59,7 @@ const actions = {
     commit('SET_IS_JOINED', joined);
   },
 
-  async getRoomList({commit}) {
+  async getRoomList({ commit }) {
     const rooms = await service.findAll();
     commit('SET_ROOMS', rooms.data);
   },
@@ -73,7 +86,12 @@ const actions = {
     if (roomIdx == -1) {
       commit('ADD_NEW_ROOM', room.data);
     }
-  }
+  },
+
+  async getAllRooms({ commit }, pageRoom) {
+    let response = await service.findAllHasPagination(pageRoom);
+    commit('SET_ROOM_PAGE', response.data);
+  },
 }
 
 const getters = {
@@ -87,7 +105,8 @@ const getters = {
 
   getRoomDetails(state) {
     return state.roomDetails;
-  }
+  },
+  getRoomPage: (state) => state.roomPage,
 }
 
 const modules = {

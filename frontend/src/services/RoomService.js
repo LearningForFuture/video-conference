@@ -1,6 +1,10 @@
 import http from './index';
 
 class Roomservice {
+  findAllHasPagination(pageRoom) {
+    return http.get('/rooms', { params: pageRoom });
+  }
+
   findAll() {
     return http.get('/room');
   }
