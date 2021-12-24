@@ -96,7 +96,7 @@ public class MeetingController {
     }
 
     @MessageMapping("/meeting/{meeting_id}")
-    @CrossOrigin(origins = "http://videoconferencedut.tk:8080")
+    @CrossOrigin(origins = "https://videoconferencedut.tk")
     public void sendMessage(@DestinationVariable String meeting_id, @Valid @Payload SignalMessage signalMessage,
             SimpMessageHeaderAccessor headerAccessor) {
         try {

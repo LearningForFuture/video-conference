@@ -30,9 +30,8 @@ public class RegistrationListener implements
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl
-                = event.getAppUrl() + "/register/registration-confirm/" + token;
-        String body = "\r\n" + "http://localhost:3000" + confirmationUrl;
+        String confirmationUrl = event.getAppUrl() + "/register/registration-confirm/" + token;
+        String body = "\r\n" + "https://videoconferencedut.tk" + confirmationUrl;
 
         emailService.send(subject, body, recipientAddress);
     }

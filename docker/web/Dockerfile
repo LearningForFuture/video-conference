@@ -39,7 +39,7 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 # Port 8080 exposed
 EXPOSE 8080
-
+EXPOSE 443
 # Note: CMD is different from RUN. CMD is used to specify the command to be executed when the container starts, while RUN is used to specify the command to be executed when the image is built.
 #    The intermediate image created by the RUN instruction will be cached and used in the next build. If you don't want to use these cache images, you can specify the -- no cache parameter at build time, such as: docker build -- no cache
 

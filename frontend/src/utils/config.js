@@ -1,5 +1,5 @@
 export default {
-  URL_SOCKET: 'ws://localhost/groups/chats/:user_id',
+  URL_SOCKET: 'wss://videoconferencedut.tk/groups/chats/:user_id',
   STATUS_OPTIONS : {
     available: 'available',
     in_a_call: 'in-a-call',

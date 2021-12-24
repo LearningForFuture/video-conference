@@ -14,8 +14,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.UUID;
 
-
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "https://videoconferencedut.tk")
 @Component
 public class WebSocketEventListener {
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
@@ -33,7 +32,7 @@ public class WebSocketEventListener {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
         String sessionId = (String) headerAccessor.getSessionAttributes().get("sessionId");
-        if(sessionId != null) {
+        if (sessionId != null) {
             logger.info("User Disconnected : " + sessionId);
         }
     }

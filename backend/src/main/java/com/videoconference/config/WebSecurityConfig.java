@@ -36,7 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtRequestFilter jwtRequestFilter;
 
     public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder(12).matches("1512001", "$2a$12$0Bt2N7InpcdR6b.m4D.eT.RVPg7Gv8sUE2evZgM7sFCT5PFAKvATy"));
+        System.out.println(new BCryptPasswordEncoder(12).matches("1512001",
+                "$2a$12$0Bt2N7InpcdR6b.m4D.eT.RVPg7Gv8sUE2evZgM7sFCT5PFAKvATy"));
     }
 
     @Override
@@ -83,11 +84,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://videoconferencedut.tk:8080"));
+        // String[] origins = new String[] { "https://videoconferencedut.tk",
+        // "http://videoconferencedut.tk" };
+        configuration
+                .setAllowedOrigins(Arrays.asList("https://videoconferencedut.tk"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token", "Origin", "Accept"));
-//        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        configuration
+                .setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token", "Origin", "Accept"));
+        configuration.setExposedHeaders(Arrays.asList("Set-Cookie"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

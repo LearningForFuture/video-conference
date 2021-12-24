@@ -267,7 +267,8 @@ export default {
     },
 
     getAppUrl() {
-      const protocol = "http" + (location.hostname == "localhost" ? "" : "s") + "://";
+      // const protocol = "http" + (location.hostname == "localhost" ? "" : "s") + "://";
+      const protocol = location.protocol + "//";
       return protocol + location.hostname + (location.hostname == "localhost" ? ":8080" : "");
     },
 
