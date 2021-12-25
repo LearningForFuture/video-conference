@@ -7,7 +7,7 @@ LABEL maintainer="anhle1512001@gmail.com"
 WORKDIR /app
 
 # copy both 'package.json' and 'package-lock.json' (if available)
-COPY ./frontend/package*.json ./
+#COPY package*.json ./
 
 # Copy the front-end project to the app directory
 COPY ./frontend .
@@ -19,7 +19,7 @@ RUN npm install
 RUN npm run build
 
 # Front end project run command
-CMD ["npm","run","serve"]
+#CMD ["npm","run","serve"]
 
 # ========================Top: npm package bottom: nginx run========================
 # nginx mirror image

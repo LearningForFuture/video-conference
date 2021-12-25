@@ -1,5 +1,9 @@
 version: '3'
-
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
 services:
   # db:
   #   image: mysql:8.0.26
@@ -44,10 +48,10 @@ services:
     #   - db
     networks:
       - backend
-    links:
-      - db
+    # links:
+    #   - db
 #    # Execute the command to run the springboot project after the container is created
-#    command: mvn clean spring-boot:run '-Dmaven.test.skip=true'
+    command: mvn clean spring-boot:run '-Dmaven.test.skip=true'
 
   web:                                  # Front end node container (running Vue projects in nginx)
     container_name: videoconference-web # Container name is 'videoconference web'

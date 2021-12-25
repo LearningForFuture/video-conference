@@ -332,19 +332,9 @@ export default {
     },
 
     getAppUrl() {
-<<<<<<< HEAD
       // const protocol = "http" + (location.hostname == "localhost" ? "" : "s") + "://";
       const protocol = location.protocol + "//";
       return protocol + location.hostname + (location.hostname == "localhost" ? ":8080" : "");
-=======
-      const protocol =
-        "http" + (location.hostname == "localhost" ? "" : "s") + "://";
-      return (
-        protocol +
-        location.hostname +
-        (location.hostname == "localhost" ? ":8080" : "")
-      );
->>>>>>> 080cfe898c639a3dadb3ee307c7097a6a523b1e3
     },
 
     getServerUrl() {
