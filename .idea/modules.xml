@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/.idea/deploy.iml" filepath="$PROJECT_DIR$/.idea/deploy.iml" />
-=======
       <module fileurl="file://$PROJECT_DIR$/.idea/videoconference.iml" filepath="$PROJECT_DIR$/.idea/videoconference.iml" />
->>>>>>> 080cfe898c639a3dadb3ee307c7097a6a523b1e3
     </modules>
   </component>
 </project>
