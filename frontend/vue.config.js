@@ -15,7 +15,8 @@ module.exports = {
     },
   },
   devServer: {
-    proxy: process.env.VUE_APP_SERVICE_ENDPOINT || 'http://localhost:3000'
+    proxy: process.env.VUE_APP_SERVICE_ENDPOINT || 'https://192.168.1.3:3000',
+    https: true,
   }
   // disableHostCheck: true,
 };

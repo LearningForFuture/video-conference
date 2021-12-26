@@ -357,16 +357,16 @@ export default {
 
     getAppUrl() {
       const protocol =
-        "http" + (location.hostname == "localhost" ? "" : "s") + "://";
+        "http" + (location.hostname == "192.168.1.3" ? "" : "s") + "://";
       return (
         protocol +
         location.hostname +
-        (location.hostname == "localhost" ? ":8080" : "")
+        (location.hostname == "192.168.1.3" ? ":8080" : "")
       );
     },
 
     getServerUrl() {
-      return process.env.VUE_APP_SERVICE_ENDPOINT || "http://localhost:3000";
+      return process.env.VUE_APP_SERVICE_ENDPOINT || "https://192.168.1.3:3000";
     },
 
     connect() {

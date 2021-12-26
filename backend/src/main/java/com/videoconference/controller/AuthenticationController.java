@@ -57,9 +57,10 @@ public class AuthenticationController {
         Cookie cookieUserId = new Cookie("user_id", userDetails.getUser().getUserId().toString());
         Arrays.asList(cookieToken, cookieUserId).forEach(cookie -> {
             cookie.setHttpOnly(true);
-            cookie.setSecure(true);
+            cookie.setSecure(false);
             cookie.setMaxAge(60*60*5);
             cookie.setPath("/");
+//            cookie.setDomain("191.168.1.3");
             response.addCookie(cookie);
         });
 

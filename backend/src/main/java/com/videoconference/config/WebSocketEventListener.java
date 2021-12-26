@@ -15,7 +15,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import java.util.UUID;
 
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "https://192.168.1.3:8080")
 @Component
 public class WebSocketEventListener {
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);

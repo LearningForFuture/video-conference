@@ -1,6 +1,6 @@
 export default {
-  URL_SOCKET: 'ws://localhost/groups/chats/:user_id',
-  STATUS_OPTIONS : {
+  URL_SOCKET: 'wss://192.168.1.3/groups/chats/:user_id',
+  STATUS_OPTIONS: {
     available: 'available',
     in_a_call: 'in-a-call',
     busy: 'busy',

@@ -96,7 +96,7 @@ public class MeetingController {
 
 
     @MessageMapping("/meeting/{meeting_id}")
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "https://192.168.1.3:8080")
     public void sendMessage(@DestinationVariable String meeting_id, @Valid @Payload SignalMessage signalMessage,
                             SimpMessageHeaderAccessor headerAccessor) {
         try {

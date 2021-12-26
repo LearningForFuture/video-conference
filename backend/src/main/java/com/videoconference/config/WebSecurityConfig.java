@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/reset-password/**", "/register/**").permitAll()
                 .antMatchers("/chat/info", "/meeting", "/chat/**").permitAll()
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and()
                 .headers().frameOptions().sameOrigin().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://127.0.0.1:8080"));
+        configuration.setAllowedOrigins(Arrays.asList("https://192.168.1.3:8080","http://localhost:8080", "http://127.0.0.1:8080"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token", "Origin", "Accept"));
